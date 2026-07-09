@@ -1,0 +1,6 @@
+{
+  "name": "MTL ROLL 2026",
+  "description": "The premier underground urban night-skating festival in Montreal. Track calendar events, core activities, syndicate organizers, guests, and sponsors registry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

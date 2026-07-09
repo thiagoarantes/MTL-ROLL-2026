@@ -1,0 +1,64 @@
+export interface Activity {
+  id: string;
+  title: string;
+  category: 'Prime Event' | 'Rides' | 'Competition' | 'Workshop' | 'Social' | 'Style' | 'Tech' | 'High Risk';
+  description: string;
+  longDescription?: string;
+  image: string;
+  iconName: string;
+  difficulty?: 'Style' | 'Tech' | 'High Risk' | 'All Levels';
+  date: string;
+  time: string;
+  location: string;
+  spotsLeft: number;
+}
+
+export interface Guest {
+  id: string;
+  name: string;
+  role: string;
+  tag: string; // e.g. VIP_ACCESS, GUEST_PRO, SYNDICATE, CREW_LINK
+  image: string;
+  isUserAdded?: boolean;
+}
+
+export interface Organizer {
+  id: string;
+  name: string;
+  roleDescription: string;
+  entityId: string;
+  image: string;
+  tags: string[];
+}
+
+export interface Sponsor {
+  id: string;
+  name: string;
+  role: string; // e.g. GOV_NODE, TECH_NODE, BRAND_NODE
+  slotIndex: number; // 1, 2, 3
+  isOpen: boolean;
+}
+
+export interface Registration {
+  id: string;
+  skaterName: string;
+  email: string;
+  phone?: string;
+  emergencyContact?: string;
+  selectedActivityIds: string[];
+  skaterLevel: 'Beginner' | 'Intermediate' | 'Advanced';
+  skateType: 'Inline' | 'Quads' | 'Three-Wheel' | 'Aggressive' | 'Other';
+  bilingualPref: 'EN' | 'FR' | 'ES';
+  customTag?: string;
+  avatarUrl?: string;
+}
+
+export interface TimetableEvent {
+  id: string;
+  time: string;
+  title: string;
+  location: string;
+  type: 'ride' | 'competition' | 'workshop' | 'social';
+  day: 1 | 2 | 3; // Sept 11, 12, 13
+  description: string;
+}
