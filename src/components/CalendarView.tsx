@@ -34,7 +34,7 @@ export default function CalendarView({
   const t = {
     hollowHeaderTitle: lang === 'EN' ? 'RIDE THE NIGHT' : lang === 'FR' ? 'ROULER LA NUIT' : 'CONDUCE LA NOCHE',
     viewSchedule: lang === 'EN' ? 'View Schedule' : lang === 'FR' ? 'Voir le Programme' : 'Ver Calendario',
-    secureSpot: lang === 'EN' ? 'Secure Your Spot' : lang === 'FR' ? 'Réserver mon Billet' : 'Asegura tu Lugar',
+    secureSpot: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
     systemModule: lang === 'EN' ? '> SYSTEM.MODULE.ACTIVITIES' : lang === 'FR' ? '> SYSTÈME.MODULE.ACTIVITÉS' : '> SISTEMA.MÓDULO.ACTIVIDADES',
     coreEvents: lang === 'EN' ? 'Core Events' : lang === 'FR' ? 'Événements Majeurs' : 'Eventos Principales',
     coreEventsDesc: lang === 'EN' 

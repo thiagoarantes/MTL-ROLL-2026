@@ -1,6 +1,7 @@
 import React from 'react';
-import { Search, Flame, Shuffle, Activity as ActivityIcon, Sparkles, Sliders, ShieldAlert, Zap, Compass, Check, X, Calendar, MapPin, Bike, Brush, Milestone } from 'lucide-react';
+import { Search, Flame, Shuffle, Activity as ActivityIcon, Sparkles, Sliders, ShieldAlert, Zap, Compass, Check, X, Calendar, MapPin, Bike, Brush, Milestone, Clock } from 'lucide-react';
 import { Activity } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface ActivitiesViewProps {
   activities: Activity[];
@@ -17,6 +18,7 @@ export default function ActivitiesView({
 }: ActivitiesViewProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedDifficulty, setSelectedDifficulty] = React.useState<'All' | 'Style' | 'Tech' | 'High Risk' | 'Prime Event'>('All');
+  const [activeDetailActivityId, setActiveDetailActivityId] = React.useState<string | null>(null);
 
   // Filter activities based on search and category
   const filteredActivities = activities.filter((act) => {
@@ -65,14 +67,7 @@ export default function ActivitiesView({
     }
   };
 
-  // Calculate user stats if registered
-  const registeredEventsList = activities.filter(a => registeredActivityIds.includes(a.id));
-  const estimatedDistance = registeredEventsList.reduce((acc, curr) => {
-    if (curr.id === 'act-long-distance') return acc + 50;
-    if (curr.id === 'act-night-ride') return acc + 25;
-    if (curr.id === 'act-mural-ride') return acc + 15;
-    return acc + 5; // Default short sessions
-  }, 0);
+
 
   const t = {
     title: lang === 'EN' ? 'Ride The Grid' : lang === 'FR' ? 'Parcourir Le Réseau' : 'Recorre la Red',
@@ -155,10 +150,10 @@ export default function ActivitiesView({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="w-full">
         
-        {/* Grid Left: Catalog of Activities */}
-        <div className="lg:col-span-9 space-y-6">
+        {/* Catalog of Activities */}
+        <div className="space-y-6">
           {filteredActivities.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter gap-4">
               
@@ -172,7 +167,8 @@ export default function ActivitiesView({
                   return (
                     <article 
                       key={act.id}
-                      className="col-span-1 md:col-span-2 bg-[#1F2833] border-t-2 border-[#9500FF] relative overflow-hidden group transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_8px_25px_rgba(225,253,21,0.15)] hover:border-[#E1FD15] flex flex-col md:flex-row text-left"
+                      onClick={() => setActiveDetailActivityId(act.id)}
+                      className="col-span-1 md:col-span-2 bg-[#1F2833] border-t-2 border-[#9500FF] relative overflow-hidden group transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_8px_25px_rgba(225,253,21,0.15)] hover:border-[#E1FD15] flex flex-col md:flex-row text-left cursor-pointer"
                     >
                       <div className="w-full md:w-1/2 h-64 md:h-auto relative">
                         <img 
@@ -194,23 +190,20 @@ export default function ActivitiesView({
                           {act.description}
                         </p>
 
-                        <div className="flex flex-wrap gap-2 mb-8 font-mono text-[9px] text-[#c7c9ac]">
+                        <div className="flex flex-wrap gap-2 mb-6 font-mono text-[9px] text-[#c7c9ac]">
                           <span className="px-2 py-1 bg-[#111415] border border-[#464932] uppercase">{act.date}</span>
                           <span className="px-2 py-1 bg-[#111415] border border-[#464932] uppercase">{act.time}</span>
                         </div>
 
-                        <div className="mt-auto">
-                          <button 
-                            onClick={() => onOpenRegister(act.id)}
-                            className={`py-3 px-6 font-headline text-xs font-bold uppercase flex items-center gap-2 tracking-widest scale-95 active:scale-90 transition-all cursor-pointer border-0 ${
-                              isRegistered
-                                ? 'bg-[#333537] text-white'
-                                : 'bg-[#E1FD15] text-[#0B0C10] hover:shadow-[0_0_15px_#E1FD15]'
-                            }`}
-                          >
-                            <span>{isRegistered ? t.registered : t.joinVector}</span>
-                            {!isRegistered && <span className="font-sans font-bold">→</span>}
-                          </button>
+                        <div className="mt-2 flex items-center justify-between border-t border-[#333537]/50 pt-4">
+                          <span className="font-mono text-[10px] text-[#E1FD15] uppercase tracking-wider group-hover:underline">
+                            &gt; {lang === 'EN' ? 'VIEW DETAILS' : lang === 'FR' ? 'VOIR LES DÉTAILS' : 'VER DETALLES'}
+                          </span>
+                          {isRegistered && (
+                            <span className="font-mono text-[9px] text-emerald-400 bg-emerald-950/20 border border-emerald-500/30 px-2 py-0.5 font-bold">
+                              {t.registered}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </article>
@@ -221,7 +214,8 @@ export default function ActivitiesView({
                 return (
                   <article 
                     key={act.id}
-                    className="bg-[#1F2833] border-t-2 border-[#333537] relative overflow-hidden group transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_8px_25px_rgba(225,253,21,0.15)] hover:border-[#E1FD15] p-6 flex flex-col justify-between text-left"
+                    onClick={() => setActiveDetailActivityId(act.id)}
+                    className="bg-[#1F2833] border-t-2 border-[#333537] relative overflow-hidden group transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_8px_25px_rgba(225,253,21,0.15)] hover:border-[#E1FD15] p-6 flex flex-col justify-between text-left cursor-pointer"
                   >
                     <div className="h-48 relative mb-6 w-full bg-[#111415] overflow-hidden">
                       <img 
@@ -253,16 +247,16 @@ export default function ActivitiesView({
                       </div>
                     </div>
 
-                    <button 
-                      onClick={() => onOpenRegister(act.id)}
-                      className={`font-headline text-xs py-2 px-4 border-2 transition-all duration-300 uppercase w-full scale-95 active:scale-90 cursor-pointer ${
-                        isRegistered
-                          ? 'border-[#333537] bg-[#333537] text-white'
-                          : 'border-[#9500FF] text-white hover:bg-[#9500FF] hover:text-white'
-                      }`}
-                    >
-                      {isRegistered ? t.registered : t.register}
-                    </button>
+                    <div className="mt-auto flex items-center justify-between border-t border-[#333537]/50 pt-4">
+                      <span className="font-mono text-[10px] text-[#E1FD15] uppercase tracking-wider group-hover:underline">
+                        &gt; {lang === 'EN' ? 'VIEW DETAILS' : lang === 'FR' ? 'VOIR LES DÉTAILS' : 'VER DETALLES'}
+                      </span>
+                      {isRegistered && (
+                        <span className="font-mono text-[9px] text-emerald-400 bg-emerald-950/20 border border-emerald-500/30 px-2 py-0.5 font-bold">
+                          {t.registered}
+                        </span>
+                      )}
+                    </div>
                   </article>
                 );
               })}
@@ -281,57 +275,193 @@ export default function ActivitiesView({
           )}
         </div>
 
-        {/* Grid Right: Synced Terminal Dashboard */}
-        <div className="lg:col-span-3 space-y-6">
-          <div className="bg-[#1F2833] border border-[#9500FF]/30 p-5 relative text-left">
-            <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#E1FD15] m-2 opacity-50" />
-            
-            <span className="font-mono text-[9px] text-[#9500FF] tracking-widest font-bold uppercase block mb-3">
-              // {t.gridPanel}
-            </span>
-
-            <div className="space-y-4">
-              <div className="p-3 bg-[#111415] border border-[#464932]">
-                <p className="font-mono text-[8px] text-[#c7c9ac] uppercase font-bold">{t.distanceEst}</p>
-                <p className="font-headline text-2xl text-[#E1FD15] font-black uppercase mt-1">
-                  {estimatedDistance} <span className="text-xs text-white">KM</span>
-                </p>
-              </div>
-
-              <div>
-                <p className="font-mono text-[10px] text-[#c7c9ac] uppercase font-bold mb-2">{t.mySchedule}</p>
-                
-                {registeredEventsList.length > 0 ? (
-                  <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                    {registeredEventsList.map(item => (
-                      <div key={item.id} className="bg-[#111415] p-2 border-l-2 border-[#9500FF] flex justify-between items-center text-xs">
-                        <div className="min-w-0">
-                          <p className="font-headline text-xs font-bold text-white uppercase truncate">{item.title}</p>
-                          <p className="font-mono text-[9px] text-[#c7c9ac] truncate mt-0.5">{item.location}</p>
-                        </div>
-                        <span className="font-mono text-[8px] text-[#E1FD15] border border-[#E1FD15]/20 px-1 bg-[#0c0e10]">SYNC</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="p-6 bg-[#111415] text-center border border-[#464932]">
-                    <p className="font-mono text-[10px] text-[#c7c9ac]">
-                      {lang === 'EN' ? 'No vectors active.' : lang === 'FR' ? 'Aucun vecteur actif.' : 'Ningún vector activo.'}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-3 border-t border-[#464932]/30 flex items-center justify-between text-[10px] font-mono text-[#c7c9ac]">
-                <span>{t.terminalActive}</span>
-                <span className="w-2 h-2 rounded-full bg-[#E1FD15] animate-ping" />
-              </div>
-
-            </div>
-          </div>
-        </div>
-
       </div>
+
+      {/* Details & Carousel Modal */}
+      <AnimatePresence>
+        {activeDetailActivityId && (() => {
+          const activeActivityIndex = filteredActivities.findIndex((a) => a.id === activeDetailActivityId);
+          const activeActivity = activeActivityIndex !== -1 ? filteredActivities[activeActivityIndex] : null;
+          
+          if (!activeActivity) return null;
+
+          return (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm"
+              onClick={() => setActiveDetailActivityId(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="bg-[#111415] border-2 border-[#9500FF] w-full max-w-2xl relative overflow-hidden text-left"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Techno Corner Accents */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#E1FD15] pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#9500FF] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#9500FF] pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#E1FD15] pointer-events-none" />
+
+                {/* Header/Close */}
+                <div className="flex items-center justify-between border-b border-[#333537] px-6 py-4 bg-[#1F2833]">
+                  <div className="flex items-center gap-2">
+                    {renderIcon(activeActivity.iconName)}
+                    <span className="font-mono text-[10px] text-[#E1FD15] uppercase tracking-widest font-black">
+                      // {activeActivity.category}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setActiveDetailActivityId(null)}
+                    className="p-1 text-[#c7c9ac] hover:text-[#E1FD15] transition-all cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Content Area */}
+                <div className="max-h-[70vh] overflow-y-auto">
+                  {/* Hero image banner */}
+                  <div className="w-full h-56 relative bg-black">
+                    <img
+                      src={activeActivity.image}
+                      alt={activeActivity.title}
+                      className="w-full h-full object-cover opacity-75"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111415] to-transparent" />
+                    <div className="absolute bottom-4 left-6">
+                      <h2 className="font-headline text-2xl sm:text-3xl font-black text-white uppercase tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        {activeActivity.title}
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="p-6 space-y-6">
+                    {/* Descriptions */}
+                    <div className="space-y-2">
+                      <span className="font-mono text-[9px] text-[#9500FF] uppercase tracking-widest font-black block">
+                        &gt; DETAILED SPECIFICATIONS
+                      </span>
+                      <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed">
+                        {activeActivity.longDescription || activeActivity.description}
+                      </p>
+                    </div>
+
+                    {/* Metadata dashboard layout */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Calendar className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">DATE</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">{activeActivity.date}</p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Clock className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">TIME</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">{activeActivity.time}</p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">LOCATION</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase truncate" title={activeActivity.location}>
+                          {activeActivity.location}
+                        </p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Flame className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">DIFFICULTY</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">
+                          {activeActivity.difficulty || 'All Levels'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Spots Remaining Info */}
+                    {activeActivity.spotsLeft !== undefined && (
+                      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#E1FD15]/5 border border-[#E1FD15]/20 font-mono text-[10px] text-[#E1FD15]">
+                        <Sparkles className="w-4 h-4 shrink-0 animate-pulse" />
+                        <span>
+                          {lang === 'EN'
+                            ? `SECURE SYSTEM: ${activeActivity.spotsLeft} places remaining for this active vector.`
+                            : lang === 'FR'
+                            ? `SYSTÈME SÉCURISÉ : ${activeActivity.spotsLeft} places restantes pour cette session.`
+                            : `SISTEMA SEGURO: ${activeActivity.spotsLeft} cupos restantes para esta sesión activa.`}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer with Carousel controls and action button */}
+                <div className="border-t border-[#333537] bg-[#1F2833] p-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  {/* Previous / Next wrap triggers */}
+                  <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const prevIdx = activeActivityIndex > 0 ? activeActivityIndex - 1 : filteredActivities.length - 1;
+                        if (filteredActivities[prevIdx]) {
+                          setActiveDetailActivityId(filteredActivities[prevIdx].id);
+                        }
+                      }}
+                      className="px-3 py-1.5 border border-[#464932] hover:border-[#E1FD15] hover:bg-[#E1FD15]/5 font-mono text-[9px] uppercase text-white transition-all cursor-pointer flex items-center gap-1"
+                    >
+                      <span>&lt;</span>
+                      <span>{lang === 'EN' ? 'Prev' : lang === 'FR' ? 'Préc' : 'Ant'}</span>
+                    </button>
+
+                    <span className="font-mono text-[10px] text-[#c7c9ac] px-2 bg-[#111415] border border-[#333537] py-1">
+                      {activeActivityIndex + 1} / {filteredActivities.length}
+                    </span>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const nextIdx = activeActivityIndex < filteredActivities.length - 1 ? activeActivityIndex + 1 : 0;
+                        if (filteredActivities[nextIdx]) {
+                          setActiveDetailActivityId(filteredActivities[nextIdx].id);
+                        }
+                      }}
+                      className="px-3 py-1.5 border border-[#464932] hover:border-[#E1FD15] hover:bg-[#E1FD15]/5 font-mono text-[9px] uppercase text-white transition-all cursor-pointer flex items-center gap-1"
+                    >
+                      <span>{lang === 'EN' ? 'Next' : lang === 'FR' ? 'Suiv' : 'Sig'}</span>
+                      <span>&gt;</span>
+                    </button>
+                  </div>
+
+                  {/* Register action trigger */}
+                  <button
+                    onClick={() => {
+                      onOpenRegister(activeActivity.id);
+                      setActiveDetailActivityId(null);
+                    }}
+                    className={`w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer border-0 ${
+                      registeredActivityIds.includes(activeActivity.id)
+                        ? 'bg-[#333537] text-white'
+                        : 'bg-[#9500FF] text-white hover:bg-[#8000DB] hover:shadow-[0_0_15px_#9500FF]'
+                    }`}
+                  >
+                    {registeredActivityIds.includes(activeActivity.id)
+                      ? t.registered
+                      : (lang === 'EN' ? 'Register for Session' : lang === 'FR' ? 'S\'inscrire à la session' : 'Registrarse en la sesión')}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })()}
+      </AnimatePresence>
 
     </div>
   );
