@@ -1,4 +1,5 @@
 import React from 'react';
+import { Instagram, Facebook, Globe } from 'lucide-react';
 import TopNavBar from './components/TopNavBar';
 import CalendarView from './components/CalendarView';
 import ActivitiesView from './components/ActivitiesView';
@@ -177,8 +178,8 @@ export default function App() {
       )}
 
       {/* Immersive Footer matching screenshots */}
-      <footer className="bg-[#111415] py-16 border-t-2 border-[#9500FF]/50 w-full mt-auto">
-        <div className="max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <footer className="bg-[#111415] py-12 border-t-2 border-[#9500FF]/50 w-full mt-auto">
+        <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
           
           {/* Copyright Brand Info */}
           <div className="font-headline text-xs font-black uppercase tracking-widest text-center md:text-left text-[#e2e2e4]">
@@ -188,64 +189,31 @@ export default function App() {
           {/* Socials Link Channels */}
           <div className="flex flex-wrap justify-center gap-6 font-sans text-xs">
             <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/groups/rollingtribes" 
               target="_blank" 
               rel="noreferrer"
-              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold"
+              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
             >
-              Facebook
+              <Facebook className="w-4 h-4" />
+              <span>Facebook</span>
             </a>
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/rollingtribes/" 
               target="_blank" 
               rel="noreferrer"
-              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold"
+              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
             >
-              Instagram
+              <Instagram className="w-4 h-4" />
+              <span>Instagram</span>
             </a>
             <a 
-              href="https://tiktok.com" 
+              href="https://rolling-tribes.web.app/" 
               target="_blank" 
               rel="noreferrer"
-              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold"
+              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
             >
-              TikTok
-            </a>
-          </div>
-
-          {/* Utility/Legal links */}
-          <div className="flex flex-wrap justify-center md:justify-end gap-6 font-sans text-xs">
-            <a 
-              href="#contact" 
-              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold"
-              onClick={(e) => {
-                e.preventDefault();
-                alert(
-                  lang === 'EN'
-                    ? 'MTL ROLL Terminal sync support active: support@mtlroll2026.net'
-                    : lang === 'FR'
-                    ? 'Assistance Terminal active : support@mtlroll2026.net'
-                    : 'Soporte de sincronización de Terminal de MTL ROLL activo: support@mtlroll2026.net'
-                );
-              }}
-            >
-              Contact
-            </a>
-            <a 
-              href="#privacy" 
-              className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold"
-              onClick={(e) => {
-                e.preventDefault();
-                alert(
-                  lang === 'EN'
-                    ? 'MTL ROLL Offline Privacy Protocol 2026: No third-party data tracking. RFID identifiers are cleared post-event.'
-                    : lang === 'FR'
-                    ? "Protocole Confidentialité MTL ROLL 2026 : Aucun traçage de données tierces. Les identifiants RFID sont supprimés après l'événement."
-                    : 'Protocolo de Privacidad fuera de línea de MTL ROLL 2026: Sin seguimiento de datos de terceros. Los identificadores RFID se borran después del evento.'
-                );
-              }}
-            >
-              Privacy
+              <Globe className="w-4 h-4" />
+              <span>Website</span>
             </a>
           </div>
 
