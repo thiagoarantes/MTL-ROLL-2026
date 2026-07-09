@@ -1,10 +1,11 @@
 import React from 'react';
-import { FileSpreadsheet, ExternalLink, LogOut, Check, AlertCircle, RefreshCw, LogIn } from 'lucide-react';
-import { User } from 'firebase/auth';
+import { FileSpreadsheet, ExternalLink, LogOut, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
 
 interface GoogleSheetsSyncConfigProps {
-  user: User | null;
-  spreadsheetInfo: { id: string; url: string } | null;
+  isConfigured: boolean;
+  adminEmail: string | null;
+  spreadsheetUrl: string | null;
+  isExpired: boolean;
   isLoading: boolean;
   error: string | null;
   onConnect: () => void;
@@ -14,8 +15,10 @@ interface GoogleSheetsSyncConfigProps {
 }
 
 export default function GoogleSheetsSyncConfig({
-  user,
-  spreadsheetInfo,
+  isConfigured,
+  adminEmail,
+  spreadsheetUrl,
+  isExpired,
   isLoading,
   error,
   onConnect,
@@ -27,17 +30,18 @@ export default function GoogleSheetsSyncConfig({
     syncTitle: lang === 'EN' ? 'Google Sheets Live Sync' : lang === 'FR' ? 'Synchro Google Sheets' : 'Sincronización en Vivo',
     syncDesc:
       lang === 'EN'
-        ? 'Automatically sync new event registrations to a Google Spreadsheet live in your Google Drive.'
+        ? 'PROXIED AUTO-SYNC: Admin-owned spreadsheet mode. Visitors submit registrations seamlessly. The server securely proxies records straight into your shared Spreadsheet without requesting visitor login.'
         : lang === 'FR'
-        ? 'Synchronisez automatiquement les nouvelles inscriptions en temps réel dans une feuille Google Sheets.'
-        : 'Sincroniza automáticamente los registros en una hoja de cálculo de Google Sheets.',
-    connectedAs: lang === 'EN' ? 'CONNECTED AS' : lang === 'FR' ? 'CONNECTÉ EN TANT QUE' : 'CONECTADO COMO',
+        ? 'AUTO-SYNCHRO PAR PROXY : Mode feuille de calcul administrée. Les visiteurs s’inscrivent de manière fluide. Le serveur pousse les données directement dans votre feuille sans demander d’authentification au visiteur.'
+        : 'Sincronización automática a través de proxy del administrador. Los visitantes se registran sin iniciar sesión.',
+    connectedAs: lang === 'EN' ? 'OWNER / ADMIN' : lang === 'FR' ? 'PROPRIÉTAIRE / ADMIN' : 'PROPIETARIO / ADMIN',
     disconnect: lang === 'EN' ? 'DISCONNECT' : lang === 'FR' ? 'DÉCONNECTER' : 'DESCONECTAR',
     liveSync: lang === 'EN' ? 'LIVE SYNC ACTIVE' : lang === 'FR' ? 'SYNCHRO LIVE ACTIVE' : 'SINCRONIZACIÓN ACTIVA',
-    reconnect: lang === 'EN' ? 'RE-SYNC FILE' : lang === 'FR' ? 'RE-SYNCHRONISER' : 'RE-SINCRONIZAR HILO',
+    expiredSync: lang === 'EN' ? 'SESSION EXPIRED (RECONNECT)' : lang === 'FR' ? 'SESSION EXPIRÉE (RECONNEXION)' : 'SESIÓN EXPIRADA (RECONECTAR)',
+    reconnect: lang === 'EN' ? 'RECONNECT SYNC' : lang === 'FR' ? 'RECONNECTER' : 'RECONECTAR',
     openSpreadsheet: lang === 'EN' ? 'OPEN SHEET' : lang === 'FR' ? 'OUVRIR FEUILLE' : 'ABRIR HOJA',
     initializing: lang === 'EN' ? 'SYNCING PIPELINE...' : lang === 'FR' ? 'SYNCHRONISATION...' : 'SINCRONIZANDO...',
-    googleBtnLabel: lang === 'EN' ? 'Sign in with Google' : lang === 'FR' ? 'Se connecter avec Google' : 'Iniciar sesión con Google',
+    googleBtnLabel: lang === 'EN' ? 'Connect Admin Google Drive' : lang === 'FR' ? 'Connecter le Google Drive Admin' : 'Conectar Google Drive Admin',
   };
 
   return (
@@ -50,7 +54,7 @@ export default function GoogleSheetsSyncConfig({
         
         {/* Left Side: Status / Text Description */}
         <div className="flex items-start gap-4 flex-1">
-          <div className={`p-3 rounded-none border ${user ? 'bg-[#9500FF]/10 border-[#9500FF] text-[#E1FD15]' : 'bg-[#1F2833] border-[#333537] text-[#666666]'}`}>
+          <div className={`p-3 rounded-none border ${isConfigured ? 'bg-[#9500FF]/10 border-[#9500FF] text-[#E1FD15]' : 'bg-[#1F2833] border-[#333537] text-[#666666]'}`}>
             <FileSpreadsheet className="w-6 h-6 animate-pulse" />
           </div>
           <div>
@@ -58,10 +62,16 @@ export default function GoogleSheetsSyncConfig({
               <h3 className="font-headline text-sm font-black uppercase tracking-wider text-white">
                 {t.syncTitle}
               </h3>
-              {user && (
+              {isConfigured && !isExpired && (
                 <span className="flex items-center gap-1 font-mono text-[9px] text-[#E1FD15] bg-[#9500FF]/25 border border-[#E1FD15]/30 px-2 py-0.5 font-bold">
                   <span className="w-1.5 h-1.5 bg-[#E1FD15] rounded-full animate-ping" />
                   {t.liveSync}
+                </span>
+              )}
+              {isConfigured && isExpired && (
+                <span className="flex items-center gap-1 font-mono text-[9px] text-red-500 bg-red-950/20 border border-red-500/30 px-2 py-0.5 font-bold">
+                  <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+                  {t.expiredSync}
                 </span>
               )}
             </div>
@@ -69,15 +79,20 @@ export default function GoogleSheetsSyncConfig({
               {t.syncDesc}
             </p>
 
-            {user && spreadsheetInfo && (
+            {isConfigured && (
               <div className="mt-3.5 flex flex-wrap items-center gap-2.5 font-mono text-[10px]">
                 <span className="text-[#666666] uppercase">{t.connectedAs}:</span>
                 <span className="text-white bg-[#0B0C10] px-2 py-0.5 border border-[#333537] font-bold">
-                  {user.email}
+                  {adminEmail || 'Admin Node'}
                 </span>
                 <span className="text-[#666666]">//</span>
                 <span className="text-[#c7c9ac]">
                   File: <span className="text-[#E1FD15] underline font-bold">MTL Roll Registrations - 2026</span>
+                </span>
+                <span className="text-[#666666]">//</span>
+                <span className="text-[#9500FF] flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  No Visitor Sign-In Required
                 </span>
               </div>
             )}
@@ -101,7 +116,7 @@ export default function GoogleSheetsSyncConfig({
             </div>
           )}
 
-          {!isLoading && !user && (
+          {!isLoading && !isConfigured && (
             <button
               onClick={onConnect}
               className="gsi-material-button font-sans font-bold flex items-center justify-center cursor-pointer relative"
@@ -114,7 +129,7 @@ export default function GoogleSheetsSyncConfig({
                 height: '40px',
                 padding: '0 16px',
                 width: '100%',
-                maxWidth: '240px',
+                maxWidth: '260px',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
               }}
               id="connect-google-sheets-btn"
@@ -137,12 +152,12 @@ export default function GoogleSheetsSyncConfig({
             </button>
           )}
 
-          {!isLoading && user && (
+          {!isLoading && isConfigured && (
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               
-              {spreadsheetInfo && (
+              {spreadsheetUrl && (
                 <a
-                  href={spreadsheetInfo.url}
+                  href={spreadsheetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 bg-[#E1FD15] text-[#0B0C10] hover:bg-[#cbf212] font-headline text-[10px] tracking-wider uppercase font-black px-4 py-2.5 transition-all w-full sm:w-auto justify-center"
@@ -155,7 +170,7 @@ export default function GoogleSheetsSyncConfig({
               <button
                 onClick={onRefreshSpreadsheet}
                 className="flex items-center gap-1.5 bg-[#1F2833] border border-[#464932] text-white hover:border-[#E1FD15] hover:bg-[#E1FD15]/5 font-mono text-[9px] tracking-wider uppercase font-bold px-3 py-2.5 transition-all w-full sm:w-auto justify-center cursor-pointer"
-                title="Verify spreadsheet connectivity"
+                title="Reconnect and refresh token connection"
               >
                 <RefreshCw className="w-3 h-3" />
                 <span>{t.reconnect}</span>
