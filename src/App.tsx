@@ -8,8 +8,6 @@ import GoogleSheetsSyncConfig from './components/GoogleSheetsSyncConfig';
 
 import { INITIAL_ACTIVITIES, INITIAL_GUESTS, INITIAL_ORGANIZERS, INITIAL_SPONSORS } from './data';
 import { Activity, Guest, Sponsor, Registration } from './types';
-import { initAuth, googleSignIn, logout, findOrCreateSpreadsheet, appendRegistration } from './lib/googleSheets';
-import { User } from 'firebase/auth';
 
 export default function App() {
   // Navigation & Localization
@@ -26,14 +24,8 @@ export default function App() {
 
   // Google Sheets Integration State (Server-backed proxy)
   const [isAdminMode, setIsAdminMode] = React.useState(false);
-  const [isConfigured, setIsConfigured] = React.useState(false);
-  const [adminEmail, setAdminEmail] = React.useState<string | null>(null);
-  const [spreadsheetUrl, setSpreadsheetUrl] = React.useState<string | null>(null);
-  const [isExpired, setIsExpired] = React.useState(false);
-  const [syncLoading, setSyncLoading] = React.useState(false);
-  const [syncError, setSyncError] = React.useState<string | null>(null);
 
-  // Load from localStorage on mount and check server-side Sheets integration status
+  // Load from localStorage on mount
   React.useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -60,32 +52,6 @@ export default function App() {
     } catch (e) {
       console.error('Failed to parse state from localStorage', e);
     }
-
-    // Check backend sheets status on startup
-    checkBackendStatus();
-
-    // Initialize Firebase Auth listener for the Admin
-    const unsubscribe = initAuth(
-      async (user, token) => {
-        setSyncLoading(true);
-        try {
-          const info = await findOrCreateSpreadsheet(token);
-          await saveConfigToServer(user, token, info);
-        } catch (err) {
-          console.error('Auth refresh spreadsheet auto-save failed:', err);
-        } finally {
-          setSyncLoading(false);
-        }
-      },
-      () => {
-        // We do NOT clear server-side configuration if local client-side session is logged out
-        // because we want the proxy to run regardless of whether the admin has an open browser tab!
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
   }, []);
 
   // Handler to switch view and scroll to anchor if needed
@@ -118,107 +84,6 @@ export default function App() {
     setPreselectedActivityId(undefined);
   };
 
-  // Google Sheets integration server interactions
-  const checkBackendStatus = async () => {
-    try {
-      const res = await fetch('/api/sheets/status');
-      const data = await res.json();
-      if (data.configured) {
-        setIsConfigured(true);
-        setSpreadsheetUrl(data.spreadsheetUrl);
-        setAdminEmail(data.adminEmail);
-        setIsExpired(false);
-      } else {
-        setIsConfigured(false);
-        setSpreadsheetUrl(null);
-        setAdminEmail(null);
-      }
-    } catch (err) {
-      console.error('Failed to load server integration status:', err);
-    }
-  };
-
-  const saveConfigToServer = async (user: User, token: string, info: { id: string; url: string }) => {
-    try {
-      const res = await fetch('/api/sheets/config', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          accessToken: token,
-          spreadsheetId: info.id,
-          spreadsheetUrl: info.url,
-          adminEmail: user.email,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setIsConfigured(true);
-        setSpreadsheetUrl(info.url);
-        setAdminEmail(user.email);
-        setIsExpired(false);
-      } else {
-        throw new Error(data.error || 'Server rejected configuration');
-      }
-    } catch (err: any) {
-      console.error('Failed to save config to server:', err);
-      setSyncError(lang === 'EN' ? 'Failed to save admin sync token on server.' : 'Échec de sauvegarde serveur.');
-    }
-  };
-
-  const handleConnectSheets = async () => {
-    setSyncLoading(true);
-    setSyncError(null);
-    try {
-      const result = await googleSignIn();
-      if (result) {
-        const info = await findOrCreateSpreadsheet(result.accessToken);
-        await saveConfigToServer(result.user, result.accessToken, info);
-      }
-    } catch (err: any) {
-      console.error(err);
-      setSyncError(
-        lang === 'EN'
-          ? 'Admin Google connection failed.'
-          : 'Échec de connexion administrateur.'
-      );
-    } finally {
-      setSyncLoading(false);
-    }
-  };
-
-  const handleDisconnectSheets = async () => {
-    setSyncLoading(true);
-    try {
-      await logout();
-      await fetch('/api/sheets/disconnect', { method: 'POST' });
-      setIsConfigured(false);
-      setSpreadsheetUrl(null);
-      setAdminEmail(null);
-      setIsExpired(false);
-    } catch (err: any) {
-      console.error(err);
-    } finally {
-      setSyncLoading(false);
-    }
-  };
-
-  const handleRefreshSpreadsheet = async () => {
-    setSyncLoading(true);
-    setSyncError(null);
-    try {
-      const result = await googleSignIn();
-      if (result) {
-        const info = await findOrCreateSpreadsheet(result.accessToken);
-        await saveConfigToServer(result.user, result.accessToken, info);
-      }
-    } catch (err: any) {
-      console.error(err);
-      setSyncError(lang === 'EN' ? 'Reconnection failed.' : 'Échec de reconnexion.');
-    } finally {
-      setSyncLoading(false);
-    }
-  };
-
   // Lock custom sponsor slot
   const handleAddSponsor = (newSponsor: Sponsor) => {
     const updatedSponsors = sponsors.map(s => 
@@ -248,9 +113,6 @@ export default function App() {
       .then((data) => {
         if (data.success) {
           console.log('Secure server proxy successfully appended registration to Admin Sheet!');
-        } else if (data.expired) {
-          setIsExpired(true);
-          console.warn('Admin Google Sheet synchronization has expired. Needs admin login update.');
         } else {
           console.warn('Proxy Sheets append did not succeed:', data.error);
         }
@@ -310,18 +172,7 @@ export default function App() {
       {/* Google Sheets Sync Integration Panel */}
       {isAdminMode && (
         <div className="max-w-7xl w-full mx-auto px-6 md:px-16 mb-12">
-          <GoogleSheetsSyncConfig
-            isConfigured={isConfigured}
-            adminEmail={adminEmail}
-            spreadsheetUrl={spreadsheetUrl}
-            isExpired={isExpired}
-            isLoading={syncLoading}
-            error={syncError}
-            onConnect={handleConnectSheets}
-            onDisconnect={handleDisconnectSheets}
-            onRefreshSpreadsheet={handleRefreshSpreadsheet}
-            lang={lang}
-          />
+          <GoogleSheetsSyncConfig lang={lang} />
         </div>
       )}
 
