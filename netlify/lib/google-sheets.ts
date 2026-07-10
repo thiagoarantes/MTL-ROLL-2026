@@ -63,7 +63,11 @@ export function getGoogleAuthClient() {
   }
 
   // Clean multiline key format issues (e.g. escaped newlines from env var UIs)
-  privateKey = privateKey.replace(/\\n/g, '\n').replace(/^"(.*)"$/, '$1');
+  // 1. Strip any accidental outer quotes first
+  privateKey = privateKey.trim().replace(/^["']|["']$/g, '');
+  
+  // 2. Fix the escaped line breaks
+  privateKey = privateKey.replace(/\\n/gm, '\n');
 
   return new google.auth.JWT({
     email,
