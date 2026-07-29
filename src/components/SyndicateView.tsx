@@ -69,13 +69,15 @@ export default function SyndicateView({
           <div className="flex flex-col md:flex-row h-full">
             
             {/* Image Block */}
-            <div className="w-full md:w-1/3 relative min-h-[300px]">
-              <img 
-                src={activeOrg.image} 
-                alt={activeOrg.name}
-                className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale"
-              />
-              <div className="absolute inset-0 border-r-2 border-[#9500FF]/30 hidden md:block" />
+            <div className="w-full md:w-auto p-6 md:p-8 flex items-center justify-center bg-[#0c0e10] border-b md:border-b-0 md:border-r border-[#9500FF]/30">
+              <div className="w-64 sm:w-72 md:w-80 aspect-square relative overflow-hidden bg-black border border-[#333537] shadow-lg">
+                <img 
+                  src={activeOrg.image} 
+                  alt={activeOrg.name}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </div>
 
             {/* Info Block */}

@@ -124,7 +124,7 @@ export const INITIAL_ORGANIZERS: Organizer[] = [
     name: 'Rolling Tribes',
     roleDescription: 'The architectural minds behind the night. Rolling Tribes is a collective of velocity addicts and urban navigators dedicated to reclaiming the concrete sprawl. They engineer the routes, establish the protocols, and ensure the grid remains electrified for every rider entering the zone.',
     entityId: 'RLL_TRB_01',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0mZrArZvnfkcZS1bO2me7minV69EFLrnxqmoYRvKlQFG-k2AZ5UZPXM8wW-eQfr3hddBhCimP-4SoA0yVOYDpkuBWX2qPwR6XxGysArMmt4p_7GzqHyFiAf5VKT9aogcMeprgVYdXnSTHYzBP1ujyHXY6SB9NO1h9Gu-GrvefBR6_O4y69Wvr4maXeNA1F5JGKQceY6IY9nuaJnStexSF_ESjdDO2TlkW2fMwaPg9MyoKEhv7pKwo',
+    image: '/rolling_tribes_logo.jpg',
     tags: ['ROUTING', 'LOGISTICS', 'OVERSEER']
   }
 ];
