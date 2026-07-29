@@ -1,3 +1,4 @@
+import { Globe, Instagram, ExternalLink } from 'lucide-react';
 import { Organizer, Guest, Sponsor } from '../types';
 
 interface SyndicateViewProps {
@@ -176,14 +177,51 @@ export default function SyndicateView({
         <div className="flex justify-center">
           
           {/* Featured Sponsor Verdun */}
-          <div className="w-full max-w-2xl bg-[#0B0C10] border border-[#333537] p-8 flex items-center justify-center min-h-[220px] relative group overflow-hidden">
-            <div className="absolute inset-0 bg-[#9500FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="text-center z-10">
-              <span className="font-mono text-xs text-[#666666] block mb-2 font-bold uppercase">GOV_NODE</span>
-              <h3 className="font-headline text-2xl md:text-3xl font-black uppercase text-white group-hover:text-[#E1FD15] transition-colors leading-tight tracking-tight">
-                Arrondissement de Verdun
-              </h3>
+          <div className="w-full max-w-2xl bg-[#0B0C10] border border-[#333537] p-8 flex flex-col items-center justify-center relative group overflow-hidden text-center">
+            <div className="absolute inset-0 bg-[#9500FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            
+            <span className="font-mono text-xs text-[#666666] block mb-4 font-bold uppercase tracking-widest">
+              GOV_NODE // PARTNER
+            </span>
+
+            {/* Dark Verdun Logo Image */}
+            <a 
+              href="https://montreal.ca/verdun" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block max-w-xs md:max-w-sm mb-6 transition-transform duration-300 hover:scale-105"
+            >
+              <img 
+                src="/verdun_logo.svg" 
+                alt="Arrondissement de Verdun - Ville de Montréal"
+                className="w-full h-auto object-contain rounded-sm"
+              />
+            </a>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 z-10">
+              <a
+                href="https://montreal.ca/verdun"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#E1FD15] text-white hover:text-[#0B0C10] border border-[#E1FD15]/40 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
+              >
+                <Globe className="w-4 h-4" />
+                <span>montreal.ca/verdun</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+              </a>
+
+              <a
+                href="https://www.instagram.com/arr_verdun"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
+              >
+                <Instagram className="w-4 h-4 text-[#E1FD15]" />
+                <span>@arr_verdun</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+              </a>
             </div>
+
             {/* Tech bracket decorations */}
             <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#333537] m-3" />
             <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#333537] m-3" />
