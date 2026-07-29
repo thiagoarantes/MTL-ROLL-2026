@@ -1,20 +1,20 @@
 import React from 'react';
-import { Search, Flame, Shuffle, Activity as ActivityIcon, Sparkles, Sliders, ShieldAlert, Zap, Compass, Check, X, Calendar, MapPin, Bike, Brush, Milestone, Clock } from 'lucide-react';
+import { Search, Flame, Shuffle, Sparkles, Compass, X, Calendar, MapPin, Bike, Brush, Milestone, Clock } from 'lucide-react';
 import { Activity } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface ActivitiesViewProps {
   activities: Activity[];
-  registeredActivityIds: string[];
-  onOpenRegister: (activityId?: string) => void;
+  registeredActivityIds?: string[];
   lang: 'EN' | 'FR' | 'ES';
+  registerFormUrl?: string;
 }
 
 export default function ActivitiesView({
   activities,
-  registeredActivityIds,
-  onOpenRegister,
+  registeredActivityIds = [],
   lang,
+  registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
 }: ActivitiesViewProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedDifficulty, setSelectedDifficulty] = React.useState<'All' | 'Style' | 'Tech' | 'High Risk' | 'Prime Event'>('All');
@@ -441,21 +441,17 @@ export default function ActivitiesView({
                   </div>
 
                   {/* Register action trigger */}
-                  <button
+                  <a
+                    href={registerFormUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => {
-                      onOpenRegister(activeActivity.id);
                       setActiveDetailActivityId(null);
                     }}
-                    className={`w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer border-0 ${
-                      registeredActivityIds.includes(activeActivity.id)
-                        ? 'bg-[#333537] text-white'
-                        : 'bg-[#9500FF] text-white hover:bg-[#8000DB] hover:shadow-[0_0_15px_#9500FF]'
-                    }`}
+                    className="w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer border-0 inline-block text-center bg-[#9500FF] text-white hover:bg-[#8000DB] hover:shadow-[0_0_15px_#9500FF]"
                   >
-                    {registeredActivityIds.includes(activeActivity.id)
-                      ? t.registered
-                      : (lang === 'EN' ? 'Register for Session' : lang === 'FR' ? 'S\'inscrire à la session' : 'Registrarse en la sesión')}
-                  </button>
+                    {lang === 'EN' ? 'Register for Session' : lang === 'FR' ? 'S\'inscrire à la session' : 'Registrarse en la sesión'}
+                  </a>
                 </div>
               </motion.div>
             </div>

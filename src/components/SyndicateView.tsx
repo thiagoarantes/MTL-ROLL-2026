@@ -1,5 +1,3 @@
-import React from 'react';
-import { Shield, Users, Award, Plus, Check, MapPin, Sparkles, Building, Compass, AlertCircle, Heart, Info } from 'lucide-react';
 import { Organizer, Guest, Sponsor } from '../types';
 
 interface SyndicateViewProps {

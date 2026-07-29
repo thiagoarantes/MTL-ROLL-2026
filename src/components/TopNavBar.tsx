@@ -1,20 +1,20 @@
 import React from 'react';
-import { Globe, Menu, X, Calendar as CalendarIcon, Activity as ActivityIcon, Users, Award, Shield } from 'lucide-react';
+import { Globe, Menu, X } from 'lucide-react';
 
 interface TopNavBarProps {
   activeView: 'calendar' | 'activities' | 'syndicate';
   onViewChange: (view: 'calendar' | 'activities' | 'syndicate', sectionId?: string) => void;
-  onOpenRegister: () => void;
   lang: 'EN' | 'FR' | 'ES';
   onChangeLang: (lang: 'EN' | 'FR' | 'ES') => void;
+  registerFormUrl?: string;
 }
 
 export default function TopNavBar({
   activeView,
   onViewChange,
-  onOpenRegister,
   lang,
   onChangeLang,
+  registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
 }: TopNavBarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [desktopLangOpen, setDesktopLangOpen] = React.useState(false);
@@ -141,13 +141,15 @@ export default function TopNavBar({
           </div>
 
           {/* Register CTA */}
-          <button
-            onClick={onOpenRegister}
-            className="bg-[#E1FD15] text-[#0B0C10] px-6 py-2 rounded-none font-headline text-sm uppercase tracking-wider hover:shadow-[0_0_15px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer font-bold border-0"
+          <a
+            href={registerFormUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#E1FD15] text-[#0B0C10] px-6 py-2 rounded-none font-headline text-sm uppercase tracking-wider hover:shadow-[0_0_15px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer font-bold border-0 inline-block text-center"
             id="register-navbar-btn"
           >
             {t.register}
-          </button>
+          </a>
         </div>
       </div>
 
@@ -254,15 +256,15 @@ export default function TopNavBar({
               </button>
             );
           })}
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenRegister();
-            }}
-            className="w-full bg-[#E1FD15] text-[#0B0C10] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer"
+          <a
+            href={registerFormUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full bg-[#E1FD15] text-[#0B0C10] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer block"
           >
             {t.register}
-          </button>
+          </a>
         </div>
       )}
     </nav>

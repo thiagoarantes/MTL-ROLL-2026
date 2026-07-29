@@ -1,25 +1,29 @@
 import React from 'react';
-import { Sparkles, Calendar, Award, School, MapPin, ArrowRight, ShieldAlert, ArrowUpRight, Zap, Trophy, Flame } from 'lucide-react';
+import { School, MapPin, ArrowRight, ArrowUpRight, Trophy, Flame } from 'lucide-react';
 import { TIMETABLE_EVENTS } from '../data';
 import { Activity } from '../types';
 
 interface CalendarViewProps {
-  onOpenRegister: (activityId?: string) => void;
   onNavigateToActivities: () => void;
   activities: Activity[];
   lang: 'EN' | 'FR' | 'ES';
+  registerFormUrl?: string;
 }
 
 export default function CalendarView({
-  onOpenRegister,
   onNavigateToActivities,
   activities,
   lang,
+  registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
 }: CalendarViewProps) {
   const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3>(1);
   const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'competition' | 'workshop' | 'social'>('all');
 
   const scheduleContainerRef = React.useRef<HTMLDivElement>(null);
+
+  const handleOpenRegister = () => {
+    window.open(registerFormUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const handleScrollToSchedule = () => {
     scheduleContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -128,12 +132,15 @@ export default function CalendarView({
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full max-w-md">
-            <button 
-              onClick={() => onOpenRegister()}
-              className="bg-[#E1FD15] text-[#0B0C10] px-8 py-4 rounded-none font-headline font-black text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer border-0 w-full"
+            <a 
+              href={registerFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#E1FD15] text-[#0B0C10] px-8 py-4 rounded-none font-headline font-black text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer border-0 w-full inline-block text-center"
+              style={{ display: "flex", alignItems: "center", justifyContent: "center"}}
             >
               {t.secureSpot}
-            </button>
+            </a>
             <button 
               onClick={handleScrollToSchedule}
               className="bg-transparent border-2 border-[#9500FF] text-white px-8 py-4 rounded-none font-headline font-bold text-sm uppercase tracking-widest hover:bg-[#9500FF]/20 transition-all scale-95 active:scale-90 cursor-pointer w-full"
@@ -167,7 +174,7 @@ export default function CalendarView({
           
           {/* Main Large Bento Card: Mass Night Ride */}
           <div 
-            onClick={() => onOpenRegister('act-night-ride')}
+            onClick={handleOpenRegister}
             className="md:col-span-2 group relative bg-[#1F2833] p-8 min-h-[350px] border border-transparent hover:border-[#E1FD15] hover:shadow-[0_0_20px_rgba(225,253,21,0.15)] transition-all duration-500 overflow-hidden flex flex-col justify-end cursor-pointer"
           >
             {/* Background artwork */}
@@ -196,7 +203,7 @@ export default function CalendarView({
 
           {/* Vertical Card: Slalom */}
           <div 
-            onClick={() => onOpenRegister('act-slalom')}
+            onClick={handleOpenRegister}
             className="group relative bg-[#1F2833] p-8 min-h-[350px] border border-transparent hover:border-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.15)] transition-all duration-500 overflow-hidden flex flex-col justify-between text-left cursor-pointer"
           >
             <div className="w-full flex justify-between items-start relative z-10">
@@ -224,7 +231,7 @@ export default function CalendarView({
 
           {/* Mini Card: Workshops */}
           <div 
-            onClick={() => onOpenRegister('act-mural-ride')}
+            onClick={handleOpenRegister}
             className="group bg-[#1F2833] p-6 border-t-2 border-[#333537] hover:border-[#E1FD15] cursor-pointer transition-all duration-300 text-left flex flex-col justify-between min-h-[140px]"
           >
             <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight flex items-center gap-2">
@@ -238,7 +245,7 @@ export default function CalendarView({
 
           {/* Mini Card: Afterparty */}
           <div 
-            onClick={() => onOpenRegister('act-wizard')}
+            onClick={handleOpenRegister}
             className="group bg-[#1F2833] p-6 border-t-2 border-[#333537] hover:border-[#9500FF] cursor-pointer transition-all duration-300 text-left flex flex-col justify-between min-h-[140px]"
           >
             <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight flex items-center gap-2">
@@ -386,19 +393,14 @@ export default function CalendarView({
                           <span className="truncate max-w-[180px]">{event.location}</span>
                         </div>
                         
-                        <button
-                          onClick={() => {
-                            // Preselect corresponding activity if found, else default
-                            const matchedActivity = activities.find(a => 
-                              a.title.toLowerCase().includes(event.title.toLowerCase()) || 
-                              event.title.toLowerCase().includes(a.title.toLowerCase())
-                            );
-                            onOpenRegister(matchedActivity?.id);
-                          }}
-                          className="font-mono text-[9px] font-bold text-[#E1FD15] border border-[#E1FD15]/30 hover:border-[#E1FD15] hover:bg-[#E1FD15]/10 px-2.5 py-1 uppercase tracking-wider cursor-pointer"
+                        <a
+                          href={registerFormUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-[9px] font-bold text-[#E1FD15] border border-[#E1FD15]/30 hover:border-[#E1FD15] hover:bg-[#E1FD15]/10 px-2.5 py-1 uppercase tracking-wider cursor-pointer inline-block"
                         >
                           &gt; {t.vectorLabel}_LOCK
-                        </button>
+                        </a>
                       </div>
                     </div>
                   );

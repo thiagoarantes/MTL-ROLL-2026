@@ -4,41 +4,23 @@ import TopNavBar from './components/TopNavBar';
 import CalendarView from './components/CalendarView';
 import ActivitiesView from './components/ActivitiesView';
 import SyndicateView from './components/SyndicateView';
-import RegistrationModal from './components/RegistrationModal';
-import GoogleSheetsSyncConfig from './components/GoogleSheetsSyncConfig';
 
 import { INITIAL_ACTIVITIES, INITIAL_GUESTS, INITIAL_ORGANIZERS, INITIAL_SPONSORS } from './data';
-import { Activity, Guest, Sponsor, Registration } from './types';
+import { Sponsor } from './types';
+
+const REGISTER_FORM_URL = 'https://forms.gle/7A9spHxz3Qm8VyEfA';
 
 export default function App() {
   // Navigation & Localization
   const [activeView, setActiveView] = React.useState<'calendar' | 'activities' | 'syndicate'>('calendar');
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
-  // Registration Modal States
-  const [isRegisterOpen, setIsRegisterOpen] = React.useState(false);
-  const [preselectedActivityId, setPreselectedActivityId] = React.useState<string | undefined>(undefined);
-
   // Persistence States
-  const [registeredActivityIds, setRegisteredActivityIds] = React.useState<string[]>([]);
   const [sponsors, setSponsors] = React.useState<Sponsor[]>(INITIAL_SPONSORS);
-
-  // Google Sheets Integration State (Server-backed proxy)
-  const [isAdminMode, setIsAdminMode] = React.useState(false);
 
   // Load from localStorage on mount
   React.useEffect(() => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('admin') === 'true' || params.get('setup') === 'sheets') {
-        setIsAdminMode(true);
-      }
-
-      const savedReg = localStorage.getItem('mtl_roll_registered_ids');
-      if (savedReg) {
-        setRegisteredActivityIds(JSON.parse(savedReg));
-      }
-
       const savedSponsors = localStorage.getItem('mtl_roll_sponsors');
       if (savedSponsors) {
         setSponsors(JSON.parse(savedSponsors));
@@ -75,16 +57,6 @@ export default function App() {
     localStorage.setItem('mtl_roll_lang', newLang);
   };
 
-  const handleOpenRegister = (activityId?: string) => {
-    setPreselectedActivityId(activityId);
-    setIsRegisterOpen(true);
-  };
-
-  const handleCloseRegister = () => {
-    setIsRegisterOpen(false);
-    setPreselectedActivityId(undefined);
-  };
-
   // Lock custom sponsor slot
   const handleAddSponsor = (newSponsor: Sponsor) => {
     const updatedSponsors = sponsors.map(s => 
@@ -92,35 +64,6 @@ export default function App() {
     );
     setSponsors(updatedSponsors);
     localStorage.setItem('mtl_roll_sponsors', JSON.stringify(updatedSponsors));
-  };
-
-  // Successful registration callback
-  const handleRegisterSuccess = (registration: Registration) => {
-    // Sync registered activity IDs locally
-    const newlySelected = registration.selectedActivityIds;
-    const combinedIds = Array.from(new Set([...registeredActivityIds, ...newlySelected]));
-    setRegisteredActivityIds(combinedIds);
-    localStorage.setItem('mtl_roll_registered_ids', JSON.stringify(combinedIds));
-
-    // Proxy the append request to Google Sheets via server-side API!
-    fetch('/api/sync-registration', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ registration }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          console.log('Secure server proxy successfully appended registration to Admin Sheet!');
-        } else {
-          console.warn('Proxy Sheets append did not succeed:', data.error);
-        }
-      })
-      .catch((err) => {
-        console.error('Error in proxy Sheets sync:', err);
-      });
   };
 
   return (
@@ -134,28 +77,27 @@ export default function App() {
       <TopNavBar
         activeView={activeView}
         onViewChange={handleViewChange}
-        onOpenRegister={() => handleOpenRegister()}
         lang={lang}
         onChangeLang={handleChangeLang}
+        registerFormUrl={REGISTER_FORM_URL}
       />
 
       {/* Primary Context Target */}
       <main className="flex-grow">
         {activeView === 'calendar' && (
           <CalendarView
-            onOpenRegister={handleOpenRegister}
             onNavigateToActivities={() => handleViewChange('activities')}
             activities={INITIAL_ACTIVITIES}
             lang={lang}
+            registerFormUrl={REGISTER_FORM_URL}
           />
         )}
 
         {activeView === 'activities' && (
           <ActivitiesView
             activities={INITIAL_ACTIVITIES}
-            registeredActivityIds={registeredActivityIds}
-            onOpenRegister={handleOpenRegister}
             lang={lang}
+            registerFormUrl={REGISTER_FORM_URL}
           />
         )}
 
@@ -169,13 +111,6 @@ export default function App() {
           />
         )}
       </main>
-
-      {/* Google Sheets Sync Integration Panel */}
-      {isAdminMode && (
-        <div className="max-w-7xl w-full mx-auto px-6 md:px-16 mb-12">
-          <GoogleSheetsSyncConfig lang={lang} />
-        </div>
-      )}
 
       {/* Immersive Footer matching screenshots */}
       <footer className="bg-[#111415] py-12 border-t-2 border-[#9500FF]/50 w-full mt-auto">
@@ -219,16 +154,6 @@ export default function App() {
 
         </div>
       </footer>
-
-      {/* Grid Synced Registration Overlay */}
-      <RegistrationModal
-        isOpen={isRegisterOpen}
-        onClose={handleCloseRegister}
-        activities={INITIAL_ACTIVITIES}
-        preselectedActivityId={preselectedActivityId}
-        onRegisterSuccess={handleRegisterSuccess}
-        lang={lang}
-      />
 
     </div>
   );
