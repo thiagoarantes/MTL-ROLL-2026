@@ -5,7 +5,7 @@ import CalendarView from './components/CalendarView';
 import ActivitiesView from './components/ActivitiesView';
 import SyndicateView from './components/SyndicateView';
 
-import { INITIAL_ACTIVITIES, INITIAL_GUESTS, INITIAL_ORGANIZERS, INITIAL_SPONSORS } from './data';
+import { ACTIVITIES, GUESTS, ORGANIZERS, SPONSORS } from './data';
 import { Sponsor } from './types';
 
 const REGISTER_FORM_URL = 'https://forms.gle/7A9spHxz3Qm8VyEfA';
@@ -16,7 +16,7 @@ export default function App() {
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
   // Persistence States
-  const [sponsors, setSponsors] = React.useState<Sponsor[]>(INITIAL_SPONSORS);
+  const [sponsors, setSponsors] = React.useState<Sponsor[]>(SPONSORS);
 
   // Load from localStorage on mount
   React.useEffect(() => {
@@ -25,8 +25,9 @@ export default function App() {
       if (savedSponsors) {
         setSponsors(JSON.parse(savedSponsors));
       } else {
-        setSponsors(INITIAL_SPONSORS);
+        setSponsors(SPONSORS);
       }
+
 
       const savedLang = localStorage.getItem('mtl_roll_lang');
       if (savedLang === 'EN' || savedLang === 'FR' || savedLang === 'ES') {
@@ -87,7 +88,7 @@ export default function App() {
         {activeView === 'calendar' && (
           <CalendarView
             onNavigateToActivities={() => handleViewChange('activities')}
-            activities={INITIAL_ACTIVITIES}
+            activities={ACTIVITIES}
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
           />
@@ -95,7 +96,7 @@ export default function App() {
 
         {activeView === 'activities' && (
           <ActivitiesView
-            activities={INITIAL_ACTIVITIES}
+            activities={ACTIVITIES}
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
           />
@@ -103,8 +104,8 @@ export default function App() {
 
         {activeView === 'syndicate' && (
           <SyndicateView
-            organizers={INITIAL_ORGANIZERS}
-            guests={INITIAL_GUESTS}
+            organizers={ORGANIZERS}
+            guests={GUESTS}
             sponsors={sponsors}
             onAddSponsor={handleAddSponsor}
             lang={lang}

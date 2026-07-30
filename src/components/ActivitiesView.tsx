@@ -386,20 +386,6 @@ export default function ActivitiesView({
                         </p>
                       </div>
                     </div>
-
-                    {/* Spots Remaining Info */}
-                    {activeActivity.spotsLeft !== undefined && (
-                      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#E1FD15]/5 border border-[#E1FD15]/20 font-mono text-[10px] text-[#E1FD15]">
-                        <Sparkles className="w-4 h-4 shrink-0 animate-pulse" />
-                        <span>
-                          {lang === 'EN'
-                            ? `SECURE SYSTEM: ${activeActivity.spotsLeft} places remaining for this active vector.`
-                            : lang === 'FR'
-                            ? `SYSTÈME SÉCURISÉ : ${activeActivity.spotsLeft} places restantes pour cette session.`
-                            : `SISTEMA SEGURO: ${activeActivity.spotsLeft} cupos restantes para esta sesión activa.`}
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </div>
 

@@ -1,6 +1,6 @@
 import { Activity, Guest, Organizer, Sponsor, TimetableEvent } from './types';
 
-export const INITIAL_ACTIVITIES: Activity[] = [
+export const ACTIVITIES: Activity[] = [
   {
     id: 'act-night-ride',
     title: 'Night Ride',
@@ -13,7 +13,6 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Friday & Saturday, Sept 11 & 12',
     time: '20:00 - 23:00',
     location: 'Starts at Verdun Grid Hub',
-    spotsLeft: 342,
   },
   {
     id: 'act-mural-ride',
@@ -27,7 +26,6 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday, Sept 12',
     time: '14:00 - 17:00',
     location: 'Starts at Saint-Laurent Metro',
-    spotsLeft: 84,
   },
   {
     id: 'act-long-distance',
@@ -41,7 +39,6 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Sunday, Sept 13',
     time: '09:00 - 12:00',
     location: 'Starts at Lachine Canal Grid',
-    spotsLeft: 45,
   },
   {
     id: 'act-slalom',
@@ -55,7 +52,6 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday, Sept 12',
     time: '11:00 - 13:00',
     location: 'Verdun Arena Court',
-    spotsLeft: 32,
   },
   {
     id: 'act-jump',
@@ -69,7 +65,6 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Sunday, Sept 13',
     time: '15:00 - 18:00',
     location: 'Verdun Outdoor Pump Circuit',
-    spotsLeft: 20,
   },
   {
     id: 'act-wizard',
@@ -83,11 +78,10 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday, Sept 12',
     time: '16:30 - 18:00',
     location: 'Verdun Waterfront Plaza',
-    spotsLeft: 55,
   }
 ];
 
-export const INITIAL_GUESTS: Guest[] = [
+export const GUESTS: Guest[] = [
   {
     id: 'guest-skatespace',
     name: 'Skatespace',
@@ -118,7 +112,7 @@ export const INITIAL_GUESTS: Guest[] = [
   }
 ];
 
-export const INITIAL_ORGANIZERS: Organizer[] = [
+export const ORGANIZERS: Organizer[] = [
   {
     id: 'org-rolling-tribes',
     name: 'Rolling Tribes',
@@ -129,27 +123,13 @@ export const INITIAL_ORGANIZERS: Organizer[] = [
   }
 ];
 
-export const INITIAL_SPONSORS: Sponsor[] = [
+export const SPONSORS: Sponsor[] = [
   {
     id: 'spon-verdun',
     name: 'Arrondissement de Verdun',
     role: 'GOV_NODE',
     slotIndex: 1,
     isOpen: false,
-  },
-  {
-    id: 'spon-open-2',
-    name: 'SLOT_02_OPEN',
-    role: 'BRAND_NODE',
-    slotIndex: 2,
-    isOpen: true,
-  },
-  {
-    id: 'spon-open-3',
-    name: 'SLOT_03_OPEN',
-    role: 'TECH_NODE',
-    slotIndex: 3,
-    isOpen: true,
   }
 ];
 

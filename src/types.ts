@@ -10,7 +10,6 @@ export interface Activity {
   date: string;
   time: string;
   location: string;
-  spotsLeft: number;
 }
 
 export interface Guest {
