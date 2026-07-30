@@ -90,11 +90,11 @@ export const GUESTS: Guest[] = [
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPVLMFbiWFwRWCmoOkO-CWbwlo2wKZi4pl3m1ywK4LhHsmzR3ZGBzCDMokjFFZ-YxKHCvOTlOrZddDAbOFLdmQcxaareKgPkiSYWElUIMhGW9aOXIAVIzDpfIKPQtoMMcD_JqQjK9DShJNhI5-lAb-jvXxdqKAJDgUBQzZ4GuOu3p0sT2jE2qAyP0V8nm_TtFULa-_qjg33_yRstpeb05YTGg15qZ94Bnf00N20T6s_189gGe65D4i',
   },
   {
-    id: 'guest-emile',
-    name: 'Émile',
-    role: 'Freeride Specialist',
+    id: 'guest-karen',
+    name: 'Karen Estrada',
+    role: 'Slalom Specialist',
     tag: 'GUEST_PRO',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDGtm6jK2gS9pavNm6jz5SH78XNkpBRlByAo36kawzTStCMCJWYmZDHSmFxJA65lvTw8t7zt04GLIQyw1RzK2wuO05f9ZUaAlWtvbO0aBn3eJYWya9H6nsp3DxS7hNByQEjXU3KTQwIMIXkc0poEBPheC_ZLEE9T_YNzd8qje1-WGGFqKJmuIpyaCUb_hfOnjQh6gB6tvT__tk1NoJ2zBkZsKku1Z9MZ1hdAsg0SCfd8F8nraYwsNCR',
+    image: '/guests/karen.jpg',
   },
   {
     id: 'guest-vrl',

@@ -1,4 +1,5 @@
-import { Globe, Instagram, ExternalLink } from 'lucide-react';
+import React from 'react';
+import { Globe, Instagram, ExternalLink, X, Maximize2 } from 'lucide-react';
 import { Organizer, Guest, Sponsor } from '../types';
 
 interface SyndicateViewProps {
@@ -17,6 +18,17 @@ export default function SyndicateView({
   lang,
 }: SyndicateViewProps) {
   const activeOrg = organizers[0];
+  const [selectedGuest, setSelectedGuest] = React.useState<Guest | null>(null);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedGuest(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const t = {
     sysOverlay: lang === 'EN' ? 'SYS.DATA_OVERLAY // 04' : lang === 'FR' ? 'SYS.DATA_OVERLAY // 04' : 'SYS.DATA_OVERLAY // 04',
@@ -130,10 +142,11 @@ export default function SyndicateView({
           {guests.map((g) => (
             <div 
               key={g.id} 
-              className="bg-[#1F2833] border-t-2 border-[#9500FF] p-6 flex flex-col justify-between group hover:translate-y-[-8px] transition-all duration-300 relative"
+              onClick={() => setSelectedGuest(g)}
+              className="bg-[#1F2833] border-t-2 border-[#9500FF] p-6 flex flex-col justify-between group hover:translate-y-[-8px] transition-all duration-300 relative cursor-pointer"
             >
               {g.isUserAdded && (
-                <span className="absolute top-2 right-2 font-mono text-[8px] bg-[#E1FD15] text-[#0B0C10] px-1 uppercase font-bold animate-pulse">
+                <span className="absolute top-2 right-2 font-mono text-[8px] bg-[#E1FD15] text-[#0B0C10] px-1 uppercase font-bold animate-pulse z-10">
                   User Profile
                 </span>
               )}
@@ -141,23 +154,92 @@ export default function SyndicateView({
                 <img 
                   src={g.image} 
                   alt={g.name}
-                  className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0 group-hover:contrast-125"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0 group-hover:contrast-125"
                 />
-                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#0B0C10] to-transparent" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="px-3 py-1.5 bg-[#9500FF] text-white font-mono text-[10px] font-bold uppercase flex items-center gap-1.5 shadow-lg">
+                    <Maximize2 className="w-3 h-3" />
+                    <span>View Profile</span>
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#0B0C10] to-transparent pointer-events-none" />
               </div>
 
               <div>
                 <span className="font-mono text-[10px] text-[#9500FF] block mb-2 font-bold uppercase">{g.tag}</span>
-                <h3 className="font-headline text-xl text-white mb-1 uppercase font-black tracking-tight truncate">{g.name}</h3>
+                <h3 className="font-headline text-xl text-white mb-1 uppercase font-black tracking-tight truncate group-hover:text-[#E1FD15] transition-colors">{g.name}</h3>
                 <p className="font-sans text-xs text-[#666666] leading-relaxed truncate">{g.role}</p>
               </div>
             </div>
           ))}
 
-
-
         </div>
       </section>
+
+      {/* Guest Full View Dialog Modal */}
+      {selectedGuest && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          onClick={() => setSelectedGuest(null)}
+        >
+          <div 
+            className="relative w-full max-w-2xl bg-[#0B0C10] border-2 border-[#9500FF] p-6 sm:p-8 shadow-[0_0_30px_rgba(149,0,255,0.3)] my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header / Close Button */}
+            <div className="flex items-center justify-between border-b border-[#333537] pb-4 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-[#E1FD15] font-bold uppercase tracking-widest">
+                  GUEST_PROFILE // {selectedGuest.tag}
+                </span>
+              </div>
+              <button
+                onClick={() => setSelectedGuest(null)}
+                className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors"
+                aria-label="Close dialog"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Image Preview Container - Full display without cut-off */}
+            <div className="w-full bg-black border border-[#333537] mb-6 flex items-center justify-center max-h-[60vh] overflow-hidden p-2 relative group">
+              <img 
+                src={selectedGuest.image} 
+                alt={selectedGuest.name} 
+                className="max-w-full max-h-[55vh] object-contain rounded-sm"
+              />
+            </div>
+
+            {/* Guest Name & Details */}
+            <div className="text-left space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h2 className="font-headline text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">
+                  {selectedGuest.name}
+                </h2>
+                <span className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#9500FF] border border-[#9500FF]/40 font-bold uppercase">
+                  {selectedGuest.tag}
+                </span>
+              </div>
+
+              <div className="pt-2 border-t border-[#1F2833]">
+                <span className="font-mono text-[10px] text-[#666666] block mb-1 uppercase font-semibold">
+                  SPECIALIZATION / ROLE
+                </span>
+                <p className="font-sans text-sm sm:text-base text-[#c7c9ac] leading-relaxed">
+                  {selectedGuest.role}
+                </p>
+              </div>
+            </div>
+
+            {/* Corner Tech Accents */}
+            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#E1FD15] m-2" />
+            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#E1FD15] m-2" />
+            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#E1FD15] m-2" />
+            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#E1FD15] m-2" />
+          </div>
+        </div>
+      )}
 
       {/* Sponsors Section (Asymmetric Grid) */}
       <section id="sponsors-anchor">
