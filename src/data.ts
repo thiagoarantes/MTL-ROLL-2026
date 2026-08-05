@@ -83,18 +83,46 @@ export const ACTIVITIES: Activity[] = [
 
 export const GUESTS: Guest[] = [
   {
-    id: 'guest-saul',
-    name: 'Saul Gomez Lopez',
-    tags: ['SLIDE'],
-    image: '/guests/saul.jpg',
-    instagramUrl: 'https://www.instagram.com/saul_gomez_lopez/',
+    id: 'guest-dave',
+    name: 'Seb',
+    tags: ['PUMPTRACK'],
+    image: '/guests/dave.jpg',
+    instagramUrl: 'https://www.instagram.com/85pereira/',
+  },
+  {
+    id: 'guest-melina',
+    name: 'Melina',
+    tags: ['PUMPTRACK'],
+    image: '/guests/melina.jpg',
+    instagramUrl: 'https://www.instagram.com/_melina_rc/',
+  },
+  {
+    id: 'guest-seb',
+    name: 'Seb',
+    tags: ['JUMP', 'WIZARD', 'SPEAKER'],
+    image: '/guests/seb.jpg',
+    instagramUrl: 'https://www.instagram.com/sebl988/',
   },
   {
     id: 'guest-karen',
-    name: 'Karen Estrada',
+    name: 'Karen',
     tags: ['SLALOM'],
     image: '/guests/karen.jpg',
     instagramUrl: 'https://www.instagram.com/karenest9/',
+  },
+  {
+    id: 'guest-kaia',
+    name: 'Kaia',
+    tags: ['SLALOM'],
+    image: '/guests/kaia.png',
+    instagramUrl: 'https://www.instagram.com/kaia_baird_/',
+  },
+  {
+    id: 'guest-saul',
+    name: 'Saul',
+    tags: ['SLIDE'],
+    image: '/guests/saul.jpg',
+    instagramUrl: 'https://www.instagram.com/saul_gomez_lopez/',
   },
   {
     id: 'guest-xav',
