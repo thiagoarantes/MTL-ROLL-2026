@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Instagram, ExternalLink, X, Maximize2 } from 'lucide-react';
+import { Globe, Instagram, ExternalLink, X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Organizer, Guest, Sponsor } from '../types';
 
 interface SyndicateViewProps {
@@ -20,15 +20,44 @@ export default function SyndicateView({
   const activeOrg = organizers[0];
   const [selectedGuest, setSelectedGuest] = React.useState<Guest | null>(null);
 
+  const selectedIndex = selectedGuest ? guests.findIndex((g) => g.id === selectedGuest.id) : -1;
+
+  const handlePrevGuest = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (guests.length === 0 || selectedIndex === -1) return;
+    const prevIndex = (selectedIndex - 1 + guests.length) % guests.length;
+    setSelectedGuest(guests[prevIndex]);
+  };
+
+  const handleNextGuest = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (guests.length === 0 || selectedIndex === -1) return;
+    const nextIndex = (selectedIndex + 1) % guests.length;
+    setSelectedGuest(guests[nextIndex]);
+  };
+
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedGuest) return;
       if (e.key === 'Escape') {
         setSelectedGuest(null);
+      } else if (e.key === 'ArrowLeft') {
+        const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
+        if (currIdx !== -1 && guests.length > 0) {
+          const prevIdx = (currIdx - 1 + guests.length) % guests.length;
+          setSelectedGuest(guests[prevIdx]);
+        }
+      } else if (e.key === 'ArrowRight') {
+        const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
+        if (currIdx !== -1 && guests.length > 0) {
+          const nextIdx = (currIdx + 1) % guests.length;
+          setSelectedGuest(guests[nextIdx]);
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [selectedGuest, guests]);
 
   const t = {
     sysOverlay: lang === 'EN' ? 'SYS.DATA_OVERLAY // 04' : lang === 'FR' ? 'SYS.DATA_OVERLAY // 04' : 'SYS.DATA_OVERLAY // 04',
@@ -191,29 +220,73 @@ export default function SyndicateView({
             className="relative w-full max-w-2xl bg-[#0B0C10] border-2 border-[#9500FF] p-6 sm:p-8 shadow-[0_0_30px_rgba(149,0,255,0.3)] my-8"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header / Close Button */}
+            {/* Header / Close & Carousel Controls */}
             <div className="flex items-center justify-between border-b border-[#333537] pb-4 mb-6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs text-[#E1FD15] font-bold uppercase tracking-widest">
-                  GUEST_PROFILE // {selectedGuest.tags.join(' / ')}
+                  GUEST [{selectedIndex + 1}/{guests.length}] // {selectedGuest.tags.join(' / ')}
                 </span>
               </div>
-              <button
-                onClick={() => setSelectedGuest(null)}
-                className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors"
-                aria-label="Close dialog"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {/* Carousel Prev/Next Quick Header Controls */}
+                <div className="flex items-center gap-1 bg-[#1F2833] border border-[#333537] p-0.5 mr-2">
+                  <button
+                    onClick={handlePrevGuest}
+                    className="p-1 hover:bg-[#9500FF] text-white transition-colors"
+                    title="Previous Guest (Left Arrow)"
+                    aria-label="Previous guest"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="font-mono text-[10px] text-[#666666] px-1 font-bold">
+                    {selectedIndex + 1}/{guests.length}
+                  </span>
+                  <button
+                    onClick={handleNextGuest}
+                    className="p-1 hover:bg-[#9500FF] text-white transition-colors"
+                    title="Next Guest (Right Arrow)"
+                    aria-label="Next guest"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => setSelectedGuest(null)}
+                  className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors"
+                  aria-label="Close dialog"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
-            {/* Image Preview Container - Full display without cut-off */}
+            {/* Image Preview Container - Full display with side navigation arrows */}
             <div className="w-full bg-black border border-[#333537] mb-6 flex items-center justify-center max-h-[60vh] overflow-hidden p-2 relative group">
+              {/* Prev Overlay Button */}
+              <button
+                onClick={handlePrevGuest}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 bg-[#0B0C10]/80 hover:bg-[#9500FF] text-white border border-[#9500FF]/50 transition-all duration-200 shadow-lg group/btn backdrop-blur-sm"
+                aria-label="Previous guest image"
+              >
+                <ChevronLeft className="w-6 h-6 text-[#E1FD15] group-hover/btn:text-white transition-colors" />
+              </button>
+
               <img 
+                key={selectedGuest.id}
                 src={selectedGuest.image} 
                 alt={selectedGuest.name} 
-                className="max-w-full max-h-[55vh] object-contain rounded-sm"
+                className="max-w-full max-h-[55vh] object-contain rounded-sm transition-opacity duration-300"
               />
+
+              {/* Next Overlay Button */}
+              <button
+                onClick={handleNextGuest}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 bg-[#0B0C10]/80 hover:bg-[#9500FF] text-white border border-[#9500FF]/50 transition-all duration-200 shadow-lg group/btn backdrop-blur-sm"
+                aria-label="Next guest image"
+              >
+                <ChevronRight className="w-6 h-6 text-[#E1FD15] group-hover/btn:text-white transition-colors" />
+              </button>
             </div>
 
             {/* Guest Name & Details */}
@@ -245,6 +318,29 @@ export default function SyndicateView({
                   </a>
                 </div>
               )}
+            </div>
+
+            {/* Bottom Footer Controls & Keyboard hint */}
+            <div className="mt-6 pt-4 border-t border-[#1F2833] flex items-center justify-between text-left">
+              <button
+                onClick={handlePrevGuest}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white font-mono text-xs uppercase font-bold transition-colors border border-[#333537]"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Prev</span>
+              </button>
+
+              <span className="font-mono text-[10px] text-[#666666] uppercase">
+                Use <kbd className="px-1 py-0.5 bg-[#1F2833] border border-[#333537] text-[#E1FD15]">←</kbd> <kbd className="px-1 py-0.5 bg-[#1F2833] border border-[#333537] text-[#E1FD15]">→</kbd> keys to navigate
+              </span>
+
+              <button
+                onClick={handleNextGuest}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white font-mono text-xs uppercase font-bold transition-colors border border-[#333537]"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
 
             {/* Corner Tech Accents */}

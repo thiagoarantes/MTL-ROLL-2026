@@ -84,7 +84,7 @@ export const ACTIVITIES: Activity[] = [
 export const GUESTS: Guest[] = [
   {
     id: 'guest-dave',
-    name: 'Seb',
+    name: 'Dave',
     tags: ['PUMPTRACK'],
     image: '/guests/dave.jpg',
     instagramUrl: 'https://www.instagram.com/85pereira/',
