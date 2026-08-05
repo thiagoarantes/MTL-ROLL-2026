@@ -83,32 +83,32 @@ export const ACTIVITIES: Activity[] = [
 
 export const GUESTS: Guest[] = [
   {
-    id: 'guest-skatespace',
-    name: 'Skatespace',
-    role: 'Digital Hub Innovators',
-    tag: 'VIP_ACCESS',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPVLMFbiWFwRWCmoOkO-CWbwlo2wKZi4pl3m1ywK4LhHsmzR3ZGBzCDMokjFFZ-YxKHCvOTlOrZddDAbOFLdmQcxaareKgPkiSYWElUIMhGW9aOXIAVIzDpfIKPQtoMMcD_JqQjK9DShJNhI5-lAb-jvXxdqKAJDgUBQzZ4GuOu3p0sT2jE2qAyP0V8nm_TtFULa-_qjg33_yRstpeb05YTGg15qZ94Bnf00N20T6s_189gGe65D4i',
+    id: 'guest-saul',
+    name: 'Saul Gomez Lopez',
+    tag: 'SLIDE',
+    image: '/guests/saul.jpg',
+    instagramUrl: 'https://www.instagram.com/saul_gomez_lopez/',
   },
   {
     id: 'guest-karen',
     name: 'Karen Estrada',
-    role: 'Slalom Specialist',
-    tag: 'GUEST_PRO',
+    tag: 'SLALOM',
     image: '/guests/karen.jpg',
+    instagramUrl: 'https://www.instagram.com/karenest9/',
   },
   {
     id: 'guest-vrl',
     name: 'VRL',
-    role: 'Tech Apparel',
     tag: 'SYNDICATE',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD-_Ict4THRYVHUB8CLRsQjgip0_D30ZyoyF3yuGBHdka_2AoHhMmS9U6mAhb27nWMMs3BBRNqfKVwy6kfq8sz8PmtLkrxyWtaPp4TSQBSk7UMiNpERlxI8-680gry-LjbhUsgZUsqRaHxzTfrRQ6-yh7DOA76n1FMmzJeTY_J-CRZF08Ei8v6bewiMx3ZrF2rSd7FLtZ9MoNHkbLYjc_bqWQis-tSHZlQWJyvXG7ejVkQfcMDwSu2J',
+    instagramUrl: 'https://www.instagram.com/vrl.skate/',
   },
   {
     id: 'guest-pumptrack',
     name: 'Pumptrack Team',
-    role: 'Modular Terrain Ops',
     tag: 'CREW_LINK',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcz5koXIDour-9seud2hMpfMyL-_igvkj8j03j20Zl82np7JbR2LTnhd6xlbVKwvbU9LsACykPpKen2VtNbc5FFrl72JyV5zULmrPzmprHSN6Xz5ZsIqK2Ru3HsHTdGaxGLUb8tsP56qQHAuvq9_jEyWiVxo4BIY6rwuwUL2WbKOn3x-9b94cTQj63E3Al0yVXhOMHS3d0ujSQfuGQf_FhLbd1NYV5vjJMu7TSfeZwWXMuIYwWhj8T',
+    instagramUrl: 'https://www.instagram.com/pumptrackmontreal/',
   }
 ];
 

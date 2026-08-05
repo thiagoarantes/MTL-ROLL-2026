@@ -167,8 +167,7 @@ export default function SyndicateView({
 
               <div>
                 <span className="font-mono text-[10px] text-[#9500FF] block mb-2 font-bold uppercase">{g.tag}</span>
-                <h3 className="font-headline text-xl text-white mb-1 uppercase font-black tracking-tight truncate group-hover:text-[#E1FD15] transition-colors">{g.name}</h3>
-                <p className="font-sans text-xs text-[#666666] leading-relaxed truncate">{g.role}</p>
+                <h3 className="font-headline text-xl text-white uppercase font-black tracking-tight truncate group-hover:text-[#E1FD15] transition-colors">{g.name}</h3>
               </div>
             </div>
           ))}
@@ -212,7 +211,7 @@ export default function SyndicateView({
             </div>
 
             {/* Guest Name & Details */}
-            <div className="text-left space-y-3">
+            <div className="text-left space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h2 className="font-headline text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">
                   {selectedGuest.name}
@@ -222,14 +221,20 @@ export default function SyndicateView({
                 </span>
               </div>
 
-              <div className="pt-2 border-t border-[#1F2833]">
-                <span className="font-mono text-[10px] text-[#666666] block mb-1 uppercase font-semibold">
-                  SPECIALIZATION / ROLE
-                </span>
-                <p className="font-sans text-sm sm:text-base text-[#c7c9ac] leading-relaxed">
-                  {selectedGuest.role}
-                </p>
-              </div>
+              {selectedGuest.instagramUrl && (
+                <div className="pt-3 border-t border-[#1F2833]">
+                  <a
+                    href={selectedGuest.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200 group"
+                  >
+                    <Instagram className="w-4 h-4 text-[#E1FD15] group-hover:text-white transition-colors" />
+                    <span>Instagram Profile</span>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Corner Tech Accents */}

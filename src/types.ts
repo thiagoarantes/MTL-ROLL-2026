@@ -15,9 +15,9 @@ export interface Activity {
 export interface Guest {
   id: string;
   name: string;
-  role: string;
   tag: string; // e.g. VIP_ACCESS, GUEST_PRO, SYNDICATE, CREW_LINK
   image: string;
+  instagramUrl?: string;
   isUserAdded?: boolean;
 }
 
