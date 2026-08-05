@@ -15,7 +15,7 @@ export interface Activity {
 export interface Guest {
   id: string;
   name: string;
-  tag: string; // e.g. VIP_ACCESS, GUEST_PRO, SYNDICATE, CREW_LINK
+  tags: string[]; // e.g. ['VIP_ACCESS', 'SLIDE', 'SLALOM', 'CREW_LINK']
   image: string;
   instagramUrl?: string;
   isUserAdded?: boolean;

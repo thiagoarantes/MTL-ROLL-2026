@@ -166,7 +166,13 @@ export default function SyndicateView({
               </div>
 
               <div>
-                <span className="font-mono text-[10px] text-[#9500FF] block mb-2 font-bold uppercase">{g.tag}</span>
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  {g.tags.map((tag) => (
+                    <span key={tag} className="font-mono text-[10px] text-[#9500FF] font-bold uppercase">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
                 <h3 className="font-headline text-xl text-white uppercase font-black tracking-tight truncate group-hover:text-[#E1FD15] transition-colors">{g.name}</h3>
               </div>
             </div>
@@ -189,7 +195,7 @@ export default function SyndicateView({
             <div className="flex items-center justify-between border-b border-[#333537] pb-4 mb-6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs text-[#E1FD15] font-bold uppercase tracking-widest">
-                  GUEST_PROFILE // {selectedGuest.tag}
+                  GUEST_PROFILE // {selectedGuest.tags.join(' / ')}
                 </span>
               </div>
               <button
@@ -216,9 +222,13 @@ export default function SyndicateView({
                 <h2 className="font-headline text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">
                   {selectedGuest.name}
                 </h2>
-                <span className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#9500FF] border border-[#9500FF]/40 font-bold uppercase">
-                  {selectedGuest.tag}
-                </span>
+                <div className="flex flex-wrap gap-2">
+                  {selectedGuest.tags.map((tag) => (
+                    <span key={tag} className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#9500FF] border border-[#9500FF]/40 font-bold uppercase">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {selectedGuest.instagramUrl && (
