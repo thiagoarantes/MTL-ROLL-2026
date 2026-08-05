@@ -172,7 +172,7 @@ export default function SyndicateView({
             <div 
               key={g.id} 
               onClick={() => setSelectedGuest(g)}
-              className="bg-[#1F2833] border-t-2 border-[#9500FF] p-6 flex flex-col justify-between group hover:translate-y-[-8px] transition-all duration-300 relative cursor-pointer"
+              className="bg-[#1F2833] border-t-2 border-[#9500FF] hover:border-[#E1FD15] p-6 flex flex-col justify-between group hover:translate-y-[-8px] transition-all duration-300 relative cursor-pointer"
             >
               {g.isUserAdded && (
                 <span className="absolute top-2 right-2 font-mono text-[8px] bg-[#E1FD15] text-[#0B0C10] px-1 uppercase font-bold animate-pulse z-10">
@@ -261,32 +261,14 @@ export default function SyndicateView({
               </div>
             </div>
 
-            {/* Image Preview Container - Full display with side navigation arrows */}
-            <div className="w-full bg-black border border-[#333537] mb-6 flex items-center justify-center max-h-[60vh] overflow-hidden p-2 relative group">
-              {/* Prev Overlay Button */}
-              <button
-                onClick={handlePrevGuest}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 bg-[#0B0C10]/80 hover:bg-[#9500FF] text-white border border-[#9500FF]/50 transition-all duration-200 shadow-lg group/btn backdrop-blur-sm"
-                aria-label="Previous guest image"
-              >
-                <ChevronLeft className="w-6 h-6 text-[#E1FD15] group-hover/btn:text-white transition-colors" />
-              </button>
-
+            {/* Image Preview Container - Full display */}
+            <div className="w-full bg-black border border-[#333537] mb-6 flex items-center justify-center max-h-[60vh] overflow-hidden p-2 relative">
               <img 
                 key={selectedGuest.id}
                 src={selectedGuest.image} 
                 alt={selectedGuest.name} 
                 className="max-w-full max-h-[55vh] object-contain rounded-sm transition-opacity duration-300"
               />
-
-              {/* Next Overlay Button */}
-              <button
-                onClick={handleNextGuest}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 bg-[#0B0C10]/80 hover:bg-[#9500FF] text-white border border-[#9500FF]/50 transition-all duration-200 shadow-lg group/btn backdrop-blur-sm"
-                aria-label="Next guest image"
-              >
-                <ChevronRight className="w-6 h-6 text-[#E1FD15] group-hover/btn:text-white transition-colors" />
-              </button>
             </div>
 
             {/* Guest Name & Details */}
@@ -318,29 +300,6 @@ export default function SyndicateView({
                   </a>
                 </div>
               )}
-            </div>
-
-            {/* Bottom Footer Controls & Keyboard hint */}
-            <div className="mt-6 pt-4 border-t border-[#1F2833] flex items-center justify-between text-left">
-              <button
-                onClick={handlePrevGuest}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white font-mono text-xs uppercase font-bold transition-colors border border-[#333537]"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Prev</span>
-              </button>
-
-              <span className="font-mono text-[10px] text-[#666666] uppercase">
-                Use <kbd className="px-1 py-0.5 bg-[#1F2833] border border-[#333537] text-[#E1FD15]">←</kbd> <kbd className="px-1 py-0.5 bg-[#1F2833] border border-[#333537] text-[#E1FD15]">→</kbd> keys to navigate
-              </span>
-
-              <button
-                onClick={handleNextGuest}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white font-mono text-xs uppercase font-bold transition-colors border border-[#333537]"
-              >
-                <span>Next</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
             </div>
 
             {/* Corner Tech Accents */}
