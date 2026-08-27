@@ -59,5 +59,11 @@ export interface TimetableEvent {
   location: string;
   type: 'ride' | 'competition' | 'workshop' | 'social';
   day: 1 | 2 | 3; // Sept 11, 12, 13
+  date?: string;
   description: string;
+  longDescription?: string;
+  image?: string;
+  iconName?: string;
+  difficulty?: 'Style' | 'Tech' | 'High Risk' | 'All Levels';
+  category?: string;
 }

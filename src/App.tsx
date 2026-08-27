@@ -2,17 +2,16 @@ import React from 'react';
 import { Instagram, Facebook, Globe } from 'lucide-react';
 import TopNavBar from './components/TopNavBar';
 import CalendarView from './components/CalendarView';
-import ActivitiesView from './components/ActivitiesView';
 import SyndicateView from './components/SyndicateView';
 
-import { ACTIVITIES, GUESTS, ORGANIZERS, SPONSORS } from './data';
+import { GUESTS, ORGANIZERS, SPONSORS } from './data';
 import { Sponsor } from './types';
 
 const REGISTER_FORM_URL = 'https://forms.gle/7A9spHxz3Qm8VyEfA';
 
 export default function App() {
   // Navigation & Localization
-  const [activeView, setActiveView] = React.useState<'calendar' | 'activities' | 'syndicate'>('calendar');
+  const [activeView, setActiveView] = React.useState<'calendar' | 'syndicate'>('calendar');
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
   // Persistence States
@@ -28,7 +27,6 @@ export default function App() {
         setSponsors(SPONSORS);
       }
 
-
       const savedLang = localStorage.getItem('mtl_roll_lang');
       if (savedLang === 'EN' || savedLang === 'FR' || savedLang === 'ES') {
         setLang(savedLang as 'EN' | 'FR' | 'ES');
@@ -39,7 +37,7 @@ export default function App() {
   }, []);
 
   // Handler to switch view and scroll to anchor if needed
-  const handleViewChange = (view: 'calendar' | 'activities' | 'syndicate', sectionId?: string) => {
+  const handleViewChange = (view: 'calendar' | 'syndicate', sectionId?: string) => {
     setActiveView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -87,16 +85,6 @@ export default function App() {
       <main className="flex-grow">
         {activeView === 'calendar' && (
           <CalendarView
-            onNavigateToActivities={() => handleViewChange('activities')}
-            activities={ACTIVITIES}
-            lang={lang}
-            registerFormUrl={REGISTER_FORM_URL}
-          />
-        )}
-
-        {activeView === 'activities' && (
-          <ActivitiesView
-            activities={ACTIVITIES}
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
           />

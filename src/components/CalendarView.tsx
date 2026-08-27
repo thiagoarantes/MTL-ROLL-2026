@@ -1,29 +1,43 @@
 import React from 'react';
-import { School, MapPin, ArrowRight, ArrowUpRight, Trophy, Flame } from 'lucide-react';
+import { 
+  School, 
+  MapPin, 
+  ArrowRight, 
+  Trophy, 
+  Flame, 
+  X, 
+  Calendar, 
+  Clock, 
+  Bike, 
+  Brush, 
+  Milestone, 
+  Shuffle, 
+  Sparkles, 
+  Compass, 
+  Users, 
+  ChevronLeft, 
+  ChevronRight, 
+  Search 
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { TIMETABLE_EVENTS } from '../data';
-import { Activity } from '../types';
+import { TimetableEvent } from '../types';
 
 interface CalendarViewProps {
-  onNavigateToActivities: () => void;
-  activities: Activity[];
   lang: 'EN' | 'FR' | 'ES';
   registerFormUrl?: string;
 }
 
 export default function CalendarView({
-  onNavigateToActivities,
-  activities,
   lang,
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
 }: CalendarViewProps) {
   const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3>(1);
   const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'competition' | 'workshop' | 'social'>('all');
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [activeDetailEventId, setActiveDetailEventId] = React.useState<string | null>(null);
 
   const scheduleContainerRef = React.useRef<HTMLDivElement>(null);
-
-  const handleOpenRegister = () => {
-    window.open(registerFormUrl, '_blank', 'noopener,noreferrer');
-  };
 
   const handleScrollToSchedule = () => {
     scheduleContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -32,48 +46,77 @@ export default function CalendarView({
   const filteredEvents = TIMETABLE_EVENTS.filter((event) => {
     const matchesDay = event.day === selectedDay;
     const matchesType = filterType === 'all' || event.type === filterType;
-    return matchesDay && matchesType;
+    const matchesSearch = 
+      !searchQuery || 
+      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.location.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesDay && matchesType && matchesSearch;
   });
+
+  // Master events list for carousel across the whole schedule or filtered view
+  const currentEventsList = filteredEvents.length > 0 ? filteredEvents : TIMETABLE_EVENTS;
+
+  // Keyboard navigation for active detail modal
+  React.useEffect(() => {
+    if (!activeDetailEventId) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveDetailEventId(null);
+      } else if (e.key === 'ArrowLeft') {
+        const idx = currentEventsList.findIndex((ev) => ev.id === activeDetailEventId);
+        if (idx !== -1) {
+          const prevIdx = idx > 0 ? idx - 1 : currentEventsList.length - 1;
+          setActiveDetailEventId(currentEventsList[prevIdx].id);
+        }
+      } else if (e.key === 'ArrowRight') {
+        const idx = currentEventsList.findIndex((ev) => ev.id === activeDetailEventId);
+        if (idx !== -1) {
+          const nextIdx = idx < currentEventsList.length - 1 ? idx + 1 : 0;
+          setActiveDetailEventId(currentEventsList[nextIdx].id);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeDetailEventId, currentEventsList]);
+
+  const renderIcon = (iconName?: string) => {
+    switch (iconName) {
+      case 'directions_bike':
+      case 'bike':
+        return <Bike className="w-5 h-5 text-[#E1FD15]" />;
+      case 'brush':
+        return <Brush className="w-5 h-5 text-[#E1FD15]" />;
+      case 'route':
+        return <Milestone className="w-5 h-5 text-[#E1FD15]" />;
+      case 'timeline':
+        return <Shuffle className="w-5 h-5 text-[#E1FD15]" />;
+      case 'flight_takeoff':
+        return <Flame className="w-5 h-5 text-[#E1FD15]" />;
+      case 'auto_awesome':
+      case 'sparkles':
+        return <Sparkles className="w-5 h-5 text-[#E1FD15]" />;
+      case 'school':
+        return <School className="w-5 h-5 text-[#E1FD15]" />;
+      case 'users':
+        return <Users className="w-5 h-5 text-[#E1FD15]" />;
+      case 'trophy':
+      case 'award':
+        return <Trophy className="w-5 h-5 text-[#E1FD15]" />;
+      default:
+        return <Compass className="w-5 h-5 text-[#E1FD15]" />;
+    }
+  };
 
   const t = {
     hollowHeaderTitle: lang === 'EN' ? 'RIDE THE NIGHT' : lang === 'FR' ? 'ROULER LA NUIT' : 'CONDUCE LA NOCHE',
     viewSchedule: lang === 'EN' ? 'View Schedule' : lang === 'FR' ? 'Voir le Programme' : 'Ver Calendario',
     secureSpot: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
-    systemModule: lang === 'EN' ? '> SYSTEM.MODULE.ACTIVITIES' : lang === 'FR' ? '> SYSTÈME.MODULE.ACTIVITÉS' : '> SISTEMA.MÓDULO.ACTIVIDADES',
-    coreEvents: lang === 'EN' ? 'Core Events' : lang === 'FR' ? 'Événements Majeurs' : 'Eventos Principales',
-    coreEventsDesc: lang === 'EN' 
-      ? 'Three days of high-velocity street skating, technical workshops, and underground culture.'
-      : lang === 'FR'
-      ? 'Trois jours de skate urbain à grande vitesse, d\'ateliers techniques et de culture underground.'
-      : 'Tres días de patinaje urbano a alta velocidad, talleres técnicos y cultura underground.',
-    massRideTitle: lang === 'EN' ? 'Mass Night Ride' : lang === 'FR' ? 'Randonnée de Nuit' : 'Patinada Nocturna Masiva',
-    massRideDesc: lang === 'EN'
-      ? 'Take over the streets of Montreal. A massive, police-escorted route through the city\'s iconic arteries. Fast pace, high energy.'
-      : lang === 'FR'
-      ? 'Envahissez les rues de Montréal. Un parcours massif escorté par la sécurité à travers les artères emblématiques de la ville. Allure rapide, énergie pure.'
-      : 'Toma las calles de Montreal. Una ruta masiva escoltada por la policía a través de las icónicas arterias de la ciudad. Ritmo rápido, alta energía.',
-    slalomTitle: lang === 'EN' ? 'Urban Slalom' : lang === 'FR' ? 'Slalom Urbain' : 'Eslalon Urbano',
-    slalomDesc: lang === 'EN'
-      ? 'Technical precision meets concrete. Compete or watch the city\'s best navigate the cone gauntlet.'
-      : lang === 'FR'
-      ? 'La précision technique s\'empare du bitume. Participez ou regardez les meilleurs slalomeurs affronter le tracé de cônes.'
-      : 'La precisión técnica se une al asfalto. Compite o mira a los mejores de la ciudad sortear los conos.',
-    workshopsTitle: lang === 'EN' ? 'Workshops' : lang === 'FR' ? 'Ateliers' : 'Talleres',
-    workshopsDesc: lang === 'EN'
-      ? 'Learn braking techniques, urban mobility, and advanced maneuvers from the pros.'
-      : lang === 'FR'
-      ? 'Apprenez les techniques de freinage, l\'agilité urbaine et les figures complexes avec des pros.'
-      : 'Aprende técnicas de frenado, movilidad urbana y maniobras avanzadas de la mano de profesionales.',
-    afterpartyTitle: lang === 'EN' ? 'Afterparty' : lang === 'FR' ? 'Soirée Après-Skate' : 'Fiesta Posterior',
-    afterpartyDesc: lang === 'EN'
-      ? 'When the wheels stop rolling, the bass drops. Exclusive venue for registered participants.'
-      : lang === 'FR'
-      ? 'Quand les roues s\'arrêtent de tourner, la basse s\'impose. Lieu exclusif pour les inscrits.'
-      : 'Cuando las ruedas dejan de girar, bajan los bajos. Lugar exclusivo para participantes registrados.',
-    rosterTitle: lang === 'EN' ? 'Full Roster' : lang === 'FR' ? 'Catalogue Complet' : 'Lista Completa',
-    rosterDesc: lang === 'EN' ? '> View all activities' : lang === 'FR' ? '> Voir toutes les activités' : '> Ver todas las actividades',
     secTitle: lang === 'EN' ? 'TACTICAL TIMETABLE' : lang === 'FR' ? 'CALENDRIER DES VECTEURS' : 'HORARIO TÁCTICO',
-    secSubtitle: lang === 'EN' ? 'Sync your local terminal with scheduled grid activations.' : lang === 'FR' ? 'Synchronisez vos platines avec le programme d\'activation du réseau.' : 'Sincroniza tu terminal local con las activaciones programadas.',
+    secSubtitle: lang === 'EN' ? 'Sync your local terminal with scheduled grid activations. Click any session to open event details.' : lang === 'FR' ? 'Synchronisez vos platines avec le programme d\'activation du réseau. Cliquez sur une session pour voir les détails.' : 'Sincroniza tu terminal con las activaciones programadas. Haz clic en una sesión para ver detalles.',
     filterAll: lang === 'EN' ? 'All Activities' : lang === 'FR' ? 'Tout' : 'Todas',
     filterRides: lang === 'EN' ? 'Street Rides' : lang === 'FR' ? 'Randonnées' : 'Rutas Urbanas',
     filterComps: lang === 'EN' ? 'Competitions' : lang === 'FR' ? 'Compétitions' : 'Competiciones',
@@ -85,6 +128,16 @@ export default function CalendarView({
     day3Label: lang === 'EN' ? 'Sunday // Sept 13' : lang === 'FR' ? 'Dimanche // 13 Sept' : 'Domingo // 13 Sept',
     noEvents: lang === 'EN' ? 'No scheduled vectors matching this filter.' : lang === 'FR' ? 'Aucun vecteur programmé pour ce filtre.' : 'No hay vectores programados que coincidan con este filtro.',
     vectorLabel: lang === 'EN' ? 'VECTOR' : lang === 'FR' ? 'VECTEUR' : 'VECTOR',
+    viewDetails: lang === 'EN' ? 'VIEW DETAILS' : lang === 'FR' ? 'VOIR LES DÉTAILS' : 'VER DETALLES',
+    searchPlaceholder: lang === 'EN' ? 'Filter sessions by name, venue, or keyword...' : lang === 'FR' ? 'Filtrer les sessions par nom, lieu ou mot-clé...' : 'Filtrar sesiones por nombre, lugar o palabra clave...',
+    specs: lang === 'EN' ? 'DETAILED SPECIFICATIONS' : lang === 'FR' ? 'SPÉCIFICATIONS DÉTAILLÉES' : 'ESPECIFICACIONES DETALLADAS',
+    registerForSession: lang === 'EN' ? 'Register for Session' : lang === 'FR' ? 'S\'inscrire à la session' : 'Registrarse en la sesión',
+    dateLabel: lang === 'EN' ? 'DATE' : lang === 'FR' ? 'DATE' : 'FECHA',
+    timeLabel: lang === 'EN' ? 'TIME' : lang === 'FR' ? 'HORAIRE' : 'HORA',
+    locationLabel: lang === 'EN' ? 'LOCATION' : lang === 'FR' ? 'LIEU' : 'LUGAR',
+    difficultyLabel: lang === 'EN' ? 'DIFFICULTY' : lang === 'FR' ? 'NIVEAU' : 'DIFICULTAD',
+    prev: lang === 'EN' ? 'Prev' : lang === 'FR' ? 'Préc' : 'Ant',
+    next: lang === 'EN' ? 'Next' : lang === 'FR' ? 'Suiv' : 'Sig',
   };
 
   return (
@@ -112,7 +165,8 @@ export default function CalendarView({
                 color: 'transparent'
               }}
             >
-              MTL
+              <span className="lg:hidden">MTL</span>
+              <span className="hidden lg:inline">MONTRÉAL</span>
             </h1>
             {/* Hollow lime word stroke */}
             <h1 
@@ -154,130 +208,6 @@ export default function CalendarView({
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-[#9500FF] to-transparent" />
       </header>
 
-      {/* Core Events Bento Section */}
-      <section className="py-24 px-6 md:px-16 w-full max-w-7xl mx-auto" id="core-activities">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#1F2833] pb-6">
-          <div>
-            <span className="font-mono text-xs text-[#9500FF] tracking-widest uppercase mb-2 block font-bold">
-              {t.systemModule}
-            </span>
-            <h3 className="font-headline text-3xl md:text-4xl text-white font-black uppercase tracking-tight">
-              {t.coreEvents}
-            </h3>
-          </div>
-          <p className="font-sans text-[#c7c9ac] text-sm md:text-base max-w-md md:text-right">
-            {t.coreEventsDesc}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Main Large Bento Card: Mass Night Ride */}
-          <div 
-            onClick={handleOpenRegister}
-            className="md:col-span-2 group relative bg-[#1F2833] p-8 min-h-[350px] border border-transparent hover:border-[#E1FD15] hover:shadow-[0_0_20px_rgba(225,253,21,0.15)] transition-all duration-500 overflow-hidden flex flex-col justify-end cursor-pointer"
-          >
-            {/* Background artwork */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-102 transition-all duration-700 mix-blend-luminosity grayscale"
-              style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzIYd8nyAicsDj0p9QMw0vc_OypY39Qi03q0N_nV2O9EkC9DmBiDS8VszGJGjdHD-Q7d01ywp0A6xGw1wqhRZnXfdWLJ7oDHSdPCDdacR6jox0ay6ByqcF0vqzVhG1U8N5QEOvUDL_kM1tdY-B4oTeUMUJk9bp_aUq1t407HctiUyKcpMOuhxJJcu9j-sFO1rDOgw3Ts73e8m-CiwhsK9C9-xMAS0iDUgpnTPFewCZ6D1H0a-IVUfa')" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10] to-transparent" />
-
-            <div className="relative z-10 text-left">
-              <span className="inline-block bg-[#333537] text-white font-mono text-[10px] font-bold px-2.5 py-1 mb-4 border border-[#464932]">
-                DAY 1 & 2
-              </span>
-              <h4 className="font-headline text-2xl text-[#E1FD15] font-black uppercase tracking-tight mb-2 flex items-center gap-2">
-                {t.massRideTitle}
-                <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </h4>
-              <p className="font-sans text-sm text-[#e2e2e4] max-w-lg leading-relaxed">
-                {t.massRideDesc}
-              </p>
-            </div>
-
-            {/* Corner visual lines */}
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#9500FF] m-4 opacity-50" />
-          </div>
-
-          {/* Vertical Card: Slalom */}
-          <div 
-            onClick={handleOpenRegister}
-            className="group relative bg-[#1F2833] p-8 min-h-[350px] border border-transparent hover:border-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.15)] transition-all duration-500 overflow-hidden flex flex-col justify-between text-left cursor-pointer"
-          >
-            <div className="w-full flex justify-between items-start relative z-10">
-              <div className="w-10 h-10 rounded-full bg-[#9500FF]/10 flex items-center justify-center border border-[#9500FF]">
-                <Trophy className="w-5 h-5 text-[#9500FF]" />
-              </div>
-              <span className="inline-block bg-[#333537] text-white font-mono text-[10px] font-bold px-2.5 py-1 border border-[#464932]">
-                DAY 3
-              </span>
-            </div>
-
-            <div className="relative z-10 mt-8">
-              <h4 className="font-headline text-xl text-white font-black uppercase tracking-tight mb-2 flex items-center gap-1">
-                {t.slalomTitle}
-                <ArrowUpRight className="w-4 h-4 text-[#9500FF] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </h4>
-              <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed">
-                {t.slalomDesc}
-              </p>
-            </div>
-
-            {/* Bottom active line slider overlay */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-[#9500FF] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
-          </div>
-
-          {/* Mini Card: Workshops */}
-          <div 
-            onClick={handleOpenRegister}
-            className="group bg-[#1F2833] p-6 border-t-2 border-[#333537] hover:border-[#E1FD15] cursor-pointer transition-all duration-300 text-left flex flex-col justify-between min-h-[140px]"
-          >
-            <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight flex items-center gap-2">
-              <School className="w-5 h-5 text-[#E1FD15]" />
-              {t.workshopsTitle}
-            </h4>
-            <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed mt-2 flex-grow">
-              {t.workshopsDesc}
-            </p>
-          </div>
-
-          {/* Mini Card: Afterparty */}
-          <div 
-            onClick={handleOpenRegister}
-            className="group bg-[#1F2833] p-6 border-t-2 border-[#333537] hover:border-[#9500FF] cursor-pointer transition-all duration-300 text-left flex flex-col justify-between min-h-[140px]"
-          >
-            <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight flex items-center gap-2">
-              <Flame className="w-5 h-5 text-[#9500FF]" />
-              {t.afterpartyTitle}
-            </h4>
-            <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed mt-2 flex-grow">
-              {t.afterpartyDesc}
-            </p>
-          </div>
-
-          {/* Mini Card: Full Roster (Navigate to activities view) */}
-          <div 
-            onClick={onNavigateToActivities}
-            className="group bg-[#1F2833] p-6 border-t-2 border-[#333537] hover:border-[#E1FD15] cursor-pointer hover:bg-[#333537]/30 transition-all duration-300 text-left flex items-center justify-between min-h-[140px]"
-          >
-            <div>
-              <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight">
-                {t.rosterTitle}
-              </h4>
-              <span className="font-mono text-xs text-[#c7c9ac] mt-1.5 block">
-                {t.rosterDesc}
-              </span>
-            </div>
-            <span className="p-2 bg-[#E1FD15]/10 group-hover:bg-[#E1FD15] rounded-none transition-all group-hover:translate-x-2">
-              <ArrowRight className="w-5 h-5 text-[#E1FD15] group-hover:text-[#0B0C10] transition-colors" />
-            </span>
-          </div>
-
-        </div>
-      </section>
-
       {/* Schedule / Timetable Section */}
       <section 
         ref={scheduleContainerRef}
@@ -313,13 +243,37 @@ export default function CalendarView({
                   onClick={() => setFilterType(filter.id)}
                   className={`py-1.5 px-3 font-mono text-[10px] uppercase tracking-wider cursor-pointer border transition-all ${
                     filterType === filter.id
-                      ? 'bg-[#E1FD15] border-[#E1FD15] text-[#0B0C10] font-black'
-                      : 'bg-[#111415] border-[#464932] text-[#c7c9ac] hover:bg-[#1e2021]'
+                      ? 'bg-[#E1FD15] border-[#E1FD15] text-[#0B0C10] font-black shadow-[0_0_10px_rgba(225,253,21,0.4)]'
+                      : 'bg-[#111415] border-[#464932] text-[#c7c9ac] hover:bg-[#1e2021] hover:text-white'
                   }`}
                 >
                   {filter.label}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Search bar inside Timetable */}
+          <div className="mb-8">
+            <div className="relative w-full max-w-md">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#c7c9ac]">
+                <Search className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t.searchPlaceholder}
+                className="w-full bg-[#111415] border border-[#464932] text-xs font-mono pl-9 pr-8 py-2.5 text-white placeholder-[#666] focus:border-[#E1FD15] focus:outline-none transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#c7c9ac] hover:text-white"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -339,7 +293,7 @@ export default function CalendarView({
                   className={`flex-1 text-left p-4 cursor-pointer border transition-all relative ${
                     selectedDay === item.day
                       ? 'bg-[#1F2833] border-[#9500FF] shadow-[0_0_15px_rgba(149,0,255,0.15)]'
-                      : 'bg-[#111415] border-[#464932] opacity-70 hover:opacity-100'
+                      : 'bg-[#111415] border-[#464932] opacity-70 hover:opacity-100 hover:border-[#9500FF]/50'
                   }`}
                 >
                   {selectedDay === item.day && (
@@ -354,7 +308,7 @@ export default function CalendarView({
             {/* Timetable Flow List */}
             <div className="lg:col-span-9 space-y-4">
               {filteredEvents.length > 0 ? (
-                filteredEvents.map((event, index) => {
+                filteredEvents.map((event) => {
                   
                   // Map type to border/glow indicator colors
                   const themeColor = 
@@ -370,7 +324,8 @@ export default function CalendarView({
                   return (
                     <div
                       key={event.id}
-                      className={`bg-[#111415] p-5 border border-[#464932] border-l-4 ${themeColor} hover:border-[#9500FF]/50 transition-all duration-300 flex flex-col md:flex-row items-start justify-between gap-4 text-left group`}
+                      onClick={() => setActiveDetailEventId(event.id)}
+                      className={`bg-[#111415] p-5 border border-[#464932] border-l-4 ${themeColor} hover:border-[#9500FF] hover:shadow-[0_0_15px_rgba(149,0,255,0.2)] transition-all duration-300 flex flex-col md:flex-row items-start justify-between gap-4 text-left group cursor-pointer`}
                     >
                       <div className="space-y-1.5 flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -379,8 +334,9 @@ export default function CalendarView({
                             {event.type}
                           </span>
                         </div>
-                        <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight group-hover:text-[#E1FD15] transition-colors">
+                        <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight group-hover:text-[#E1FD15] transition-colors flex items-center gap-2">
                           {event.title}
+                          <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#E1FD15]" />
                         </h4>
                         <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed max-w-2xl">
                           {event.description}
@@ -393,14 +349,18 @@ export default function CalendarView({
                           <span className="truncate max-w-[180px]">{event.location}</span>
                         </div>
                         
-                        <a
-                          href={registerFormUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-mono text-[9px] font-bold text-[#E1FD15] border border-[#E1FD15]/30 hover:border-[#E1FD15] hover:bg-[#E1FD15]/10 px-2.5 py-1 uppercase tracking-wider cursor-pointer inline-block"
-                        >
-                          &gt; {t.vectorLabel}_LOCK
-                        </a>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveDetailEventId(event.id);
+                            }}
+                            className="font-mono text-[9px] font-bold text-[#E1FD15] border border-[#E1FD15]/30 hover:border-[#E1FD15] hover:bg-[#E1FD15]/10 px-2.5 py-1 uppercase tracking-wider cursor-pointer inline-block"
+                          >
+                            &gt; {t.viewDetails}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -416,6 +376,183 @@ export default function CalendarView({
 
         </div>
       </section>
+
+      {/* Details & Carousel Modal */}
+      <AnimatePresence>
+        {activeDetailEventId && (() => {
+          const activeIndex = currentEventsList.findIndex((ev) => ev.id === activeDetailEventId);
+          const activeEvent = activeIndex !== -1 ? currentEventsList[activeIndex] : null;
+
+          if (!activeEvent) return null;
+
+          return (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm"
+              onClick={() => setActiveDetailEventId(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="bg-[#111415] border-2 border-[#9500FF] w-full max-w-2xl relative overflow-hidden text-left shadow-[0_0_40px_rgba(149,0,255,0.3)]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Techno Corner Accents */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#E1FD15] pointer-events-none z-20" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#9500FF] pointer-events-none z-20" />
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#9500FF] pointer-events-none z-20" />
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#E1FD15] pointer-events-none z-20" />
+
+                {/* Header/Close */}
+                <div className="flex items-center justify-between border-b border-[#333537] px-6 py-4 bg-[#1F2833]">
+                  <div className="flex items-center gap-2">
+                    {renderIcon(activeEvent.iconName)}
+                    <span className="font-mono text-[10px] text-[#E1FD15] uppercase tracking-widest font-black">
+                      // {activeEvent.category || activeEvent.type}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-[10px] text-[#c7c9ac] px-2 bg-[#111415] border border-[#333537] py-0.5">
+                      {activeIndex + 1} / {currentEventsList.length}
+                    </span>
+                    <button
+                      onClick={() => setActiveDetailEventId(null)}
+                      className="p-1 text-[#c7c9ac] hover:text-[#E1FD15] transition-all cursor-pointer"
+                      aria-label="Close dialog"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="max-h-[70vh] overflow-y-auto">
+                  {/* Hero image banner */}
+                  <div className="w-full h-56 relative bg-black">
+                    <img
+                      src={activeEvent.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDaEtvIx3NC3aokEq5kAnJDSJej_iPs2Ir0RXyjztW_Bo-vgBwr2NREvtKYDGAKjGBvJ-mKODUcLe7js9QKoJto-O-z9W2doNrsIiazWALsCJWxQpYugsn_vInMSp6elnmQ0aDv--AnPNJHalMz7dl_99mSwqqei5OC0BM19vf8yu7Uug4CKtI6cVFwxLuoWYiC3nxV2MoyMjFDnxj5lVJASm0zmIASXFPtHWW5ZfU5G0EkvuHVBDiN'}
+                      alt={activeEvent.title}
+                      className="w-full h-full object-cover opacity-75"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111415] via-[#111415]/40 to-transparent" />
+                    <div className="absolute bottom-4 left-6 right-6">
+                      <h2 className="font-headline text-2xl sm:text-3xl font-black text-white uppercase tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        {activeEvent.title}
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="p-6 space-y-6">
+                    {/* Descriptions */}
+                    <div className="space-y-2">
+                      <span className="font-mono text-[9px] text-[#9500FF] uppercase tracking-widest font-black block">
+                        &gt; {t.specs}
+                      </span>
+                      <p className="font-sans text-xs sm:text-sm text-[#c7c9ac] leading-relaxed">
+                        {activeEvent.longDescription || activeEvent.description}
+                      </p>
+                    </div>
+
+                    {/* Metadata dashboard layout */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Calendar className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.dateLabel}</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">
+                          {activeEvent.date || `Day 0${activeEvent.day}`}
+                        </p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Clock className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.timeLabel}</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">{activeEvent.time}</p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.locationLabel}</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase truncate" title={activeEvent.location}>
+                          {activeEvent.location}
+                        </p>
+                      </div>
+
+                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
+                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                          <Flame className="w-3.5 h-3.5 text-[#E1FD15]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.difficultyLabel}</span>
+                        </div>
+                        <p className="font-sans text-xs font-bold text-white uppercase">
+                          {activeEvent.difficulty || 'All Levels'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer with Carousel controls and action button */}
+                <div className="border-t border-[#333537] bg-[#1F2833] p-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  {/* Previous / Next wrap triggers */}
+                  <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const prevIdx = activeIndex > 0 ? activeIndex - 1 : currentEventsList.length - 1;
+                        if (currentEventsList[prevIdx]) {
+                          setActiveDetailEventId(currentEventsList[prevIdx].id);
+                        }
+                      }}
+                      className="px-3 py-1.5 border border-[#464932] hover:border-[#E1FD15] hover:bg-[#E1FD15]/5 font-mono text-[9px] uppercase text-white transition-all cursor-pointer flex items-center gap-1"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      <span>{t.prev}</span>
+                    </button>
+
+                    <span className="font-mono text-[10px] text-[#c7c9ac] px-2 bg-[#111415] border border-[#333537] py-1">
+                      {activeIndex + 1} / {currentEventsList.length}
+                    </span>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const nextIdx = activeIndex < currentEventsList.length - 1 ? activeIndex + 1 : 0;
+                        if (currentEventsList[nextIdx]) {
+                          setActiveDetailEventId(currentEventsList[nextIdx].id);
+                        }
+                      }}
+                      className="px-3 py-1.5 border border-[#464932] hover:border-[#E1FD15] hover:bg-[#E1FD15]/5 font-mono text-[9px] uppercase text-white transition-all cursor-pointer flex items-center gap-1"
+                    >
+                      <span>{t.next}</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Register action trigger */}
+                  <a
+                    href={registerFormUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      setActiveDetailEventId(null);
+                    }}
+                    className="w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer border-0 inline-block text-center bg-[#9500FF] text-white hover:bg-[#8000DB] hover:shadow-[0_0_15px_#9500FF]"
+                  >
+                    {t.registerForSession}
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })()}
+      </AnimatePresence>
+
     </div>
   );
 }
