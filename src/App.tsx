@@ -3,6 +3,7 @@ import { Instagram, Facebook, Globe } from 'lucide-react';
 import TopNavBar from './components/TopNavBar';
 import CalendarView from './components/CalendarView';
 import SyndicateView from './components/SyndicateView';
+import FaqConductView from './components/FaqConductView';
 
 import { GUESTS, ORGANIZERS, SPONSORS } from './data';
 import { Sponsor } from './types';
@@ -11,7 +12,7 @@ const REGISTER_FORM_URL = 'https://forms.gle/7A9spHxz3Qm8VyEfA';
 
 export default function App() {
   // Navigation & Localization
-  const [activeView, setActiveView] = React.useState<'calendar' | 'syndicate'>('calendar');
+  const [activeView, setActiveView] = React.useState<'calendar' | 'syndicate' | 'faq'>('calendar');
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
   // Persistence States
@@ -54,7 +55,7 @@ export default function App() {
   }, []);
 
   // Handler to switch view and scroll to anchor if needed
-  const handleViewChange = (view: 'calendar' | 'syndicate', sectionId?: string) => {
+  const handleViewChange = (view: 'calendar' | 'syndicate' | 'faq', sectionId?: string) => {
     setActiveView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -113,15 +114,32 @@ export default function App() {
             lang={lang}
           />
         )}
+
+        {activeView === 'faq' && (
+          <FaqConductView
+            lang={lang}
+            registerFormUrl={REGISTER_FORM_URL}
+          />
+        )}
       </main>
 
       {/* Immersive Footer matching screenshots */}
       <footer className="bg-[#111415] py-12 border-t-2 border-[#9500FF]/50 w-full mt-auto">
         <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
           
-          {/* Copyright Brand Info */}
-          <div className="font-headline text-xs font-black uppercase tracking-widest text-center md:text-left text-[#e2e2e4]">
-            © 2026 MTL ROLL. RIDE THE WEEKEND.
+          {/* Copyright & Quick Nav */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center md:text-left">
+            <div className="font-headline text-xs font-black uppercase tracking-widest text-[#e2e2e4]">
+              © 2026 MTL ROLL. RIDE THE WEEKEND.
+            </div>
+            <div className="flex items-center gap-3 font-mono text-[11px]">
+              <button
+                onClick={() => handleViewChange('faq')}
+                className="text-[#E1FD15] hover:underline uppercase tracking-wider cursor-pointer"
+              >
+                {lang === 'EN' ? 'FAQ & Conduct' : lang === 'FR' ? 'FAQ & Conduite' : 'FAQ y Conducta'}
+              </button>
+            </div>
           </div>
 
           {/* Socials Link Channels */}

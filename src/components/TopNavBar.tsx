@@ -2,8 +2,8 @@ import React from 'react';
 import { Globe, Menu, X } from 'lucide-react';
 
 interface TopNavBarProps {
-  activeView: 'calendar' | 'syndicate';
-  onViewChange: (view: 'calendar' | 'syndicate', sectionId?: string) => void;
+  activeView: 'calendar' | 'syndicate' | 'faq';
+  onViewChange: (view: 'calendar' | 'syndicate' | 'faq', sectionId?: string) => void;
   lang: 'EN' | 'FR' | 'ES';
   onChangeLang: (lang: 'EN' | 'FR' | 'ES') => void;
   registerFormUrl?: string;
@@ -25,6 +25,7 @@ export default function TopNavBar({
   const navLinks = [
     { id: 'calendar', labelEN: 'Calendar', labelFR: 'Calendrier', labelES: 'Calendario' },
     { id: 'syndicate', labelEN: 'Syndicate', labelFR: 'Syndicat', labelES: 'Sindicato' },
+    { id: 'faq', labelEN: 'FAQ & Conduct', labelFR: 'FAQ & Conduite', labelES: 'FAQ y Conducta' },
   ];
 
   const handleLinkClick = (link: typeof navLinks[0]) => {
