@@ -8,7 +8,6 @@ import {
   MapPin,
   Sparkles,
   ExternalLink,
-  CheckCircle2,
   Lock,
 } from 'lucide-react';
 import { FAQ_CATEGORIES, FAQ_ITEMS, CONDUCT_RULES } from '../faqData';
@@ -373,13 +372,6 @@ export default function FaqConductView({
                     <p className="font-sans text-sm text-[#c8c8cc] leading-relaxed">
                       {rule.description[lang]}
                     </p>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-[#22262B] flex items-center justify-between font-mono text-[11px] text-[#777777]">
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#E1FD15]" />
-                      <span>MTL ROLL 2026 MANDATE</span>
-                    </span>
                   </div>
                 </div>
               );
