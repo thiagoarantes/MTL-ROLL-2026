@@ -132,12 +132,33 @@ export const GUESTS: Guest[] = [
     instagramUrl: 'https://www.instagram.com/crazyxav.art/',
   },
   {
+    id: 'guest-emile',
+    name: 'Émile',
+    tags: ['FREESTYLE'],
+    image: '/guests/emile.jpg',
+    instagramUrl: 'https://www.instagram.com/emile_besh/',
+  },
+  {
+    id: 'guest-marly',
+    name: 'Marly',
+    tags: ['ROLLER_DANCE'],
+    image: '/guests/marly.jpg',
+    instagramUrl: 'https://www.instagram.com/skatewithmarly/',
+  },
+  {
     id: 'guest-skatespace',
     name: 'SKATESPACE',
     tags: ['INTRO_TO_SKATING', 'ROLLER_DANCE', 'SLALOM', 'GAMES'],
     image: '/guests/skatespace.jpg',
     instagramUrl: 'https://www.instagram.com/skatespace.ca/',
-  }
+  },
+  {
+    id: 'guest-vrl',
+    name: 'VRL',
+    tags: ['SPEED_SKATING'],
+    image: '/guests/vrl.png',
+    instagramUrl: 'https://www.instagram.com/vrlroller/',
+  },
 ];
 
 export const ORGANIZERS: Organizer[] = [

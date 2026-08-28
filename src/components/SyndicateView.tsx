@@ -176,7 +176,7 @@ export default function SyndicateView({
                   {org.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="font-mono text-[10px] text-[#9500FF] font-bold uppercase tracking-wider"
+                      className="inline-block px-2 py-0.5 bg-[#0B0C10] border border-[#9500FF]/50 text-[#9500FF] font-mono text-[10px] font-bold uppercase tracking-wider"
                     >
                       {tag}
                     </span>
@@ -370,7 +370,10 @@ export default function SyndicateView({
               <div>
                 <div className="flex flex-wrap gap-1.5 mb-2">
                   {g.tags.map((tag) => (
-                    <span key={tag} className="font-mono text-[10px] text-[#9500FF] font-bold uppercase">
+                    <span 
+                      key={tag} 
+                      className="inline-block px-2 py-0.5 bg-[#0B0C10] border border-[#E1FD15]/50 text-[#E1FD15] font-mono text-[10px] font-bold uppercase tracking-wider"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -452,7 +455,7 @@ export default function SyndicateView({
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {selectedGuest.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#9500FF] border border-[#9500FF]/40 font-bold uppercase">
+                    <span key={tag} className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#E1FD15] border border-[#E1FD15]/40 font-bold uppercase">
                       {tag}
                     </span>
                   ))}
