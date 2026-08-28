@@ -17,47 +17,79 @@ export default function SyndicateView({
   onAddSponsor,
   lang,
 }: SyndicateViewProps) {
-  const activeOrg = organizers[0];
+  const [selectedOrganizer, setSelectedOrganizer] = React.useState<Organizer | null>(null);
   const [selectedGuest, setSelectedGuest] = React.useState<Guest | null>(null);
 
-  const selectedIndex = selectedGuest ? guests.findIndex((g) => g.id === selectedGuest.id) : -1;
+  const selectedGuestIndex = selectedGuest ? guests.findIndex((g) => g.id === selectedGuest.id) : -1;
+  const selectedOrgIndex = selectedOrganizer ? organizers.findIndex((o) => o.id === selectedOrganizer.id) : -1;
 
   const handlePrevGuest = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (guests.length === 0 || selectedIndex === -1) return;
-    const prevIndex = (selectedIndex - 1 + guests.length) % guests.length;
+    if (guests.length === 0 || selectedGuestIndex === -1) return;
+    const prevIndex = (selectedGuestIndex - 1 + guests.length) % guests.length;
     setSelectedGuest(guests[prevIndex]);
   };
 
   const handleNextGuest = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (guests.length === 0 || selectedIndex === -1) return;
-    const nextIndex = (selectedIndex + 1) % guests.length;
+    if (guests.length === 0 || selectedGuestIndex === -1) return;
+    const nextIndex = (selectedGuestIndex + 1) % guests.length;
     setSelectedGuest(guests[nextIndex]);
+  };
+
+  const handlePrevOrg = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (organizers.length === 0 || selectedOrgIndex === -1) return;
+    const prevIndex = (selectedOrgIndex - 1 + organizers.length) % organizers.length;
+    setSelectedOrganizer(organizers[prevIndex]);
+  };
+
+  const handleNextOrg = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (organizers.length === 0 || selectedOrgIndex === -1) return;
+    const nextIndex = (selectedOrgIndex + 1) % organizers.length;
+    setSelectedOrganizer(organizers[nextIndex]);
   };
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedGuest) return;
-      if (e.key === 'Escape') {
-        setSelectedGuest(null);
-      } else if (e.key === 'ArrowLeft') {
-        const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
-        if (currIdx !== -1 && guests.length > 0) {
-          const prevIdx = (currIdx - 1 + guests.length) % guests.length;
-          setSelectedGuest(guests[prevIdx]);
+      if (selectedOrganizer) {
+        if (e.key === 'Escape') {
+          setSelectedOrganizer(null);
+        } else if (e.key === 'ArrowLeft') {
+          const currIdx = organizers.findIndex((o) => o.id === selectedOrganizer.id);
+          if (currIdx !== -1 && organizers.length > 0) {
+            const prevIdx = (currIdx - 1 + organizers.length) % organizers.length;
+            setSelectedOrganizer(organizers[prevIdx]);
+          }
+        } else if (e.key === 'ArrowRight') {
+          const currIdx = organizers.findIndex((o) => o.id === selectedOrganizer.id);
+          if (currIdx !== -1 && organizers.length > 0) {
+            const nextIdx = (currIdx + 1) % organizers.length;
+            setSelectedOrganizer(organizers[nextIdx]);
+          }
         }
-      } else if (e.key === 'ArrowRight') {
-        const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
-        if (currIdx !== -1 && guests.length > 0) {
-          const nextIdx = (currIdx + 1) % guests.length;
-          setSelectedGuest(guests[nextIdx]);
+      } else if (selectedGuest) {
+        if (e.key === 'Escape') {
+          setSelectedGuest(null);
+        } else if (e.key === 'ArrowLeft') {
+          const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
+          if (currIdx !== -1 && guests.length > 0) {
+            const prevIdx = (currIdx - 1 + guests.length) % guests.length;
+            setSelectedGuest(guests[prevIdx]);
+          }
+        } else if (e.key === 'ArrowRight') {
+          const currIdx = guests.findIndex((g) => g.id === selectedGuest.id);
+          if (currIdx !== -1 && guests.length > 0) {
+            const nextIdx = (currIdx + 1) % guests.length;
+            setSelectedGuest(guests[nextIdx]);
+          }
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedGuest, guests]);
+  }, [selectedOrganizer, selectedGuest, organizers, guests]);
 
   const t = {
     sysOverlay: lang === 'EN' ? 'SYS.DATA_OVERLAY // 04' : lang === 'FR' ? 'SYS.DATA_OVERLAY // 04' : 'SYS.DATA_OVERLAY // 04',
@@ -70,6 +102,9 @@ export default function SyndicateView({
     coreOrganizers: lang === 'EN' ? 'Core Organizers' : lang === 'FR' ? 'Organisateurs Principaux' : 'Organizadores Principales',
     registeredGuests: lang === 'EN' ? 'Registered Guests' : lang === 'FR' ? 'Invités Enregistrés' : 'Invitados Registrados',
     networkSponsors: lang === 'EN' ? 'Network Sponsors' : lang === 'FR' ? 'Partenaires Réseau' : 'Patrocinadores de la Red',
+    viewDetails: lang === 'EN' ? 'View Details' : lang === 'FR' ? 'Voir Détails' : 'Ver Detalles',
+    websiteLabel: lang === 'EN' ? 'Official Website' : lang === 'FR' ? 'Site Officiel' : 'Sitio Oficial',
+    instagramLabel: lang === 'EN' ? 'Instagram Profile' : lang === 'FR' ? 'Profil Instagram' : 'Perfil de Instagram',
   };
 
   return (
@@ -88,7 +123,7 @@ export default function SyndicateView({
         </p>
       </header>
 
-      {/* Core Organizers (Bento Highlight) */}
+      {/* Core Organizers Section */}
       <section className="mb-24" id="organizers-anchor">
         <div className="flex items-center justify-between mb-8 border-b border-[#1F2833] pb-4">
           <div className="flex items-center gap-4">
@@ -105,50 +140,188 @@ export default function SyndicateView({
           </div>
         </div>
 
-        {/* Carousel Slide */}
-        <div className="bg-[#1F2833] border border-[#9500FF]/50 relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#9500FF]/10 to-transparent pointer-events-none" />
-          <div className="flex flex-col md:flex-row h-full">
-            
-            {/* Image Block */}
-            <div className="w-full md:w-auto p-6 md:p-8 flex items-center justify-center bg-[#0c0e10] border-b md:border-b-0 md:border-r border-[#9500FF]/30">
-              <div className="w-64 sm:w-72 md:w-80 aspect-square relative overflow-hidden bg-black border border-[#333537] shadow-lg">
-                <img 
-                  src={activeOrg.image} 
-                  alt={activeOrg.name}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            </div>
+        {/* Organizers Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 items-stretch">
+          {organizers.map((org) => (
+            <div
+              key={org.id}
+              onClick={() => setSelectedOrganizer(org)}
+              className="bg-[#1F2833] border-t-2 border-[#9500FF] hover:border-[#E1FD15] p-6 flex flex-col justify-between group hover:translate-y-[-6px] transition-all duration-300 relative cursor-pointer"
+            >
+              <div>
+                {/* Image Box */}
+                <div className="w-full aspect-[4/3] sm:aspect-[16/10] mb-6 relative overflow-hidden bg-black border border-[#333537] flex items-center justify-center p-4">
+                  <img
+                    src={org.image}
+                    alt={org.name}
+                    referrerPolicy="no-referrer"
+                    className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                    <div className="px-3 py-1.5 bg-[#9500FF] text-white font-mono text-[10px] font-bold uppercase flex items-center gap-1.5 shadow-lg">
+                      <Maximize2 className="w-3 h-3" />
+                      <span>{t.viewDetails}</span>
+                    </div>
+                  </div>
+                </div>
 
-            {/* Info Block */}
-            <div className="w-full md:w-2/3 p-8 md:p-12 flex flex-col justify-center relative z-10 text-left">
-              <span className="font-mono text-xs text-[#666666] mb-2 font-semibold">
-                &gt; ENTITY_ID: {activeOrg.entityId}
-              </span>
-              <h3 className="font-headline text-3xl font-black uppercase text-[#E1FD15] mb-6">
-                {activeOrg.name}
-              </h3>
-              <p className="font-sans text-sm md:text-base text-[#c7c9ac] mb-8 leading-relaxed">
-                {activeOrg.roleDescription}
-              </p>
-              
-              <div className="flex flex-wrap gap-2.5">
-                {activeOrg.tags.map(tag => (
-                  <span 
-                    key={tag}
-                    className="inline-block px-3 py-1 bg-[#0c0e10] font-mono text-[10px] text-white border border-[#333537]"
-                  >
-                    {tag}
+                {/* Entity ID & Tags */}
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="font-mono text-[10px] text-[#666666] font-semibold">
+                    &gt; {org.entityId}
                   </span>
-                ))}
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {org.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-mono text-[10px] text-[#9500FF] font-bold uppercase tracking-wider"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Organizer Name */}
+                <h3 className="font-headline text-2xl text-white uppercase font-black tracking-tight group-hover:text-[#E1FD15] transition-colors">
+                  {org.name}
+                </h3>
+              </div>
+
+              <div className="pt-4 mt-4 border-t border-[#333537]/50 flex items-center justify-between">
+                <span className="font-mono text-[9px] text-[#c7c9ac] uppercase tracking-wider">
+                  &gt; INSPECT_ENTITY
+                </span>
+                <Maximize2 className="w-4 h-4 text-[#9500FF] group-hover:text-[#E1FD15] transition-colors" />
               </div>
             </div>
-
-          </div>
+          ))}
         </div>
       </section>
+
+      {/* Organizer Full Detail Modal */}
+      {selectedOrganizer && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          onClick={() => setSelectedOrganizer(null)}
+        >
+          <div 
+            className="relative w-full max-w-2xl bg-[#0B0C10] border-2 border-[#9500FF] p-6 sm:p-8 shadow-[0_0_30px_rgba(149,0,255,0.3)] my-8 text-left"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header / Close & Carousel Controls */}
+            <div className="flex items-center justify-between border-b border-[#333537] pb-4 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-[#E1FD15] font-bold uppercase tracking-widest">
+                  ORGANIZER [{selectedOrgIndex + 1}/{organizers.length}] // {selectedOrganizer.entityId}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {organizers.length > 1 && (
+                  <div className="flex items-center gap-1 bg-[#1F2833] border border-[#333537] p-0.5 mr-2">
+                    <button
+                      onClick={handlePrevOrg}
+                      className="p-1 hover:bg-[#9500FF] text-white transition-colors cursor-pointer"
+                      title="Previous Organizer (Left Arrow)"
+                      aria-label="Previous organizer"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <span className="font-mono text-[10px] text-[#666666] px-1 font-bold">
+                      {selectedOrgIndex + 1}/{organizers.length}
+                    </span>
+                    <button
+                      onClick={handleNextOrg}
+                      className="p-1 hover:bg-[#9500FF] text-white transition-colors cursor-pointer"
+                      title="Next Organizer (Right Arrow)"
+                      aria-label="Next organizer"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  onClick={() => setSelectedOrganizer(null)}
+                  className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors cursor-pointer"
+                  aria-label="Close dialog"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Image Preview Container */}
+            <div className="w-full bg-black border border-[#333537] mb-6 flex items-center justify-center p-6 relative max-h-[300px] overflow-hidden">
+              <img 
+                key={selectedOrganizer.id}
+                src={selectedOrganizer.image} 
+                alt={selectedOrganizer.name} 
+                referrerPolicy="no-referrer"
+                className="max-h-[220px] max-w-full object-contain rounded-sm"
+              />
+            </div>
+
+            {/* Organizer Details */}
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h2 className="font-headline text-2xl sm:text-3xl font-black text-[#E1FD15] uppercase tracking-tight">
+                  {selectedOrganizer.name}
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {selectedOrganizer.tags.map((tag) => (
+                    <span key={tag} className="px-3 py-1 bg-[#1F2833] font-mono text-xs text-[#9500FF] border border-[#9500FF]/40 font-bold uppercase">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <p className="font-sans text-sm sm:text-base text-[#c7c9ac] leading-relaxed pt-2">
+                {selectedOrganizer.roleDescription}
+              </p>
+
+              {/* Social & Website Links */}
+              {(selectedOrganizer.website || selectedOrganizer.instagramUrl) && (
+                <div className="pt-4 border-t border-[#1F2833] flex flex-wrap items-center gap-3">
+                  {selectedOrganizer.website && (
+                    <a
+                      href={selectedOrganizer.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#E1FD15] text-white hover:text-[#0B0C10] border border-[#E1FD15]/40 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
+                    >
+                      <Globe className="w-4 h-4" />
+                      <span>{t.websiteLabel}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  )}
+
+                  {selectedOrganizer.instagramUrl && (
+                    <a
+                      href={selectedOrganizer.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200 group"
+                    >
+                      <Instagram className="w-4 h-4 text-[#E1FD15] group-hover:text-white transition-colors" />
+                      <span>{t.instagramLabel}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Corner Tech Accents */}
+            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#E1FD15] m-2 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#E1FD15] m-2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#E1FD15] m-2 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#E1FD15] m-2 pointer-events-none" />
+          </div>
+        </div>
+      )}
 
       {/* Guests Section (Glassmorphism Cards + Add Guest Terminal) */}
       <section className="mb-24" id="guests-anchor">
@@ -224,7 +397,7 @@ export default function SyndicateView({
             <div className="flex items-center justify-between border-b border-[#333537] pb-4 mb-6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs text-[#E1FD15] font-bold uppercase tracking-widest">
-                  GUEST [{selectedIndex + 1}/{guests.length}] // {selectedGuest.tags.join(' / ')}
+                  GUEST [{selectedGuestIndex + 1}/{guests.length}] // {selectedGuest.tags.join(' / ')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -239,7 +412,7 @@ export default function SyndicateView({
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <span className="font-mono text-[10px] text-[#666666] px-1 font-bold">
-                    {selectedIndex + 1}/{guests.length}
+                    {selectedGuestIndex + 1}/{guests.length}
                   </span>
                   <button
                     onClick={handleNextGuest}
@@ -311,7 +484,7 @@ export default function SyndicateView({
         </div>
       )}
 
-      {/* Sponsors Section (Asymmetric Grid) */}
+      {/* Sponsors Section */}
       <section id="sponsors-anchor">
         <div className="flex items-center gap-4 mb-8 border-b border-[#1F2833] pb-4">
           <div className="h-px w-12 bg-[#c7c9ac]"></div>
@@ -326,59 +499,45 @@ export default function SyndicateView({
           </h2>
         </div>
 
-        <div className="flex justify-center">
-          
-          {/* Featured Sponsor Verdun */}
-          <div className="w-full max-w-2xl bg-[#0B0C10] border border-[#333537] p-8 flex flex-col items-center justify-center relative group overflow-hidden text-center">
-            <div className="absolute inset-0 bg-[#9500FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-            
-            <span className="font-mono text-xs text-[#666666] block mb-4 font-bold uppercase tracking-widest">
-              GOV_NODE // PARTNER
-            </span>
-
-            {/* Dark Verdun Logo Image */}
-            <a 
-              href="https://montreal.ca/verdun" 
-              target="_blank" 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {sponsors.map((sponsor) => (
+            <a
+              key={sponsor.id}
+              href={sponsor.website}
+              target="_blank"
               rel="noopener noreferrer"
-              className="block max-w-xs md:max-w-sm mb-6 transition-transform duration-300 hover:scale-105"
+              className="bg-[#0B0C10] border border-[#333537] hover:border-[#E1FD15] p-6 sm:p-8 flex flex-col items-center justify-between text-center group hover:shadow-[0_0_25px_rgba(225,253,21,0.15)] hover:translate-y-[-4px] transition-all duration-300 relative overflow-hidden cursor-pointer"
             >
-              <img 
-                src="/verdun_logo.svg" 
-                alt="Arrondissement de Verdun - Ville de Montréal"
-                className="w-full h-auto object-contain rounded-sm"
-              />
+              <div className="absolute inset-0 bg-[#9500FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              
+              <div className="w-full flex justify-between items-center mb-6">
+                <span className="font-mono text-[10px] text-[#666666] font-bold uppercase tracking-widest">
+                  &gt; SPONSOR_NODE
+                </span>
+                <ExternalLink className="w-4 h-4 text-[#9500FF] group-hover:text-[#E1FD15] transition-colors" />
+              </div>
+
+              {/* Sponsor Logo Image */}
+              <div className="w-full aspect-[16/9] max-h-36 flex items-center justify-center p-4 bg-black/50 border border-[#1F2833] mb-6 overflow-hidden">
+                <img 
+                  src={sponsor.image} 
+                  alt={sponsor.name}
+                  referrerPolicy="no-referrer"
+                  className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <div className="w-full">
+                <h3 className="font-headline text-xl text-white uppercase font-black tracking-tight group-hover:text-[#E1FD15] transition-colors">
+                  {sponsor.name}
+                </h3>
+              </div>
+
+              {/* Tech bracket decorations */}
+              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#333537] group-hover:border-[#E1FD15] transition-colors m-3" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#333537] group-hover:border-[#E1FD15] transition-colors m-3" />
             </a>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 z-10">
-              <a
-                href="https://montreal.ca/verdun"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#E1FD15] text-white hover:text-[#0B0C10] border border-[#E1FD15]/40 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
-              >
-                <Globe className="w-4 h-4" />
-                <span>montreal.ca/verdun</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-              </a>
-
-              <a
-                href="https://www.instagram.com/arr_verdun"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
-              >
-                <Instagram className="w-4 h-4 text-[#E1FD15]" />
-                <span>@arr_verdun</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-              </a>
-            </div>
-
-            {/* Tech bracket decorations */}
-            <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#333537] m-3" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#333537] m-3" />
-          </div>
-
+          ))}
         </div>
       </section>
 

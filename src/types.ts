@@ -28,14 +28,15 @@ export interface Organizer {
   entityId: string;
   image: string;
   tags: string[];
+  website?: string;
+  instagramUrl?: string;
 }
 
 export interface Sponsor {
   id: string;
   name: string;
-  role: string; // e.g. GOV_NODE, TECH_NODE, BRAND_NODE
-  slotIndex: number; // 1, 2, 3
-  isOpen: boolean;
+  image: string;
+  website: string;
 }
 
 export interface Registration {

@@ -17,12 +17,29 @@ export default function App() {
   // Persistence States
   const [sponsors, setSponsors] = React.useState<Sponsor[]>(SPONSORS);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount (validating sponsor schema and syncing with data.ts)
   React.useEffect(() => {
     try {
       const savedSponsors = localStorage.getItem('mtl_roll_sponsors');
       if (savedSponsors) {
-        setSponsors(JSON.parse(savedSponsors));
+        const parsed = JSON.parse(savedSponsors);
+        // Ensure parsed items match current Sponsor schema
+        if (Array.isArray(parsed) && parsed.every(s => typeof s.website === 'string' && typeof s.id === 'string')) {
+          // Merge predefined SPONSORS so any newly added sponsor in data.ts is immediately visible
+          const baseMap = new Map<string, Sponsor>();
+          SPONSORS.forEach(s => baseMap.set(s.id, s));
+          parsed.forEach((s: Sponsor) => {
+            if (!baseMap.has(s.id)) {
+              baseMap.set(s.id, s);
+            }
+          });
+          const merged = Array.from(baseMap.values());
+          setSponsors(merged);
+          localStorage.setItem('mtl_roll_sponsors', JSON.stringify(merged));
+        } else {
+          setSponsors(SPONSORS);
+          localStorage.setItem('mtl_roll_sponsors', JSON.stringify(SPONSORS));
+        }
       } else {
         setSponsors(SPONSORS);
       }
@@ -56,11 +73,8 @@ export default function App() {
     localStorage.setItem('mtl_roll_lang', newLang);
   };
 
-  // Lock custom sponsor slot
   const handleAddSponsor = (newSponsor: Sponsor) => {
-    const updatedSponsors = sponsors.map(s => 
-      s.slotIndex === newSponsor.slotIndex ? newSponsor : s
-    );
+    const updatedSponsors = [...sponsors.filter(s => s.id !== newSponsor.id), newSponsor];
     setSponsors(updatedSponsors);
     localStorage.setItem('mtl_roll_sponsors', JSON.stringify(updatedSponsors));
   };

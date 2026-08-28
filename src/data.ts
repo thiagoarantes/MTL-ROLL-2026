@@ -146,18 +146,65 @@ export const ORGANIZERS: Organizer[] = [
     name: 'Rolling Tribes',
     roleDescription: 'The architectural minds behind the night. Rolling Tribes is a collective of velocity addicts and urban navigators dedicated to reclaiming the concrete sprawl. They engineer the routes, establish the protocols, and ensure the grid remains electrified for every rider entering the zone.',
     entityId: 'RLL_TRB_01',
-    image: '/rolling_tribes_logo.jpg',
-    tags: ['ROUTING', 'LOGISTICS', 'OVERSEER']
+    image: '/organizers/rolling_tribes_logo.jpg',
+    tags: ['ROUTING', 'LOGISTICS', 'OVERSEER'],
+    website: 'https://rollingtribes.com',
+    instagramUrl: 'https://www.instagram.com/rollingtribes/',
+  },
+  {
+    id: 'org-city-verdun',
+    name: 'Arrondissement de Verdun',
+    roleDescription: 'Official municipal host and territorial partner for MONTRÉAL ROLL 2026. Arrondissement de Verdun powers the grid by opening prime waterfront plazas, pump track hubs, and protected urban corridors, championing active mobility and community skate culture.',
+    entityId: 'ARR_VRDN_02',
+    image: '/organizers/verdun_logo.svg',
+    tags: ['HOST_BOROUGH', 'CIVIC_PARTNER', 'URBAN_CORRIDORS', 'ACTIVE_MOBILITY'],
+    website: 'https://montreal.ca/verdun',
+    instagramUrl: 'https://www.instagram.com/arr_verdun',
   }
 ];
 
 export const SPONSORS: Sponsor[] = [
   {
-    id: 'spon-verdun',
-    name: 'Arrondissement de Verdun',
-    role: 'GOV_NODE',
-    slotIndex: 1,
-    isOpen: false,
+    id: 'spon-rockin',
+    name: 'ROCKIN\' FRAMES',
+    image: '/sponsors/rockin.png',
+    website: 'https://rockinframes.com',
+  },
+  {
+    id: 'spon-solo',
+    name: 'Boutique Solo-Inline',
+    image: '/sponsors/solo.png',
+    website: 'https://solo-inline.com/'
+  },
+  {
+    id: 'spon-lowlife',
+    name: 'Lowlife Mtl',
+    image: '/sponsors/lowlife.png',
+    website: 'https://www.lowlifemtl.com/'
+  },
+  {
+    id: 'spon-skpro',
+    name: 'SkatePro',
+    image: '/sponsors/skatepro.png',
+    website: 'https://www.skatepro.ca/'
+  },
+  {
+    id: 'spon-prosk8place',
+    name: 'ProSkaters Place',
+    image: '/sponsors/proskaterplace.png',
+    website: 'https://proskatersplace.ca/'
+  },
+  {
+    id: 'spon-flyingeagle',
+    name: 'FlyingEagle Skate',
+    image: '/sponsors/flyingeagle.png',
+    website: 'https://www.flyingeagleskates.com/'
+  },
+  {
+    id: 'spon-yoyo',
+    name: 'YOYOSKATE',
+    image: '/sponsors/yoyo.png',
+    website: 'https://www.yoyoskateofficial.com/'
   }
 ];
 
