@@ -40,6 +40,249 @@ export interface ConductRule {
   severity?: 'standard' | 'safety' | 'zero_tolerance';
 }
 
+export interface SkatingSkillLevel {
+  id: 'first_timer' | 'beginner' | 'intermediate' | 'advanced';
+  colorCode: string;
+  colorName: string;
+  dotBg: string;
+  borderClass: string;
+  textClass: string;
+  bgGlowClass: string;
+  pace?: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  name: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  requirements: {
+    EN: string[];
+    FR: string[];
+    ES: string[];
+  };
+  accessibleEvents: {
+    EN: string[];
+    FR: string[];
+    ES: string[];
+  };
+}
+
+export const SKATING_SKILL_LEVELS: SkatingSkillLevel[] = [
+  {
+    id: 'first_timer',
+    colorCode: '#E1FD15',
+    colorName: 'Yellow / Jaune / Amarillo',
+    dotBg: 'bg-[#E1FD15]',
+    borderClass: 'border-[#E1FD15]/60 hover:border-[#E1FD15]',
+    textClass: 'text-[#E1FD15]',
+    bgGlowClass: 'shadow-[0_0_20px_rgba(225,253,21,0.15)]',
+    name: {
+      EN: 'First-timer',
+      FR: 'Première Fois',
+      ES: 'Primera Vez',
+    },
+    requirements: {
+      EN: [
+        'Great job for having the courage to take up skating!',
+        'Our practice sessions and open clinics will be perfect for learning basics, balance, and improving your skills.',
+      ],
+      FR: [
+        'Bravo pour ton courage à te lancer dans le patin !',
+        "Nos événements de pratique et initiations seront parfaits pour apprendre les bases, l'équilibre et t'améliorer.",
+      ],
+      ES: [
+        '¡Qué bien que hayas tenido el valor de empezar a patinar!',
+        'Nuestras sesiones de práctica serán perfectas para aprender las bases, el equilibrio y mejorar tus habilidades.',
+      ],
+    },
+    accessibleEvents: {
+      EN: [
+        'Magic Monday',
+        'Saturday on wheels (winter season)',
+        'Sunday Fun Days',
+      ],
+      FR: [
+        'Lundi Magique',
+        'Samedi ça roule (saison hivernale)',
+        'Dimanches Fun de l\'été',
+      ],
+      ES: [
+        'Lunes mágico',
+        'Sábado sobre ruedas (temporada de invierno)',
+        'Días de diversión los domingos',
+      ],
+    },
+  },
+  {
+    id: 'beginner',
+    colorCode: '#00FF66',
+    colorName: 'Green / Vert / Verde',
+    dotBg: 'bg-[#00FF66]',
+    borderClass: 'border-[#00FF66]/60 hover:border-[#00FF66]',
+    textClass: 'text-[#00FF66]',
+    bgGlowClass: 'shadow-[0_0_20px_rgba(0,255,102,0.15)]',
+    pace: {
+      EN: '10 km in 2h',
+      FR: '10 km en 2h',
+      ES: '10 km en 2h',
+    },
+    name: {
+      EN: 'Beginner',
+      FR: 'Débutant',
+      ES: 'Principiante',
+    },
+    requirements: {
+      EN: [
+        'You can ride while balancing and control your direction',
+        'You know how to control your speed on flat ground and slow down with T-brake on one side',
+        'You can skate 10 km in 2 hours',
+      ],
+      FR: [
+        'Tu peux rouler en équilibre et contrôler ta direction',
+        'Tu sais contrôler ta vitesse sur le plat et ralentir avec le freinage en T d\'un côté',
+        'Tu peux patiner 10 km en 2h',
+      ],
+      ES: [
+        'Puedes patinar manteniendo el equilibrio y controlando la dirección',
+        'Sabes cómo controlar tu velocidad en terreno llano y reducir la velocidad con el freno en T de un lado',
+        'Puedes patinar 10 km en 2 horas',
+      ],
+    },
+    accessibleEvents: {
+      EN: [
+        'All from First-timer level',
+        'Urban Wednesday with introduction',
+        'Saturday Night Roller Fever',
+      ],
+      FR: [
+        'Tout du niveau Première Fois',
+        'Mercredi urbain avec initiation',
+        'La fièvre du Samedi soir en roller',
+      ],
+      ES: [
+        'Todo de nível Primera Vez',
+        'Miércoles urbano con presentación',
+        'Fiebre de patines del sábado por la noche',
+      ],
+    },
+  },
+  {
+    id: 'intermediate',
+    colorCode: '#00D2FF',
+    colorName: 'Blue / Bleu / Azul',
+    dotBg: 'bg-[#00D2FF]',
+    borderClass: 'border-[#00D2FF]/60 hover:border-[#00D2FF]',
+    textClass: 'text-[#00D2FF]',
+    bgGlowClass: 'shadow-[0_0_20px_rgba(0,210,255,0.15)]',
+    pace: {
+      EN: '15 km in 2h',
+      FR: '15 km en 2h',
+      ES: '15 km en 2h',
+    },
+    name: {
+      EN: 'Intermediate',
+      FR: 'Intermédiaire',
+      ES: 'Intermedio',
+    },
+    requirements: {
+      EN: [
+        'You know how to control your speed on gentle slopes',
+        'You know how to take turns by leaning into them (carving/drift)',
+        'You know how to stop using the T-stop on both sides',
+        'You can skate 15 km in 2 hours',
+      ],
+      FR: [
+        'Tu sais contrôler ta vitesse dans les pentes légères',
+        'Tu sais prendre les courbes en dérive',
+        'Tu sais freiner en T des 2 côtés',
+        'Tu peux patiner 15 km en 2h',
+      ],
+      ES: [
+        'Sabes cómo controlar tu velocidad en pendientes suaves',
+        'Sabes cómo tomar las curvas inclinándote hacia ellas',
+        'Sabes cómo detenerte usando el freno en T en ambos lados',
+        'Puedes patinar 15 km en 2 horas',
+      ],
+    },
+    accessibleEvents: {
+      EN: [
+        'All from Beginner level',
+        'Light-Up the 514',
+        'Urban Wednesday (off-summer-season)',
+      ],
+      FR: [
+        'Tout du niveau Débutant',
+        'Illumine le 514',
+        'Mercredi urbain (hors saison estivale)',
+      ],
+      ES: [
+        'Todo de nível Principiante',
+        'Ilumina el 514',
+        'Miércoles urbano (fuera de la temporada de verano)',
+      ],
+    },
+  },
+  {
+    id: 'advanced',
+    colorCode: '#FF0055',
+    colorName: 'Red / Rouge / Rojo',
+    dotBg: 'bg-[#FF0055]',
+    borderClass: 'border-[#FF0055]/60 hover:border-[#FF0055]',
+    textClass: 'text-[#FF0055]',
+    bgGlowClass: 'shadow-[0_0_20px_rgba(255,0,85,0.15)]',
+    pace: {
+      EN: '25 km in 2h',
+      FR: '25 km en 2h',
+      ES: '25 km en 2h',
+    },
+    name: {
+      EN: 'Advanced',
+      FR: 'Avancé',
+      ES: 'Avanzado',
+    },
+    requirements: {
+      EN: [
+        'You can control your speed in all situations: traffic, steep descents',
+        'You can navigate obstacles: curbs, potholes, gravel',
+        'You can take turns with a cross-step (crossovers)',
+        'You can skate backward and perform powerslides and/or soul slides',
+        'You can skate 25 km in 2 hours',
+      ],
+      FR: [
+        'Tu sais contrôler ta vitesse en toutes circonstances : circulation, descente abrupte',
+        'Tu sais gérer les obstacles : trottoirs, nids-de-poule, gravier',
+        'Tu sais prendre les courbes en croisé',
+        'Tu sais patiner en arrière et déraper en powerslide et/ou soul slide',
+        'Tu peux patiner 25 km en 2h',
+      ],
+      ES: [
+        'Puedes controlar tu velocidad en cualquier situación: tráfico, descensos empinados',
+        'Puedes sortear obstáculos: bordillos, baches, grava',
+        'Puedes tomar las curvas con un paso cruzado',
+        'Puedes patinar hacia atrás y hacer derrapes y/o soul slides',
+        'Puedes patinar 25 km en 2 horas',
+      ],
+    },
+    accessibleEvents: {
+      EN: [
+        'All from Intermediate level',
+        'Explore the 514 (off-summer-season)',
+      ],
+      FR: [
+        'Tout du niveau Intermédiaire',
+        'Explore le 514 (hors saison estivale)',
+      ],
+      ES: [
+        'Todo de nível Intermedio',
+        'Explora el 514 (fuera de la temporada de verano)',
+      ],
+    },
+  },
+];
+
 export const FAQ_CATEGORIES = [
   { id: 'all', labelEN: 'All Intel', labelFR: 'Toutes les infos', labelES: 'Toda la información' },
   { id: 'general', labelEN: 'Overview', labelFR: 'Général', labelES: 'General' },
