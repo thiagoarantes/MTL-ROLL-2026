@@ -165,7 +165,11 @@ export const ORGANIZERS: Organizer[] = [
   {
     id: 'org-rolling-tribes',
     name: 'Rolling Tribes',
-    roleDescription: 'The architectural minds behind the night. Rolling Tribes is a collective of velocity addicts and urban navigators dedicated to reclaiming the concrete sprawl. They engineer the routes, establish the protocols, and ensure the grid remains electrified for every rider entering the zone.',
+    roleDescription: {
+      EN: 'The architectural minds behind the night. Rolling Tribes is a collective of velocity addicts and urban navigators dedicated to reclaiming the concrete sprawl. They engineer the routes, establish the protocols, and ensure the grid remains electrified for every rider entering the zone.',
+      FR: "Les architectes au cœur de l'événement. Rolling Tribes est un collectif de passionnés de vitesse et de navigateurs urbains dévoués à s'approprier les espaces urbains. Ils conçoivent les parcours, établissent les protocoles de sécurité et veillent à dynamiser chaque kilomètre pour tous les patineurs.",
+      ES: 'Las mentes maestras detrás del evento. Rolling Tribes es un colectivo de apasionados por la velocidad y exploradores urbanos dedicados a conquistar el asfalto. Diseñan las rutas, establecen los protocolos de seguridad y aseguran que la energía se mantenga al máximo para cada participante.',
+    },
     entityId: 'RLL_TRB_01',
     image: '/organizers/rolling_tribes_logo.jpg',
     tags: ['ROUTING', 'LOGISTICS', 'OVERSEER'],
@@ -175,7 +179,11 @@ export const ORGANIZERS: Organizer[] = [
   {
     id: 'org-city-verdun',
     name: 'Arrondissement de Verdun',
-    roleDescription: 'Official municipal host and territorial partner for MONTRÉAL ROLL 2026. Arrondissement de Verdun powers the grid by opening prime waterfront plazas, pump track hubs, and protected urban corridors, championing active mobility and community skate culture.',
+    roleDescription: {
+      EN: 'Official municipal host and territorial partner for MONTRÉAL ROLL 2026. Arrondissement de Verdun powers the grid by opening prime waterfront plazas, pump track hubs, and protected urban corridors, championing active mobility and community skate culture.',
+      FR: "Arrondissement hôte officiel et partenaire territorial de MONTRÉAL ROLL 2026. L'arrondissement de Verdun soutient le festival en ouvrant ses magnifiques berges, ses installations de pumptrack et ses corridors urbains protégés, valorisant la mobilité active et la culture du patinage.",
+      ES: 'Anfitrión municipal oficial y aliado territorial de MONTRÉAL ROLL 2026. La alcaldía de Verdun impulsa el evento abriendo sus plazas costeras, circuitos de pumptrack y corredores urbanos protegidos, promoviendo la movilidad activa y la cultura del patinaje.',
+    },
     entityId: 'ARR_VRDN_02',
     image: '/organizers/verdun_logo.svg',
     tags: ['HOST_BOROUGH', 'CIVIC_PARTNER', 'URBAN_CORRIDORS', 'ACTIVE_MOBILITY'],

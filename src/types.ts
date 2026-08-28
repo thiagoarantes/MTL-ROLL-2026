@@ -24,7 +24,11 @@ export interface Guest {
 export interface Organizer {
   id: string;
   name: string;
-  roleDescription: string;
+  roleDescription: string | {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
   entityId: string;
   image: string;
   tags: string[];

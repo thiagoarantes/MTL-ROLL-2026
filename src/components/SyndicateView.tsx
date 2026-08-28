@@ -103,6 +103,7 @@ export default function SyndicateView({
     registeredGuests: lang === 'EN' ? 'Registered Guests' : lang === 'FR' ? 'Invités Enregistrés' : 'Invitados Registrados',
     networkSponsors: lang === 'EN' ? 'Network Sponsors' : lang === 'FR' ? 'Partenaires Réseau' : 'Patrocinadores de la Red',
     viewDetails: lang === 'EN' ? 'View Details' : lang === 'FR' ? 'Voir Détails' : 'Ver Detalles',
+    viewProfile: lang === 'EN' ? 'View Profile' : lang === 'FR' ? 'Voir Profil' : 'Ver Perfil',
     websiteLabel: lang === 'EN' ? 'Official Website' : lang === 'FR' ? 'Site Officiel' : 'Sitio Oficial',
     instagramLabel: lang === 'EN' ? 'Instagram Profile' : lang === 'FR' ? 'Profil Instagram' : 'Perfil de Instagram',
   };
@@ -279,7 +280,9 @@ export default function SyndicateView({
               </div>
 
               <p className="font-sans text-sm sm:text-base text-[#c7c9ac] leading-relaxed pt-2">
-                {selectedOrganizer.roleDescription}
+                {typeof selectedOrganizer.roleDescription === 'string'
+                  ? selectedOrganizer.roleDescription
+                  : selectedOrganizer.roleDescription[lang]}
               </p>
 
               {/* Social & Website Links */}
@@ -361,7 +364,7 @@ export default function SyndicateView({
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="px-3 py-1.5 bg-[#9500FF] text-white font-mono text-[10px] font-bold uppercase flex items-center gap-1.5 shadow-lg">
                     <Maximize2 className="w-3 h-3" />
-                    <span>View Profile</span>
+                    <span>{t.viewProfile}</span>
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#0B0C10] to-transparent pointer-events-none" />
@@ -471,7 +474,7 @@ export default function SyndicateView({
                     className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200 group"
                   >
                     <Instagram className="w-4 h-4 text-[#E1FD15] group-hover:text-white transition-colors" />
-                    <span>Instagram Profile</span>
+                    <span>{t.instagramLabel}</span>
                     <ExternalLink className="w-3.5 h-3.5 opacity-70" />
                   </a>
                 </div>
