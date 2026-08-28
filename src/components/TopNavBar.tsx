@@ -7,6 +7,7 @@ interface TopNavBarProps {
   lang: 'EN' | 'FR' | 'ES';
   onChangeLang: (lang: 'EN' | 'FR' | 'ES') => void;
   registerFormUrl?: string;
+  boutiqueUrl?: string;
 }
 
 export default function TopNavBar({
@@ -15,6 +16,7 @@ export default function TopNavBar({
   lang,
   onChangeLang,
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
+  boutiqueUrl = 'https://www.zeffy.com/en-CA/embed/ticketing/dons-durant-la-saison-estivale',
 }: TopNavBarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [desktopLangOpen, setDesktopLangOpen] = React.useState(false);
@@ -32,6 +34,7 @@ export default function TopNavBar({
 
   const t = {
     register: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
+    boutique: lang === 'EN' ? 'Shop' : lang === 'FR' ? 'Boutique' : 'Tienda',
   };
 
   return (
@@ -138,6 +141,17 @@ export default function TopNavBar({
               </>
             )}
           </div>
+
+          {/* Boutique CTA */}
+          <a
+            href={boutiqueUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-2 border-[#9500FF] bg-[#1a0933]/70 text-white hover:bg-[#9500FF] hover:text-white hover:shadow-[0_0_15px_rgba(149,0,255,0.7)] px-5 py-2 rounded-none font-headline text-sm uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer font-bold inline-block text-center"
+            id="boutique-navbar-btn"
+          >
+            {t.boutique}
+          </a>
 
           {/* Register CTA */}
           <a
@@ -255,15 +269,28 @@ export default function TopNavBar({
               </button>
             );
           })}
-          <a
-            href={registerFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full bg-[#E1FD15] text-[#0B0C10] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer block"
-          >
-            {t.register}
-          </a>
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <a
+              href={boutiqueUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full border-2 border-[#9500FF] bg-[#1a0933]/70 text-white hover:bg-[#9500FF] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer block"
+              id="mobile-boutique-btn"
+            >
+              {t.boutique}
+            </a>
+            <a
+              href={registerFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full bg-[#E1FD15] text-[#0B0C10] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer block"
+              id="mobile-register-btn"
+            >
+              {t.register}
+            </a>
+          </div>
         </div>
       )}
     </nav>
