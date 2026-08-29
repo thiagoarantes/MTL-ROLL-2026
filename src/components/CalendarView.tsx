@@ -472,17 +472,14 @@ export default function CalendarView({
                           const title = getLocalized(event.title);
                           const levelInfo = getLevelInfo(event.level);
 
-                          // Accent border based on event type
-                          const themeBorder = 
-                            event.type === 'ride' ? 'border-l-[#E1FD15]' :
-                            event.type === 'competition' ? 'border-l-[#ffb4ab]' :
-                            event.type === 'workshop' ? 'border-l-[#9500FF]' : 'border-l-[#00D2FF]';
+                          // Cyan left border, purple on hover
+                          const themeBorder = 'border-l-[#00D2FF]';
 
                           return (
                             <div
                               key={event.id}
                               onClick={() => setActiveDetailEventId(event.id)}
-                              className={`bg-[#17191d] border border-[#272a2e] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:bg-[#1f2227] hover:shadow-[0_0_15px_rgba(149,0,255,0.25)] transition-all p-3.5 cursor-pointer group text-left relative`}
+                              className={`bg-[#17191d] border border-[#272a2e] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:border-l-[#9500FF] hover:bg-[#1f2227] hover:shadow-[0_0_15px_rgba(149,0,255,0.25)] transition-all p-3.5 cursor-pointer group text-left relative`}
                             >
                               {/* Time & Level Indicator */}
                               <div className="flex items-center justify-between gap-2 mb-2">
@@ -577,17 +574,14 @@ export default function CalendarView({
                     const isRide = !!endLocation && endLocation.trim().length > 0;
                     const levelInfo = getLevelInfo(event.level);
 
-                    // Border indicator accent
-                    const themeBorder = 
-                      event.type === 'ride' ? 'border-l-[#E1FD15]' :
-                      event.type === 'competition' ? 'border-l-[#ffb4ab]' :
-                      event.type === 'workshop' ? 'border-l-[#9500FF]' : 'border-l-[#00D2FF]';
+                    // Cyan left border, purple on hover
+                    const themeBorder = 'border-l-[#00D2FF]';
 
                     return (
                       <div
                         key={event.id}
                         onClick={() => setActiveDetailEventId(event.id)}
-                        className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
+                        className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:border-l-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
                       >
                         {/* Content Area */}
                         <div className="flex flex-col justify-between gap-4">
@@ -600,14 +594,6 @@ export default function CalendarView({
                                   {renderIcon(event.iconName)}
                                   <span>{category}</span>
                                 </span>
-
-                                {/* Ride Badge */}
-                                {isRide && (
-                                  <span className="font-mono text-[9px] uppercase px-2 py-0.5 bg-[#E1FD15] text-[#0B0C10] font-black tracking-wider flex items-center gap-1 shadow-sm">
-                                    <Bike className="w-3 h-3" />
-                                    <span>{t.rideType}</span>
-                                  </span>
-                                )}
 
                                 {/* Time */}
                                 <div className="flex items-center gap-1.5 text-[#E1FD15] font-mono text-xs font-bold ml-1">
@@ -739,11 +725,6 @@ export default function CalendarView({
                     <span className="font-mono text-[11px] text-[#E1FD15] uppercase tracking-widest font-black">
                       // {category}
                     </span>
-                    {isRide && (
-                      <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 bg-[#E1FD15] text-[#0B0C10] font-black">
-                        {t.rideType}
-                      </span>
-                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-[10px] text-[#c7c9ac] px-2 bg-[#111415] border border-[#333537] py-0.5">
