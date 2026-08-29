@@ -87,8 +87,8 @@ export default function CalendarView({
     };
   };
 
-  const filteredEvents = TIMETABLE_EVENTS.filter((event) => {
-    const matchesDay = selectedDay === 'all' || event.day === selectedDay;
+  // Events matching Category, Level, and Search query (independent of day)
+  const matchingEvents = TIMETABLE_EVENTS.filter((event) => {
     const matchesType = filterType === 'all' || event.type === filterType;
     const matchesLevel = selectedLevel === 'all' || event.level === selectedLevel;
     
@@ -108,11 +108,17 @@ export default function CalendarView({
       catStr.includes(q) ||
       event.time.toLowerCase().includes(q);
 
-    return matchesDay && matchesType && matchesLevel && matchesSearch;
+    return matchesType && matchesLevel && matchesSearch;
   });
 
-  // Master events list for carousel across the whole schedule or filtered view
-  const currentEventsList = filteredEvents.length > 0 ? filteredEvents : TIMETABLE_EVENTS;
+  // List view specific events: applies the Day selection filter on top of other filters
+  const listFilteredEvents = matchingEvents.filter((event) => {
+    return selectedDay === 'all' || event.day === selectedDay;
+  });
+
+  // Master events list for carousel across active view mode
+  const activeEventsPool = viewMode === 'calendar' ? matchingEvents : listFilteredEvents;
+  const currentEventsList = activeEventsPool.length > 0 ? activeEventsPool : TIMETABLE_EVENTS;
 
   // Keyboard navigation for active detail modal
   React.useEffect(() => {
@@ -442,8 +448,8 @@ export default function CalendarView({
                 { day: 2 as const, label: t.day2Label, short: t.day2Short, dateCode: '2026-09-12' },
                 { day: 3 as const, label: t.day3Label, short: t.day3Short, dateCode: '2026-09-13' },
               ]).map((col) => {
-                // Filter events matching the day, plus any active category/level/search filters
-                const dayEvents = filteredEvents.filter((ev) => ev.day === col.day);
+                // Calendar view always displays all three days, filtered only by category/level/search
+                const dayEvents = matchingEvents.filter((ev) => ev.day === col.day);
 
                 return (
                   <div 
@@ -563,8 +569,8 @@ export default function CalendarView({
 
               {/* Timetable Flow List */}
               <div className="lg:col-span-9 space-y-4">
-                {filteredEvents.length > 0 ? (
-                  filteredEvents.map((event) => {
+                {listFilteredEvents.length > 0 ? (
+                  listFilteredEvents.map((event) => {
                     const title = getLocalized(event.title);
                     const description = getLocalized(event.description);
                     const dateStr = getLocalized(event.date);
