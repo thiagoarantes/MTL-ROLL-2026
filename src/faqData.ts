@@ -390,6 +390,25 @@ export const FAQ_ITEMS: FaqItem[] = [
     },
   },
   {
+    id: 'faq-skate-rentals-borrowing',
+    category: 'rules',
+    question: {
+      EN: 'Do you rent skates?',
+      FR: 'Louez-vous des patins ?',
+      ES: '¿Alquilan patines?',
+    },
+    answer: {
+      EN: 'You can borrow inline skates for free from the Rolling Tribes community for workshops at the BBB rink in Verdun (limited quantities available).\n\nIf you wish to rent or purchase skates, check out the local specialized skate shops: SoloInline for inline skates and LowLife for quad roller skates.',
+      FR: 'Vous pouvez emprunter gratuitement des patins à roues alignées de la communauté Rolling Tribes pour les ateliers à la patinoire BBB de Verdun (quantités limitées).\n\nSi vous souhaitez en louer ou en acheter, rendez-vous aux boutiques locales spécialisées : SoloInline pour des rollers en ligne (Inlines) et LowLife pour des quads (patins à roulettes).',
+      ES: 'Puedes tomar prestados patines en línea gratuitamente de la comunidad Rolling Tribes para los talleres en la pista BBB de Verdun (cantidades limitadas).\n\nSi deseas alquilar o comprar patines, visita las tiendas especializadas locales: SoloInline para patines en línea y LowLife para quads (patines de 4 ruedas).',
+    },
+    highlights: {
+      EN: ['Free Loan at BBB Rink (Limited)', 'SoloInline for Inlines', 'LowLife for Quads'],
+      FR: ['Prêt gratuit patinoire BBB (Limité)', 'SoloInline pour les Inlines', 'LowLife pour les Quads'],
+      ES: ['Préstamo gratis pista BBB (Limitado)', 'SoloInline para Inlines', 'LowLife para Quads'],
+    },
+  },
+  {
     id: 'faq-food-and-drink',
     category: 'amenities',
     question: {
