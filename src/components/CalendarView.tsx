@@ -472,14 +472,14 @@ export default function CalendarView({
                           const title = getLocalized(event.title);
                           const levelInfo = getLevelInfo(event.level);
 
-                          // Cyan left border, purple on hover
-                          const themeBorder = 'border-l-[#00D2FF]';
+                          // Purple left border, yellow on hover
+                          const themeBorder = 'border-l-[#9500FF]';
 
                           return (
                             <div
                               key={event.id}
                               onClick={() => setActiveDetailEventId(event.id)}
-                              className={`bg-[#17191d] border border-[#272a2e] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:border-l-[#9500FF] hover:bg-[#1f2227] hover:shadow-[0_0_15px_rgba(149,0,255,0.25)] transition-all p-3.5 cursor-pointer group text-left relative`}
+                              className={`bg-[#17191d] border border-[#272a2e] border-l-4 ${themeBorder} hover:border-[#E1FD15] hover:border-l-[#E1FD15] hover:bg-[#1f2227] hover:shadow-[0_0_15px_rgba(225,253,21,0.25)] transition-all p-3.5 cursor-pointer group text-left relative`}
                             >
                               {/* Time & Level Indicator */}
                               <div className="flex items-center justify-between gap-2 mb-2">
@@ -574,14 +574,14 @@ export default function CalendarView({
                     const isRide = !!endLocation && endLocation.trim().length > 0;
                     const levelInfo = getLevelInfo(event.level);
 
-                    // Cyan left border, purple on hover
-                    const themeBorder = 'border-l-[#00D2FF]';
+                    // Purple left border, yellow on hover
+                    const themeBorder = 'border-l-[#9500FF]';
 
                     return (
                       <div
                         key={event.id}
                         onClick={() => setActiveDetailEventId(event.id)}
-                        className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:border-l-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
+                        className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#E1FD15] hover:border-l-[#E1FD15] hover:shadow-[0_0_20px_rgba(225,253,21,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
                       >
                         {/* Content Area */}
                         <div className="flex flex-col justify-between gap-4">
