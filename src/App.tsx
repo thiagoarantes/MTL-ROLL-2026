@@ -1,5 +1,6 @@
 import React from 'react';
 import { Instagram, Facebook, Globe, MapPin } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import TopNavBar from './components/TopNavBar';
 import CalendarView from './components/CalendarView';
 import SitesMapView from './components/SitesMapView';
@@ -208,6 +209,9 @@ export default function App() {
 
         </div>
       </footer>
+
+      {/* Vercel Analytics */}
+      <Analytics />
 
     </div>
   );
