@@ -8,7 +8,7 @@ import {
   X, 
   Calendar as CalendarIcon, 
   Clock, 
-  Bike, 
+  Building2, 
   Brush, 
   Milestone, 
   Shuffle, 
@@ -150,7 +150,9 @@ export default function CalendarView({
     switch (iconName) {
       case 'directions_bike':
       case 'bike':
-        return <Bike className="w-4 h-4 text-[#E1FD15]" />;
+      case 'building':
+      case 'building2':
+        return <Building2 className="w-4 h-4 text-[#E1FD15]" />;
       case 'brush':
         return <Brush className="w-4 h-4 text-[#E1FD15]" />;
       case 'route':

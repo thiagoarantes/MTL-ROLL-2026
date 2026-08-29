@@ -162,7 +162,7 @@ export default function App() {
           {/* Socials & Community Link Channels */}
           <div className="flex flex-wrap justify-center items-center gap-6 font-sans text-xs">
             <a 
-              href="https://chat.whatsapp.com/F7nHbcrNuGJGlpq2oRIlgl" 
+              href="https://chat.whatsapp.com/JyyW0HZxQsQDYbLdTaBG4p" 
               target="_blank" 
               rel="noreferrer"
               className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
