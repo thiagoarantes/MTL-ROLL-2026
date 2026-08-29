@@ -232,7 +232,7 @@ export default function CalendarView({
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full opacity-40 mix-blend-luminosity grayscale"
           style={{ 
-            backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBk23iiPsQondimS8L4yxRofJ4bhsP047QTlBPD9Q2yAq81d3NVWmJPkMoTr-538WC-BYjgSUwL2KujXsd86RSSIWoIUPFWDCjC5znhkqE4sNF6ERE4RBrz1NAHjpvdYcCzVPhl3-Zxr86kRXEL4pew3b0hF0wcEmcXlS-W5jMlp00OGwHKc4tUvXNDcF2u6iZERWETMLoSwYmpfSpLYCqlrL4J03o2ZyXAxyJT3Z-l3270gFsqfT5g')" 
+            backgroundImage: "url('/mtlbg.png')" 
           }}
         />
         {/* Dark to transparent gradients */}
