@@ -26,11 +26,13 @@ import { TimetableEvent } from '../types';
 interface CalendarViewProps {
   lang: 'EN' | 'FR' | 'ES';
   registerFormUrl?: string;
+  volunteerFormUrl?: string;
 }
 
 export default function CalendarView({
   lang,
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
+  volunteerFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc1bOWF_xmJuNlZifWtSGFHFhYTJUqjYpvbMZCE_rdhs5js8A/viewform',
 }: CalendarViewProps) {
   const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3>(1);
   const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'competition' | 'workshop' | 'social'>('all');
@@ -115,6 +117,7 @@ export default function CalendarView({
     hollowHeaderTitle: lang === 'EN' ? 'RIDE THE NIGHT' : lang === 'FR' ? 'ROULER LA NUIT' : 'CONDUCE LA NOCHE',
     viewSchedule: lang === 'EN' ? 'View Schedule' : lang === 'FR' ? 'Voir le Programme' : 'Ver Calendario',
     secureSpot: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
+    becomeVolunteer: lang === 'EN' ? 'Become a Volunteer' : lang === 'FR' ? 'Devenir Bénévole' : 'Hazte Voluntario',
     secTitle: lang === 'EN' ? 'TACTICAL TIMETABLE' : lang === 'FR' ? 'CALENDRIER DES VECTEURS' : 'HORARIO TÁCTICO',
     secSubtitle: lang === 'EN' ? 'Sync your local terminal with scheduled grid activations. Click any session to open event details.' : lang === 'FR' ? 'Synchronisez vos platines avec le programme d\'activation du réseau. Cliquez sur une session pour voir les détails.' : 'Sincroniza tu terminal con las activaciones programadas. Haz clic en una sesión para ver detalles.',
     filterAll: lang === 'EN' ? 'All Activities' : lang === 'FR' ? 'Tout' : 'Todas',
@@ -185,22 +188,36 @@ export default function CalendarView({
             SEPT 11-12-13
           </p>
 
-          <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full max-w-md">
-            <a 
-              href={registerFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#E1FD15] text-[#0B0C10] px-8 py-4 rounded-none font-headline font-black text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer border-0 w-full inline-block text-center"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center"}}
-            >
-              {t.secureSpot}
-            </a>
-            <button 
-              onClick={handleScrollToSchedule}
-              className="bg-transparent border-2 border-[#9500FF] text-white px-8 py-4 rounded-none font-headline font-bold text-sm uppercase tracking-widest hover:bg-[#9500FF]/20 transition-all scale-95 active:scale-90 cursor-pointer w-full"
-            >
-              {t.viewSchedule}
-            </button>
+          <div className="mt-12 flex flex-col items-center gap-4 w-full max-w-md">
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
+              <a 
+                href={registerFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#E1FD15] text-[#0B0C10] px-8 py-4 rounded-none font-headline font-black text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer border-0 w-full flex items-center justify-center text-center"
+              >
+                {t.secureSpot}
+              </a>
+              <button 
+                onClick={handleScrollToSchedule}
+                className="bg-transparent border-2 border-[#9500FF] text-white px-8 py-4 rounded-none font-headline font-bold text-sm uppercase tracking-widest hover:bg-[#9500FF]/20 transition-all scale-95 active:scale-90 cursor-pointer w-full flex items-center justify-center text-center"
+              >
+                {t.viewSchedule}
+              </button>
+            </div>
+
+            {/* Become a Volunteer */}
+            <div className="w-full flex">
+              <a 
+                href={volunteerFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#111415]/90 border-2 border-[#00D2FF] hover:border-[#00D2FF] text-[#00D2FF] hover:text-white hover:bg-[#00D2FF]/20 px-8 py-4 rounded-none font-headline font-bold text-sm uppercase tracking-widest transition-all scale-95 active:scale-90 cursor-pointer w-full flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(0,210,255,0.6)] text-center"
+              >
+                <Users className="w-4 h-4 text-[#00D2FF]" />
+                <span>{t.becomeVolunteer}</span>
+              </a>
+            </div>
           </div>
         </div>
 

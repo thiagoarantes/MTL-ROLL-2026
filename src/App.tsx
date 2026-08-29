@@ -9,6 +9,7 @@ import { GUESTS, ORGANIZERS, SPONSORS } from './data';
 import { Sponsor } from './types';
 
 const REGISTER_FORM_URL = 'https://forms.gle/7A9spHxz3Qm8VyEfA';
+const VOLUNTEER_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc1bOWF_xmJuNlZifWtSGFHFhYTJUqjYpvbMZCE_rdhs5js8A/viewform';
 
 export default function App() {
   // Navigation & Localization
@@ -102,6 +103,7 @@ export default function App() {
           <CalendarView
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
+            volunteerFormUrl={VOLUNTEER_FORM_URL}
           />
         )}
 
