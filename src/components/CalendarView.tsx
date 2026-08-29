@@ -17,11 +17,16 @@ import {
   Users, 
   ChevronLeft, 
   ChevronRight, 
-  Search 
+  Search,
+  Navigation,
+  CheckCircle2,
+  Layers,
+  Flag
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { TIMETABLE_EVENTS } from '../data';
-import { TimetableEvent } from '../types';
+import { TimetableEvent, SkillLevelId, LocalizedText } from '../types';
+import { SKATING_SKILL_LEVELS } from '../faqData';
 
 interface CalendarViewProps {
   lang: 'EN' | 'FR' | 'ES';
@@ -34,8 +39,9 @@ export default function CalendarView({
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
   volunteerFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc1bOWF_xmJuNlZifWtSGFHFhYTJUqjYpvbMZCE_rdhs5js8A/viewform',
 }: CalendarViewProps) {
-  const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3>(1);
+  const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3 | 'all'>('all');
   const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'competition' | 'workshop' | 'social'>('all');
+  const [selectedLevel, setSelectedLevel] = React.useState<'all' | SkillLevelId>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [activeDetailEventId, setActiveDetailEventId] = React.useState<string | null>(null);
 
@@ -45,15 +51,62 @@ export default function CalendarView({
     scheduleContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const getLocalized = (field: string | LocalizedText | undefined): string => {
+    if (!field) return '';
+    if (typeof field === 'string') return field;
+    return field[lang] || field.EN || '';
+  };
+
+  const getLevelInfo = (levelId: SkillLevelId) => {
+    const level = SKATING_SKILL_LEVELS.find((lvl) => lvl.id === levelId);
+    if (level) {
+      return {
+        id: level.id,
+        name: level.name[lang] || level.name.EN,
+        colorCode: level.colorCode,
+        colorName: level.colorName,
+        dotBg: level.dotBg,
+        borderClass: level.borderClass,
+        textClass: level.textClass,
+        bgGlowClass: level.bgGlowClass,
+        pace: level.pace ? level.pace[lang] : undefined,
+      };
+    }
+    return {
+      id: levelId,
+      name: levelId,
+      colorCode: '#E1FD15',
+      colorName: 'Yellow',
+      dotBg: 'bg-[#E1FD15]',
+      borderClass: 'border-[#E1FD15]',
+      textClass: 'text-[#E1FD15]',
+      bgGlowClass: 'bg-[#E1FD15]/10',
+      pace: undefined,
+    };
+  };
+
   const filteredEvents = TIMETABLE_EVENTS.filter((event) => {
-    const matchesDay = event.day === selectedDay;
+    const matchesDay = selectedDay === 'all' || event.day === selectedDay;
     const matchesType = filterType === 'all' || event.type === filterType;
+    const matchesLevel = selectedLevel === 'all' || event.level === selectedLevel;
+    
+    const titleStr = getLocalized(event.title).toLowerCase();
+    const descStr = getLocalized(event.description).toLowerCase();
+    const startLocStr = getLocalized(event.startLocation).toLowerCase();
+    const endLocStr = getLocalized(event.endLocation).toLowerCase();
+    const catStr = getLocalized(event.category).toLowerCase();
+    const q = searchQuery.toLowerCase();
+
     const matchesSearch = 
       !searchQuery || 
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesDay && matchesType && matchesSearch;
+      titleStr.includes(q) ||
+      descStr.includes(q) ||
+      startLocStr.includes(q) ||
+      endLocStr.includes(q) ||
+      catStr.includes(q) ||
+      event.time.toLowerCase().includes(q);
+
+    return matchesDay && matchesType && matchesLevel && matchesSearch;
   });
 
   // Master events list for carousel across the whole schedule or filtered view
@@ -89,27 +142,27 @@ export default function CalendarView({
     switch (iconName) {
       case 'directions_bike':
       case 'bike':
-        return <Bike className="w-5 h-5 text-[#E1FD15]" />;
+        return <Bike className="w-4 h-4 text-[#E1FD15]" />;
       case 'brush':
-        return <Brush className="w-5 h-5 text-[#E1FD15]" />;
+        return <Brush className="w-4 h-4 text-[#E1FD15]" />;
       case 'route':
-        return <Milestone className="w-5 h-5 text-[#E1FD15]" />;
+        return <Milestone className="w-4 h-4 text-[#E1FD15]" />;
       case 'timeline':
-        return <Shuffle className="w-5 h-5 text-[#E1FD15]" />;
+        return <Shuffle className="w-4 h-4 text-[#E1FD15]" />;
       case 'flight_takeoff':
-        return <Flame className="w-5 h-5 text-[#E1FD15]" />;
+        return <Flame className="w-4 h-4 text-[#E1FD15]" />;
       case 'auto_awesome':
       case 'sparkles':
-        return <Sparkles className="w-5 h-5 text-[#E1FD15]" />;
+        return <Sparkles className="w-4 h-4 text-[#E1FD15]" />;
       case 'school':
-        return <School className="w-5 h-5 text-[#E1FD15]" />;
+        return <School className="w-4 h-4 text-[#E1FD15]" />;
       case 'users':
-        return <Users className="w-5 h-5 text-[#E1FD15]" />;
+        return <Users className="w-4 h-4 text-[#E1FD15]" />;
       case 'trophy':
       case 'award':
-        return <Trophy className="w-5 h-5 text-[#E1FD15]" />;
+        return <Trophy className="w-4 h-4 text-[#E1FD15]" />;
       default:
-        return <Compass className="w-5 h-5 text-[#E1FD15]" />;
+        return <Compass className="w-4 h-4 text-[#E1FD15]" />;
     }
   };
 
@@ -119,26 +172,39 @@ export default function CalendarView({
     secureSpot: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
     becomeVolunteer: lang === 'EN' ? 'Become a Volunteer' : lang === 'FR' ? 'Devenir Bénévole' : 'Hazte Voluntario',
     secTitle: lang === 'EN' ? 'TACTICAL TIMETABLE' : lang === 'FR' ? 'CALENDRIER DES VECTEURS' : 'HORARIO TÁCTICO',
-    secSubtitle: lang === 'EN' ? 'Sync your local terminal with scheduled grid activations. Click any session to open event details.' : lang === 'FR' ? 'Synchronisez vos platines avec le programme d\'activation du réseau. Cliquez sur une session pour voir les détails.' : 'Sincroniza tu terminal con las activaciones programadas. Haz clic en una sesión para ver detalles.',
+    secSubtitle: lang === 'EN' 
+      ? 'Synchronized schedule of rides, workshops, and competitions. Click any event to inspect full route vectors and requirements.' 
+      : lang === 'FR' 
+      ? 'Programme synchronisé des randonnées, ateliers et compétitions. Cliquez sur une session pour voir l\'itinéraire et les détails.' 
+      : 'Horario sincronizado de rutas, talleres y competencias. Haz clic en un evento para ver rutas y especificaciones.',
     filterAll: lang === 'EN' ? 'All Activities' : lang === 'FR' ? 'Tout' : 'Todas',
     filterRides: lang === 'EN' ? 'Street Rides' : lang === 'FR' ? 'Randonnées' : 'Rutas Urbanas',
     filterComps: lang === 'EN' ? 'Competitions' : lang === 'FR' ? 'Compétitions' : 'Competiciones',
     filterWorkshops: lang === 'EN' ? 'Workshops' : lang === 'FR' ? 'Ateliers' : 'Talleres',
     filterSocials: lang === 'EN' ? 'Syndicate Socials' : lang === 'FR' ? 'Rassemblements' : 'Sociales del Sindicato',
+    allLevels: lang === 'EN' ? 'All Levels' : lang === 'FR' ? 'Tous Niveaux' : 'Todos los Niveles',
     dayLabel: lang === 'EN' ? 'Day' : lang === 'FR' ? 'Jour' : 'Día',
+    allDaysPrefix: lang === 'EN' ? 'ALL DAYS // SEPT 11–13' : lang === 'FR' ? 'TOUS LES JOURS // 11–13 SEPT' : 'TODOS LOS DÍAS // 11–13 SEPT',
+    allDaysLabel: lang === 'EN' ? 'All Days (Full Grid)' : lang === 'FR' ? 'Tous les Jours (Complet)' : 'Todos los Días (Completo)',
     day1Label: lang === 'EN' ? 'Friday // Sept 11' : lang === 'FR' ? 'Vendredi // 11 Sept' : 'Viernes // 11 Sept',
     day2Label: lang === 'EN' ? 'Saturday // Sept 12' : lang === 'FR' ? 'Samedi // 12 Sept' : 'Sábado // 12 Sept',
     day3Label: lang === 'EN' ? 'Sunday // Sept 13' : lang === 'FR' ? 'Dimanche // 13 Sept' : 'Domingo // 13 Sept',
     noEvents: lang === 'EN' ? 'No scheduled vectors matching this filter.' : lang === 'FR' ? 'Aucun vecteur programmé pour ce filtre.' : 'No hay vectores programados que coincidan con este filtro.',
     vectorLabel: lang === 'EN' ? 'VECTOR' : lang === 'FR' ? 'VECTEUR' : 'VECTOR',
     viewDetails: lang === 'EN' ? 'VIEW DETAILS' : lang === 'FR' ? 'VOIR LES DÉTAILS' : 'VER DETALLES',
-    searchPlaceholder: lang === 'EN' ? 'Filter sessions by name, venue, or keyword...' : lang === 'FR' ? 'Filtrer les sessions par nom, lieu ou mot-clé...' : 'Filtrar sesiones por nombre, lugar o palabra clave...',
+    searchPlaceholder: lang === 'EN' ? 'Filter sessions by title, venue, route, or category...' : lang === 'FR' ? 'Filtrer les sessions par titre, lieu, itinéraire ou catégorie...' : 'Filtrar sesiones por título, lugar, ruta o categoría...',
     specs: lang === 'EN' ? 'DETAILED SPECIFICATIONS' : lang === 'FR' ? 'SPÉCIFICATIONS DÉTAILLÉES' : 'ESPECIFICACIONES DETALLADAS',
-    registerForSession: lang === 'EN' ? 'Register for Session' : lang === 'FR' ? 'S\'inscrire à la session' : 'Registrarse en la sesión',
+    registerForSession: lang === 'EN' ? 'Register' : lang === 'FR' ? 'S\'inscrire' : 'Registrarse',
     dateLabel: lang === 'EN' ? 'DATE' : lang === 'FR' ? 'DATE' : 'FECHA',
     timeLabel: lang === 'EN' ? 'TIME' : lang === 'FR' ? 'HORAIRE' : 'HORA',
+    levelLabel: lang === 'EN' ? 'LEVEL' : lang === 'FR' ? 'NIVEAU' : 'NIVEL',
     locationLabel: lang === 'EN' ? 'LOCATION' : lang === 'FR' ? 'LIEU' : 'LUGAR',
-    difficultyLabel: lang === 'EN' ? 'DIFFICULTY' : lang === 'FR' ? 'NIVEAU' : 'DIFICULTAD',
+    categoryLabel: lang === 'EN' ? 'CATEGORY' : lang === 'FR' ? 'CATÉGORIE' : 'CATEGORÍA',
+    startLocationLabel: lang === 'EN' ? 'STARTING LOCATION' : lang === 'FR' ? 'LIEU DE DÉPART' : 'LUGAR DE SALIDA',
+    endLocationLabel: lang === 'EN' ? 'ENDING LOCATION' : lang === 'FR' ? 'LIEU D\'ARRIVÉE' : 'LUGAR DE LLEGADA',
+    rideType: lang === 'EN' ? 'STREET RIDE' : lang === 'FR' ? 'RANDONNÉE URBAINE' : 'RUTA DE PATINAJE',
+    fixedType: lang === 'EN' ? 'FIXED LOCATION' : lang === 'FR' ? 'LIEU UNIQUE' : 'LUGAR FIJO',
+    routeTrajectory: lang === 'EN' ? 'ROUTE TRAJECTORY' : lang === 'FR' ? 'TRAJECTOIRE DU PARCOURS' : 'TRAYECTORIA DE LA RUTA',
     prev: lang === 'EN' ? 'Prev' : lang === 'FR' ? 'Préc' : 'Ant',
     next: lang === 'EN' ? 'Next' : lang === 'FR' ? 'Suiv' : 'Sig',
   };
@@ -225,7 +291,7 @@ export default function CalendarView({
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-[#9500FF] to-transparent" />
       </header>
 
-      {/* Schedule / Timetable Section */}
+      {/* Tactical Timetable Section */}
       <section 
         ref={scheduleContainerRef}
         className="py-24 bg-[#0B0C10] border-t border-[#1F2833] w-full"
@@ -233,21 +299,21 @@ export default function CalendarView({
         <div className="px-6 md:px-16 w-full max-w-7xl mx-auto">
           
           {/* Section Header */}
-          <div className="mb-12 text-left border-b border-[#1F2833] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="mb-10 text-left border-b border-[#1F2833] pb-6 flex flex-col gap-5">
             <div>
               <span className="font-mono text-xs text-[#E1FD15] tracking-widest uppercase block mb-1 font-bold">
-                &gt; SYS.SCHED_SERVICE // 2026
+                &gt; SYS.TACTICAL_TIMETABLE // 2026
               </span>
               <h3 className="font-headline text-3xl md:text-4xl text-white font-black uppercase tracking-tight">
                 {t.secTitle}
               </h3>
-              <p className="text-sm text-[#c7c9ac] mt-2 max-w-xl">
+              <p className="text-sm text-[#c7c9ac] mt-2 max-w-3xl">
                 {t.secSubtitle}
               </p>
             </div>
 
-            {/* Quick Filters */}
-            <div className="flex flex-wrap gap-1.5 self-start">
+            {/* Category Filter directly under subtitle */}
+            <div className="flex flex-wrap gap-2 pt-1">
               {([
                 { id: 'all', label: t.filterAll },
                 { id: 'ride', label: t.filterRides },
@@ -258,7 +324,7 @@ export default function CalendarView({
                 <button
                   key={filter.id}
                   onClick={() => setFilterType(filter.id)}
-                  className={`py-1.5 px-3 font-mono text-[10px] uppercase tracking-wider cursor-pointer border transition-all ${
+                  className={`py-1.5 px-3.5 font-mono text-[11px] uppercase tracking-wider cursor-pointer border transition-all ${
                     filterType === filter.id
                       ? 'bg-[#E1FD15] border-[#E1FD15] text-[#0B0C10] font-black shadow-[0_0_10px_rgba(225,253,21,0.4)]'
                       : 'bg-[#111415] border-[#464932] text-[#c7c9ac] hover:bg-[#1e2021] hover:text-white'
@@ -270,8 +336,9 @@ export default function CalendarView({
             </div>
           </div>
 
-          {/* Search bar inside Timetable */}
-          <div className="mb-8">
+          {/* Level Filter Bar & Search bar */}
+          <div className="mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+            {/* Search Input */}
             <div className="relative w-full max-w-md">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#c7c9ac]">
                 <Search className="w-4 h-4" />
@@ -292,13 +359,72 @@ export default function CalendarView({
                 </button>
               )}
             </div>
+
+            {/* Skill Level Quick Pills */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="font-mono text-[10px] text-[#666] uppercase tracking-wider mr-1 hidden sm:inline">
+                {t.levelLabel}:
+              </span>
+              <button
+                onClick={() => setSelectedLevel('all')}
+                className={`py-1 px-2.5 font-mono text-[10px] uppercase tracking-wider cursor-pointer border transition-all ${
+                  selectedLevel === 'all'
+                    ? 'bg-[#1F2833] border-[#9500FF] text-white font-bold'
+                    : 'bg-[#111415] border-[#333537] text-[#888] hover:text-white'
+                }`}
+              >
+                {t.allLevels}
+              </button>
+              {SKATING_SKILL_LEVELS.map((lvl) => {
+                const isSelected = selectedLevel === lvl.id;
+                return (
+                  <button
+                    key={lvl.id}
+                    onClick={() => setSelectedLevel(lvl.id)}
+                    className={`py-1 px-2.5 font-mono text-[10px] uppercase tracking-wider cursor-pointer border flex items-center gap-1.5 transition-all ${
+                      isSelected
+                        ? `${lvl.bgGlowClass} ${lvl.borderClass} ${lvl.textClass} font-bold shadow-[0_0_10px_rgba(0,0,0,0.5)]`
+                        : 'bg-[#111415] border-[#333537] text-[#c7c9ac] hover:text-white'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${lvl.dotBg}`} />
+                    <span>{lvl.name[lang] || lvl.name.EN}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Chrono Timeline Selection */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Days Column Selection */}
-            <div className="lg:col-span-3 flex flex-row lg:flex-col gap-2.5">
+            <div className="lg:col-span-3 flex flex-row lg:flex-col gap-2.5 overflow-x-auto pb-2 lg:pb-0">
+              {/* All Days Top Option - Thinner profile */}
+              <button
+                onClick={() => setSelectedDay('all')}
+                className={`flex-1 lg:flex-none text-left py-2.5 px-3.5 cursor-pointer border transition-all relative shrink-0 min-w-[130px] lg:min-w-0 ${
+                  selectedDay === 'all'
+                    ? 'bg-[#1F2833] border-[#9500FF] shadow-[0_0_15px_rgba(149,0,255,0.15)]'
+                    : 'bg-[#111415] border-[#464932] opacity-75 hover:opacity-100 hover:border-[#9500FF]/50'
+                }`}
+              >
+                {selectedDay === 'all' && (
+                  <div className="absolute top-0 left-0 w-1 h-full bg-[#9500FF]" />
+                )}
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-mono text-[9px] block text-[#9500FF] font-bold uppercase tracking-wider">
+                    {t.allDaysPrefix}
+                  </span>
+                  <span className="font-mono text-[8px] text-[#E1FD15] bg-[#E1FD15]/10 px-1.5 py-0.5 border border-[#E1FD15]/30">
+                    3D
+                  </span>
+                </div>
+                <p className="font-headline text-[11px] text-white font-black uppercase tracking-tight mt-0.5">
+                  {t.allDaysLabel}
+                </p>
+              </button>
+
               {([
                 { day: 1, label: t.day1Label, prefix: `${t.dayLabel} 01` },
                 { day: 2, label: t.day2Label, prefix: `${t.dayLabel} 02` },
@@ -307,7 +433,7 @@ export default function CalendarView({
                 <button
                   key={item.day}
                   onClick={() => setSelectedDay(item.day)}
-                  className={`flex-1 text-left p-4 cursor-pointer border transition-all relative ${
+                  className={`flex-1 lg:flex-none text-left p-4 cursor-pointer border transition-all relative shrink-0 min-w-[130px] lg:min-w-0 ${
                     selectedDay === item.day
                       ? 'bg-[#1F2833] border-[#9500FF] shadow-[0_0_15px_rgba(149,0,255,0.15)]'
                       : 'bg-[#111415] border-[#464932] opacity-70 hover:opacity-100 hover:border-[#9500FF]/50'
@@ -326,64 +452,122 @@ export default function CalendarView({
             <div className="lg:col-span-9 space-y-4">
               {filteredEvents.length > 0 ? (
                 filteredEvents.map((event) => {
-                  
-                  // Map type to border/glow indicator colors
-                  const themeColor = 
+                  const title = getLocalized(event.title);
+                  const description = getLocalized(event.description);
+                  const dateStr = getLocalized(event.date);
+                  const startLocation = getLocalized(event.startLocation);
+                  const endLocation = getLocalized(event.endLocation);
+                  const category = getLocalized(event.category);
+                  const isRide = !!endLocation && endLocation.trim().length > 0;
+                  const levelInfo = getLevelInfo(event.level);
+
+                  // Border indicator accent
+                  const themeBorder = 
                     event.type === 'ride' ? 'border-l-[#E1FD15]' :
                     event.type === 'competition' ? 'border-l-[#ffb4ab]' :
-                    event.type === 'workshop' ? 'border-l-[#9500FF]' : 'border-l-[#bec7d6]';
-
-                  const typeTagColor = 
-                    event.type === 'ride' ? 'text-[#E1FD15] bg-[#E1FD15]/5' :
-                    event.type === 'competition' ? 'text-[#ffb4ab] bg-[#ffb4ab]/5' :
-                    event.type === 'workshop' ? 'text-[#9500FF] bg-[#9500FF]/5' : 'text-white bg-white/5';
+                    event.type === 'workshop' ? 'border-l-[#9500FF]' : 'border-l-[#00D2FF]';
 
                   return (
                     <div
                       key={event.id}
                       onClick={() => setActiveDetailEventId(event.id)}
-                      className={`bg-[#111415] p-5 border border-[#464932] border-l-4 ${themeColor} hover:border-[#9500FF] hover:shadow-[0_0_15px_rgba(149,0,255,0.2)] transition-all duration-300 flex flex-col md:flex-row items-start justify-between gap-4 text-left group cursor-pointer`}
+                      className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#9500FF] hover:shadow-[0_0_20px_rgba(149,0,255,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
                     >
-                      <div className="space-y-1.5 flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-[11px] text-[#E1FD15] font-semibold">{event.time}</span>
-                          <span className={`font-mono text-[9px] uppercase px-2 py-0.5 border border-[#464932] ${typeTagColor}`}>
-                            {event.type}
-                          </span>
-                        </div>
-                        <h4 className="font-headline text-lg text-white font-black uppercase tracking-tight group-hover:text-[#E1FD15] transition-colors flex items-center gap-2">
-                          {event.title}
-                          <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#E1FD15]" />
-                        </h4>
-                        <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed max-w-2xl">
-                          {event.description}
-                        </p>
-                      </div>
+                      {/* Content Area */}
+                      <div className="flex flex-col justify-between gap-4">
+                        <div className="space-y-2.5">
+                          {/* Metadata row: Category, Type, Date, Time & Skill Level */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#222528] pb-3">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {/* Category Tag */}
+                              <span className="font-mono text-[10px] uppercase px-2 py-0.5 bg-[#1F2833] border border-[#464932] text-white font-bold flex items-center gap-1.5">
+                                {renderIcon(event.iconName)}
+                                <span>{category}</span>
+                              </span>
 
-                      <div className="flex flex-col items-start md:items-end gap-3 self-stretch justify-between text-left md:text-right shrink-0">
-                        <div className="flex items-center gap-1.5 text-[#c7c9ac] text-xs font-mono">
-                          <MapPin className="w-3.5 h-3.5 text-[#9500FF]" />
-                          <span className="truncate max-w-[180px]">{event.location}</span>
+                              {/* Ride Badge */}
+                              {isRide && (
+                                <span className="font-mono text-[9px] uppercase px-2 py-0.5 bg-[#E1FD15] text-[#0B0C10] font-black tracking-wider flex items-center gap-1 shadow-sm">
+                                  <Bike className="w-3 h-3" />
+                                  <span>{t.rideType}</span>
+                                </span>
+                              )}
+
+                              {/* Time */}
+                              <div className="flex items-center gap-1.5 text-[#E1FD15] font-mono text-xs font-bold ml-1">
+                                <Clock className="w-3.5 h-3.5" />
+                                <span>{event.time}</span>
+                              </div>
+
+                              {/* Date */}
+                              <span className="text-gray-500 text-xs font-mono hidden sm:inline">•</span>
+                              <span className="text-[#8e9196] font-mono text-[11px]">
+                                {dateStr}
+                              </span>
+                            </div>
+
+                            {/* Level Badge from FAQ */}
+                            <div className={`px-2 py-0.5 border ${levelInfo.borderClass} ${levelInfo.bgGlowClass} ${levelInfo.textClass} font-mono text-[9px] font-bold uppercase tracking-wider flex items-center gap-1.5`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${levelInfo.dotBg}`} />
+                              <span>{levelInfo.name}</span>
+                            </div>
+                          </div>
+
+                          {/* Title */}
+                          <h4 className="font-headline text-lg sm:text-xl text-white font-black uppercase tracking-tight group-hover:text-[#E1FD15] transition-colors flex items-center justify-between gap-2">
+                            <span>{title}</span>
+                            <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#E1FD15] shrink-0" />
+                          </h4>
+
+                          {/* Description */}
+                          <p className="font-sans text-xs text-[#c7c9ac] leading-relaxed line-clamp-2">
+                            {description}
+                          </p>
                         </div>
-                        
-                        <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveDetailEventId(event.id);
-                            }}
-                            className="font-mono text-[9px] font-bold text-[#E1FD15] border border-[#E1FD15]/30 hover:border-[#E1FD15] hover:bg-[#E1FD15]/10 px-2.5 py-1 uppercase tracking-wider cursor-pointer inline-block"
-                          >
-                            &gt; {t.viewDetails}
-                          </button>
+
+                        {/* Starting Location & Ending Location Display */}
+                        <div className="bg-[#17191d] border border-[#272a2e] p-2.5 space-y-1.5">
+                          {isRide ? (
+                            /* Ride Route: Start ➔ End */
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
+                              <div className="flex items-center gap-1.5 text-[#E1FD15] min-w-0">
+                                <Navigation className="w-3.5 h-3.5 text-[#E1FD15] shrink-0" />
+                                <div className="truncate">
+                                  <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-sans">{t.startLocationLabel}:</span>
+                                  <span className="text-white font-medium truncate block">{startLocation}</span>
+                                </div>
+                              </div>
+
+                              <div className="hidden sm:flex items-center text-[#E1FD15] shrink-0 px-1 font-bold">
+                                ➔
+                              </div>
+
+                              <div className="flex items-center gap-1.5 text-[#00D2FF] min-w-0">
+                                <Flag className="w-3.5 h-3.5 text-[#00D2FF] shrink-0" />
+                                <div className="truncate">
+                                  <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-sans">{t.endLocationLabel}:</span>
+                                  <span className="text-white font-medium truncate block">{endLocation}</span>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            /* Fixed Venue / Single Location */
+                            <div className="flex items-center gap-1.5 text-xs font-mono text-white">
+                              <MapPin className="w-3.5 h-3.5 text-[#9500FF] shrink-0" />
+                              <div className="truncate">
+                                <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-sans">{t.locationLabel}:</span>
+                                <span className="text-white font-medium truncate block">{startLocation}</span>
+                              </div>
+                            </div>
+                          )}
                         </div>
+
                       </div>
                     </div>
                   );
                 })
               ) : (
-                <div className="p-12 border border-dashed border-[#464932] text-center">
+                <div className="p-12 border border-dashed border-[#464932] text-center bg-[#111415]/50">
                   <p className="font-mono text-[#c7c9ac] text-xs">{t.noEvents}</p>
                 </div>
               )}
@@ -394,13 +578,23 @@ export default function CalendarView({
         </div>
       </section>
 
-      {/* Details & Carousel Modal */}
+      {/* Details & Route Modal */}
       <AnimatePresence>
         {activeDetailEventId && (() => {
           const activeIndex = currentEventsList.findIndex((ev) => ev.id === activeDetailEventId);
           const activeEvent = activeIndex !== -1 ? currentEventsList[activeIndex] : null;
 
           if (!activeEvent) return null;
+
+          const title = getLocalized(activeEvent.title);
+          const description = getLocalized(activeEvent.description);
+          const longDescription = getLocalized(activeEvent.longDescription) || description;
+          const dateStr = getLocalized(activeEvent.date);
+          const startLocation = getLocalized(activeEvent.startLocation);
+          const endLocation = getLocalized(activeEvent.endLocation);
+          const category = getLocalized(activeEvent.category);
+          const isRide = !!endLocation && endLocation.trim().length > 0;
+          const levelInfo = getLevelInfo(activeEvent.level);
 
           return (
             <div 
@@ -412,7 +606,7 @@ export default function CalendarView({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="bg-[#111415] border-2 border-[#9500FF] w-full max-w-2xl relative overflow-hidden text-left shadow-[0_0_40px_rgba(149,0,255,0.3)]"
+                className="bg-[#111415] border-2 border-[#9500FF] w-full max-w-3xl relative overflow-hidden text-left shadow-[0_0_40px_rgba(149,0,255,0.3)]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Techno Corner Accents */}
@@ -423,11 +617,16 @@ export default function CalendarView({
 
                 {/* Header/Close */}
                 <div className="flex items-center justify-between border-b border-[#333537] px-6 py-4 bg-[#1F2833]">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     {renderIcon(activeEvent.iconName)}
-                    <span className="font-mono text-[10px] text-[#E1FD15] uppercase tracking-widest font-black">
-                      // {activeEvent.category || activeEvent.type}
+                    <span className="font-mono text-[11px] text-[#E1FD15] uppercase tracking-widest font-black">
+                      // {category}
                     </span>
+                    {isRide && (
+                      <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 bg-[#E1FD15] text-[#0B0C10] font-black">
+                        {t.rideType}
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-[10px] text-[#c7c9ac] px-2 bg-[#111415] border border-[#333537] py-0.5">
@@ -444,73 +643,121 @@ export default function CalendarView({
                 </div>
 
                 {/* Content Area */}
-                <div className="max-h-[70vh] overflow-y-auto">
+                <div className="max-h-[72vh] overflow-y-auto">
                   {/* Hero image banner */}
-                  <div className="w-full h-56 relative bg-black">
+                  <div className="w-full h-64 relative bg-black">
                     <img
-                      src={activeEvent.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDaEtvIx3NC3aokEq5kAnJDSJej_iPs2Ir0RXyjztW_Bo-vgBwr2NREvtKYDGAKjGBvJ-mKODUcLe7js9QKoJto-O-z9W2doNrsIiazWALsCJWxQpYugsn_vInMSp6elnmQ0aDv--AnPNJHalMz7dl_99mSwqqei5OC0BM19vf8yu7Uug4CKtI6cVFwxLuoWYiC3nxV2MoyMjFDnxj5lVJASm0zmIASXFPtHWW5ZfU5G0EkvuHVBDiN'}
-                      alt={activeEvent.title}
-                      className="w-full h-full object-cover opacity-75"
+                      src={activeEvent.image}
+                      alt={title}
+                      className="w-full h-full object-cover opacity-80"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111415] via-[#111415]/40 to-transparent" />
-                    <div className="absolute bottom-4 left-6 right-6">
+                    <div className="absolute bottom-4 left-6 right-6 flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2 py-0.5 border ${levelInfo.borderClass} ${levelInfo.bgGlowClass} ${levelInfo.textClass} font-mono text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs`}>
+                          {levelInfo.name}
+                        </span>
+                        <span className="bg-black/70 px-2 py-0.5 border border-[#333537] text-white font-mono text-[10px]">
+                          {activeEvent.time}
+                        </span>
+                      </div>
                       <h2 className="font-headline text-2xl sm:text-3xl font-black text-white uppercase tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-                        {activeEvent.title}
+                        {title}
                       </h2>
                     </div>
                   </div>
 
                   <div className="p-6 space-y-6">
-                    {/* Descriptions */}
-                    <div className="space-y-2">
-                      <span className="font-mono text-[9px] text-[#9500FF] uppercase tracking-widest font-black block">
-                        &gt; {t.specs}
-                      </span>
-                      <p className="font-sans text-xs sm:text-sm text-[#c7c9ac] leading-relaxed">
-                        {activeEvent.longDescription || activeEvent.description}
-                      </p>
-                    </div>
-
-                    {/* Metadata dashboard layout */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {/* Structure elements grid: Date, Time, Level, Category, Locations */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {/* Date */}
                       <div className="bg-[#1F2833] p-3 border border-[#333537]">
-                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                        <div className="flex items-center gap-1 text-gray-400 mb-1">
                           <Calendar className="w-3.5 h-3.5 text-[#E1FD15]" />
                           <span className="font-mono text-[8px] uppercase tracking-wider">{t.dateLabel}</span>
                         </div>
                         <p className="font-sans text-xs font-bold text-white uppercase">
-                          {activeEvent.date || `Day 0${activeEvent.day}`}
+                          {dateStr}
                         </p>
                       </div>
 
+                      {/* Time */}
                       <div className="bg-[#1F2833] p-3 border border-[#333537]">
-                        <div className="flex items-center gap-1 text-gray-500 mb-1">
+                        <div className="flex items-center gap-1 text-gray-400 mb-1">
                           <Clock className="w-3.5 h-3.5 text-[#E1FD15]" />
                           <span className="font-mono text-[8px] uppercase tracking-wider">{t.timeLabel}</span>
                         </div>
                         <p className="font-sans text-xs font-bold text-white uppercase">{activeEvent.time}</p>
                       </div>
 
-                      <div className="bg-[#1F2833] p-3 border border-[#333537]">
-                        <div className="flex items-center gap-1 text-gray-500 mb-1">
-                          <MapPin className="w-3.5 h-3.5 text-[#E1FD15]" />
-                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.locationLabel}</span>
+                      {/* Level from FAQ */}
+                      <div className={`p-3 border ${levelInfo.borderClass} ${levelInfo.bgGlowClass}`}>
+                        <div className="flex items-center gap-1 text-gray-400 mb-1">
+                          <CheckCircle2 className={`w-3.5 h-3.5 ${levelInfo.textClass}`} />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.levelLabel}</span>
                         </div>
-                        <p className="font-sans text-xs font-bold text-white uppercase truncate" title={activeEvent.location}>
-                          {activeEvent.location}
+                        <p className={`font-sans text-xs font-black uppercase ${levelInfo.textClass}`}>
+                          {levelInfo.name}
                         </p>
                       </div>
 
+                      {/* Category */}
                       <div className="bg-[#1F2833] p-3 border border-[#333537]">
-                        <div className="flex items-center gap-1 text-gray-500 mb-1">
-                          <Flame className="w-3.5 h-3.5 text-[#E1FD15]" />
-                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.difficultyLabel}</span>
+                        <div className="flex items-center gap-1 text-gray-400 mb-1">
+                          <Layers className="w-3.5 h-3.5 text-[#9500FF]" />
+                          <span className="font-mono text-[8px] uppercase tracking-wider">{t.categoryLabel}</span>
                         </div>
                         <p className="font-sans text-xs font-bold text-white uppercase">
-                          {activeEvent.difficulty || 'All Levels'}
+                          {category}
                         </p>
                       </div>
                     </div>
+
+                    {/* Location & Route Breakdown */}
+                    <div className="bg-[#181a1e] border border-[#333537] p-4 space-y-3">
+                      <span className="font-mono text-[9px] text-[#E1FD15] uppercase tracking-widest font-black block">
+                        &gt; {isRide ? t.routeTrajectory : t.locationLabel}
+                      </span>
+                      
+                      {isRide ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="border-l-2 border-[#E1FD15] pl-3 py-1">
+                            <div className="flex items-center gap-1 text-[#E1FD15] text-[10px] font-mono uppercase font-bold mb-1">
+                              <Navigation className="w-3.5 h-3.5" />
+                              <span>{t.startLocationLabel}</span>
+                            </div>
+                            <p className="font-sans text-xs text-white font-semibold">{startLocation}</p>
+                          </div>
+
+                          <div className="border-l-2 border-[#00D2FF] pl-3 py-1">
+                            <div className="flex items-center gap-1 text-[#00D2FF] text-[10px] font-mono uppercase font-bold mb-1">
+                              <Flag className="w-3.5 h-3.5" />
+                              <span>{t.endLocationLabel}</span>
+                            </div>
+                            <p className="font-sans text-xs text-white font-semibold">{endLocation}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="border-l-2 border-[#9500FF] pl-3 py-1">
+                          <div className="flex items-center gap-1 text-[#9500FF] text-[10px] font-mono uppercase font-bold mb-1">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>{t.locationLabel}</span>
+                          </div>
+                          <p className="font-sans text-xs text-white font-semibold">{startLocation}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Descriptions */}
+                    <div className="space-y-2">
+                      <span className="font-mono text-[9px] text-[#9500FF] uppercase tracking-widest font-black block">
+                        &gt; {t.specs}
+                      </span>
+                      <p className="font-sans text-xs sm:text-sm text-[#c7c9ac] leading-relaxed">
+                        {longDescription}
+                      </p>
+                    </div>
+
                   </div>
                 </div>
 

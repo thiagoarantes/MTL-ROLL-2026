@@ -57,18 +57,27 @@ export interface Registration {
   avatarUrl?: string;
 }
 
+export type SkillLevelId = 'first_timer' | 'beginner' | 'intermediate' | 'advanced';
+
+export interface LocalizedText {
+  EN: string;
+  FR: string;
+  ES: string;
+}
+
 export interface TimetableEvent {
   id: string;
-  time: string;
-  title: string;
-  location: string;
-  type: 'ride' | 'competition' | 'workshop' | 'social';
-  day: 1 | 2 | 3; // Sept 11, 12, 13
-  date?: string;
-  description: string;
-  longDescription?: string;
-  image?: string;
+  title: string | LocalizedText;
+  description: string | LocalizedText;
+  longDescription?: string | LocalizedText;
+  image: string;
+  date: string | LocalizedText;
+  time: string; // e.g. "18:00 - 19:30"
+  level: SkillLevelId; // 'first_timer' | 'beginner' | 'intermediate' | 'advanced'
+  startLocation: string | LocalizedText;
+  endLocation?: string | LocalizedText; // Empty: same place; Filled: ride / route
+  category: string | LocalizedText;
+  type?: 'ride' | 'competition' | 'workshop' | 'social';
+  day: 1 | 2 | 3;
   iconName?: string;
-  difficulty?: 'Style' | 'Tech' | 'High Risk' | 'All Levels';
-  category?: string;
 }
