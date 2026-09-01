@@ -23,7 +23,7 @@ import {
   CONDUCT_RULES,
   SKATING_SKILL_LEVELS,
   SkatingSkillLevel,
-} from '../faqData';
+} from '../data/faqData';
 
 interface FaqConductViewProps {
   lang: 'EN' | 'FR' | 'ES';

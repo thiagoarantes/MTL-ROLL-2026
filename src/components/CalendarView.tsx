@@ -25,9 +25,9 @@ import {
   List as ListIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { TIMETABLE_EVENTS } from '../data';
+import { TIMETABLE_EVENTS } from '../data/calendarData';
 import { TimetableEvent, SkillLevelId, LocalizedText } from '../types';
-import { SKATING_SKILL_LEVELS } from '../faqData';
+import { SKATING_SKILL_LEVELS } from '../data/faqData';
 
 interface CalendarViewProps {
   lang: 'EN' | 'FR' | 'ES';

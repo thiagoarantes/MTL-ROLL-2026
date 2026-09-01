@@ -105,8 +105,10 @@ npm start
 │   │   ├── SyndicateView.tsx     # Crew, organizers, guests & sponsors
 │   │   ├── FaqConductView.tsx    # Q&A accordion and code of conduct
 │   │   └── TopNavBar.tsx         # Navigation header, language picker, mobile drawer
-│   ├── data.ts                   # Festival schedule & organizers data
-│   ├── faqData.ts                # FAQ questions, answers & categories (EN/FR/ES)
+│   ├── data/
+│   │   ├── calendarData.ts       # Festival timetable schedule & event entries
+│   │   ├── faqData.ts            # FAQ questions, answers & categories (EN/FR/ES)
+│   │   └── index.ts              # Activities, organizers, guests & sponsors
 │   ├── types.ts                  # Shared TypeScript interfaces & types
 │   ├── App.tsx                   # Main layout container & analytics
 │   ├── main.tsx                  # React DOM root entry point
