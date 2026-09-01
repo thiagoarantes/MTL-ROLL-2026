@@ -104,7 +104,7 @@ export default function SyndicateView({
     networkSponsors: lang === 'EN' ? 'Network Sponsors' : lang === 'FR' ? 'Partenaires Réseau' : 'Patrocinadores de la Red',
     viewDetails: lang === 'EN' ? 'View Details' : lang === 'FR' ? 'Voir Détails' : 'Ver Detalles',
     viewProfile: lang === 'EN' ? 'View Profile' : lang === 'FR' ? 'Voir Profil' : 'Ver Perfil',
-    websiteLabel: lang === 'EN' ? 'Official Website' : lang === 'FR' ? 'Site Officiel' : 'Sitio Oficial',
+    websiteLabel: lang === 'EN' ? 'Website' : lang === 'FR' ? 'Site Web' : 'Sitio Web',
     instagramLabel: lang === 'EN' ? 'Instagram Profile' : lang === 'FR' ? 'Profil Instagram' : 'Perfil de Instagram',
   };
 
@@ -396,7 +396,7 @@ export default function SyndicateView({
           onClick={() => setSelectedGuest(null)}
         >
           <div 
-            className="relative w-full max-w-2xl bg-[#0B0C10] border-2 border-[#9500FF] p-6 sm:p-8 shadow-[0_0_30px_rgba(149,0,255,0.3)] my-8"
+            className="relative w-full max-w-2xl bg-[#0B0C10] border-2 border-[#9500FF] p-6 sm:p-8 shadow-[0_0_30px_rgba(149,0,255,0.3)] my-8 text-left"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header / Close & Carousel Controls */}
@@ -411,7 +411,7 @@ export default function SyndicateView({
                 <div className="flex items-center gap-1 bg-[#1F2833] border border-[#333537] p-0.5 mr-2">
                   <button
                     onClick={handlePrevGuest}
-                    className="p-1 hover:bg-[#9500FF] text-white transition-colors"
+                    className="p-1 hover:bg-[#9500FF] text-white transition-colors cursor-pointer"
                     title="Previous Guest (Left Arrow)"
                     aria-label="Previous guest"
                   >
@@ -422,7 +422,7 @@ export default function SyndicateView({
                   </span>
                   <button
                     onClick={handleNextGuest}
-                    className="p-1 hover:bg-[#9500FF] text-white transition-colors"
+                    className="p-1 hover:bg-[#9500FF] text-white transition-colors cursor-pointer"
                     title="Next Guest (Right Arrow)"
                     aria-label="Next guest"
                   >
@@ -432,7 +432,7 @@ export default function SyndicateView({
 
                 <button
                   onClick={() => setSelectedGuest(null)}
-                  className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors"
+                  className="p-1.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#333537] transition-colors cursor-pointer"
                   aria-label="Close dialog"
                 >
                   <X className="w-5 h-5" />
@@ -465,18 +465,34 @@ export default function SyndicateView({
                 </div>
               </div>
 
-              {selectedGuest.instagramUrl && (
-                <div className="pt-3 border-t border-[#1F2833]">
-                  <a
-                    href={selectedGuest.instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200 group"
-                  >
-                    <Instagram className="w-4 h-4 text-[#E1FD15] group-hover:text-white transition-colors" />
-                    <span>{t.instagramLabel}</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-                  </a>
+              {/* Social & Website Links */}
+              {(selectedGuest.websiteUrl || selectedGuest.instagramUrl) && (
+                <div className="pt-4 border-t border-[#1F2833] flex flex-wrap items-center gap-3">
+                  {selectedGuest.websiteUrl && (
+                    <a
+                      href={selectedGuest.websiteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#E1FD15] text-white hover:text-[#0B0C10] border border-[#E1FD15]/40 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200"
+                    >
+                      <Globe className="w-4 h-4" />
+                      <span>{t.websiteLabel}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  )}
+
+                  {selectedGuest.instagramUrl && (
+                    <a
+                      href={selectedGuest.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F2833] hover:bg-[#9500FF] text-white border border-[#9500FF]/50 font-headline text-xs font-bold uppercase tracking-wider transition-all duration-200 group"
+                    >
+                      <Instagram className="w-4 h-4 text-[#E1FD15] group-hover:text-white transition-colors" />
+                      <span>{t.instagramLabel}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  )}
                 </div>
               )}
             </div>

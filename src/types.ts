@@ -17,6 +17,7 @@ export interface Guest {
   name: string;
   tags: string[]; // e.g. ['VIP_ACCESS', 'SLIDE', 'SLALOM', 'CREW_LINK']
   image: string;
+  websiteUrl?: string;
   instagramUrl?: string;
   isUserAdded?: boolean;
 }

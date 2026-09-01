@@ -148,19 +148,25 @@ export const GUESTS: Guest[] = [
     instagramUrl: 'https://www.instagram.com/skatewithmarly/',
   },
   {
+    id: 'guest-pierra',
+    name: 'Pierra',
+    tags: ['SPEED_SKATING'],
+    image: '/guests/pierra.jpg',
+    websiteUrl: 'https://www.vrlleclub.com/non-classe/premiere-canadienne-championne-du-monde-en-roller-vitesse.html',
+  },
+  {
+    id: 'guest-mathieu',
+    name: 'Mathieu',
+    tags: ['SPEED_SKATING'],
+    image: '/guests/mathieu.jpg',
+  },
+  {
     id: 'guest-skatespace',
     name: 'SKATESPACE',
     tags: ['INTRO_TO_SKATING', 'ROLLER_DANCE', 'SLALOM', 'GAMES'],
     image: '/guests/skatespace.jpg',
     instagramUrl: 'https://www.instagram.com/skatespace.ca/',
-  },
-  {
-    id: 'guest-vrl',
-    name: 'VRL',
-    tags: ['SPEED_SKATING'],
-    image: '/guests/vrl.png',
-    instagramUrl: 'https://www.instagram.com/vrlroller/',
-  },
+  }
 ];
 
 export const ORGANIZERS: Organizer[] = [
