@@ -179,7 +179,7 @@ export default function App() {
               <span>WhatsApp</span>
             </a>
             <a 
-              href="https://www.facebook.com/groups/rollingtribes" 
+              href="https://www.facebook.com/montrealroll/" 
               target="_blank" 
               rel="noreferrer"
               className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
@@ -188,7 +188,7 @@ export default function App() {
               <span>Facebook</span>
             </a>
             <a 
-              href="https://www.instagram.com/rollingtribes/" 
+              href="https://www.instagram.com/montrealroll/" 
               target="_blank" 
               rel="noreferrer"
               className="text-[#666666] hover:text-[#E1FD15] hover:drop-shadow-[0_0_5px_#E1FD15] transition-all opacity-80 hover:opacity-100 uppercase tracking-widest font-bold flex items-center gap-1.5"
