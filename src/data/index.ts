@@ -208,6 +208,18 @@ export const SPONSORS: Sponsor[] = [
     website: 'https://rockinframes.com',
   },
   {
+    id: 'spon-bones',
+    name: 'Rollerbones',
+    image: '/sponsors/rollerbones.jpg',
+    website: 'https://rollerbones.com/',
+  },
+  {
+    id: 'spon-s1',
+    name: 'S1 Helmets',
+    image: '/sponsors/s1.png',
+    website: 'https://www.s1helmets.ca/',
+  },
+  {
     id: 'spon-solo',
     name: 'Boutique Solo-Inline',
     image: '/sponsors/solo.png',
