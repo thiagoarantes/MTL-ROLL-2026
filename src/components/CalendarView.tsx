@@ -42,7 +42,7 @@ export default function CalendarView({
 }: CalendarViewProps) {
   const [viewMode, setViewMode] = React.useState<'list' | 'calendar'>('list');
   const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3 | 'all'>('all');
-  const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'competition' | 'workshop' | 'social'>('all');
+  const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'workshop' | 'social'>('all');
   const [selectedLevel, setSelectedLevel] = React.useState<'all' | SkillLevelId>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [activeDetailEventId, setActiveDetailEventId] = React.useState<string | null>(null);
@@ -189,7 +189,6 @@ export default function CalendarView({
       : 'Horario sincronizado de rutas, talleres y competencias. Haz clic en un evento para ver rutas y especificaciones.',
     filterAll: lang === 'EN' ? 'All Activities' : lang === 'FR' ? 'Tout' : 'Todas',
     filterRides: lang === 'EN' ? 'Street Rides' : lang === 'FR' ? 'Randonnées' : 'Rutas Urbanas',
-    filterComps: lang === 'EN' ? 'Competitions' : lang === 'FR' ? 'Compétitions' : 'Competiciones',
     filterWorkshops: lang === 'EN' ? 'Workshops' : lang === 'FR' ? 'Ateliers' : 'Talleres',
     filterSocials: lang === 'EN' ? 'Syndicate Socials' : lang === 'FR' ? 'Rassemblements' : 'Sociales del Sindicato',
     allLevels: lang === 'EN' ? 'All Levels' : lang === 'FR' ? 'Tous Niveaux' : 'Todos los Niveles',
@@ -363,7 +362,6 @@ export default function CalendarView({
               {([
                 { id: 'all', label: t.filterAll },
                 { id: 'ride', label: t.filterRides },
-                { id: 'competition', label: t.filterComps },
                 { id: 'workshop', label: t.filterWorkshops },
                 { id: 'social', label: t.filterSocials },
               ] as const).map((filter) => (

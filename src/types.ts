@@ -1,7 +1,7 @@
 export interface Activity {
   id: string;
   title: string;
-  category: 'Prime Event' | 'Rides' | 'Competition' | 'Workshop' | 'Social' | 'Style' | 'Tech' | 'High Risk';
+  category: 'Prime Event' | 'Rides' | 'Workshop' | 'Social' | 'Style' | 'Tech' | 'High Risk';
   description: string;
   longDescription?: string;
   image: string;
@@ -78,7 +78,7 @@ export interface TimetableEvent {
   startLocation: string | LocalizedText;
   endLocation?: string | LocalizedText; // Empty: same place; Filled: ride / route
   category: string | LocalizedText;
-  type?: 'ride' | 'competition' | 'workshop' | 'social';
+  type?: 'ride' | 'workshop' | 'social';
   day: 1 | 2 | 3;
   iconName?: string;
 }
