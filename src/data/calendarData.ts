@@ -940,11 +940,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       FR: 'Parc du Souvenir (Métro Verdun)',
       ES: 'Parc du Souvenir (Metro Verdun)',
     },
-    endLocation: {
-      EN: 'Circuit Gilles Villeneuve',
-      FR: 'Circuit Gilles Villeneuve',
-      ES: 'Circuito Gilles Villeneuve',
-    },
+    endLocation: undefined,
     category: {
       EN: 'Workshop',
       FR: 'Atelier',
