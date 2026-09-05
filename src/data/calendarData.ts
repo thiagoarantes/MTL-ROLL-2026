@@ -384,14 +384,14 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Taller de Skatepark',
     },
     description: {
-      EN: 'Xavier from Rolling Tribes teaches basic and advanced skatepark techniques tailored to your skill level. Helmet and pads required.',
-      FR: 'Xavier de Rolling Tribes vous montrera les techniques de bases et avancées pour s\'amuser en Skatepark selon votre niveau. Apportez casque et protections.',
-      ES: 'Xavier de Rolling Tribes te enseñará técnicas básicas y avanzadas para divertirte en el Skatepark según tu nivel. Trae casco y protecciones.',
+      EN: 'Xavier from Rolling Tribes teaches basic and advanced skatepark techniques tailored to your skill level. Helmet mandatory; other protective gear highly recommended.',
+      FR: 'Xavier de Rolling Tribes vous montrera les techniques de bases et avancées pour s\'amuser en Skatepark selon votre niveau. Casque obligatoire, autres protections fortement recommandées.',
+      ES: 'Xavier de Rolling Tribes te enseñará técnicas básicas y avanzadas para divertirte en el Skatepark según tu nivel. Casco obligatorio, demás protecciones altamente recomendadas.',
     },
     longDescription: {
-      EN: 'Learn park transitions, dropping in, pumping bowls, coping stalls, and jump safety with Xavier from Rolling Tribes. Structured for beginner to intermediate park skaters. Protective gear (helmet, knee, elbow, wrist guards) mandatory.',
-      FR: 'Apprenez les transitions en courbe, les drops, le pompage dans les bowls et la sécurité en skatepark avec Xavier de Rolling Tribes. Adapté selon votre niveau. Casque et protections complets obligatoires.',
-      ES: 'Aprende transiciones en rampa, drops, bombeo en bowl y seguridad en el skatepark con Xavier de Rolling Tribes. Adaptado a tu nivel. Casco y protecciones completas obligatorios.',
+      EN: 'Learn park transitions, dropping in, pumping bowls, coping stalls, and jump safety with Xavier from Rolling Tribes. Structured for beginner to intermediate park skaters. Helmet is mandatory; all other protective gear (knee, elbow, wrist guards) is highly recommended.',
+      FR: 'Apprenez les transitions en courbe, les drops, le pompage dans les bowls et la sécurité en skatepark avec Xavier de Rolling Tribes. Adapté selon votre niveau. Casque obligatoire ; toutes les autres protections (genouillères, coudières, protège-poignets) sont fortement recommandées.',
+      ES: 'Aprende transiciones en rampa, drops, bombeo en bowl y seguridad en el skatepark con Xavier de Rolling Tribes. Adaptado a tu nivel. Casco obligatorio; todas las demás protecciones (rodilleras, coderas, muñequeras) son altamente recomendadas.',
     },
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD-_Ict4THRYVHUB8CLRsQjgip0_D30ZyoyF3yuGBHdka_2AoHhMmS9U6mAhb27nWMMs3BBRNqfKVwy6kfq8sz8PmtLkrxyWtaPp4TSQBSk7UMiNpERlxI8-680gry-LjbhUsgZUsqRaHxzTfrRQ6-yh7DOA76n1FMmzJeTY_J-CRZF08Ei8v6bewiMx3ZrF2rSd7FLtZ9MoNHkbLYjc_bqWQis-tSHZlQWJyvXG7ejVkQfcMDwSu2J',
     date: {
