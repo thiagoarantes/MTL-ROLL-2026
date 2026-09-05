@@ -225,12 +225,12 @@ export const SPONSORS: Sponsor[] = [
     image: '/sponsors/solo.png',
     website: 'https://solo-inline.com/'
   },
-  {
-    id: 'spon-xact',
-    name: 'Xact Skate Shop',
-    image: '/sponsors/xact.png',
-    website: 'https://xactskateshop.com/'
-  },
+  // {
+  //   id: 'spon-xact',
+  //   name: 'Xact Skate Shop',
+  //   image: '/sponsors/xact.png',
+  //   website: 'https://xactskateshop.com/'
+  // },
   {
     id: 'spon-lowlife',
     name: 'Lowlife Mtl',
