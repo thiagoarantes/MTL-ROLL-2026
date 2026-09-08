@@ -5,19 +5,19 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
   {
     id: 'time-d1-1',
     title: {
-      EN: 'Urban Street Ride 20km',
-      FR: 'Randonnée urbaine 20kms',
-      ES: 'Ruta Urbana de 20 km',
+      EN: 'Urban Street Ride 28km',
+      FR: 'Randonnée urbaine 28 kms',
+      ES: 'Ruta Urbana de 28 km',
     },
     description: {
-      EN: 'Easy scenic ride along the waterfront, passing by the LaSalle skatepark and pumptrack; by Rolling Tribes.',
-      FR: 'Randonnée tranquille le long de l’eau, en passant par le skatepark et pumptrack de LaSalle ; par Rolling Tribes.',
-      ES: 'Paseo tranquilo junto al agua, pasando por el skatepark y pumptrack de LaSalle; por Rolling Tribes.',
+      EN: 'Ride to the famous F1 circuit via Île des Sœurs and the Champlain Bridge Estacade. Return via Lachine Canal; guided by Rolling Tribes.',
+      FR: 'Randonnée à destination du fameux circuit de F1 via l\'île des Sœurs et l\'estacade du pont Champlain. Retour via le canal Lachine ; rando encadrée par Rolling Tribes.',
+      ES: 'Ruta con destino al famoso circuito de F1 pasando por Île des Sœurs y la estacada del puente Champlain. Regreso por el canal Lachine; ruta guiada por Rolling Tribes.',
     },
     longDescription: {
-      EN: 'A scenic and relaxed 20km group roll along the waterfront of Montreal, routing through LaSalle skatepark and the local pumptrack. Led and escorted by the Rolling Tribes crew.',
-      FR: 'Randonnée tranquille de 20 km le long de l’eau, en passant par le skatepark et pumptrack de LaSalle ; organisée et encadrée par Rolling Tribes.',
-      ES: 'Recorrido panorámico y tranquilo de 20 km junto a la orilla del agua, pasando por el skatepark y pumptrack de LaSalle; organizado y guiado por Rolling Tribes.',
+      EN: 'A 28km street ride heading to the famous F1 circuit via Île des Sœurs and the Champlain Bridge ice control structure (Estacade). Return via Lachine Canal; guided and escorted by the Rolling Tribes crew.',
+      FR: 'Randonnée à destination du fameux circuit de F1 via l\'île des Sœurs et l\'estacade du pont Champlain. Retour via le canal Lachine ; rando encadrée par Rolling Tribes.',
+      ES: 'Ruta urbana de 28 km con destino al famoso circuito de F1 pasando por Île des Sœurs y la estacada del puente Champlain. Regreso por el canal Lachine; ruta guiada y encuadrada por Rolling Tribes.',
     },
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDaEtvIx3NC3aokEq5kAnJDSJej_iPs2Ir0RXyjztW_Bo-vgBwr2NREvtKYDGAKjGBvJ-mKODUcLe7js9QKoJto-O-z9W2doNrsIiazWALsCJWxQpYugsn_vInMSp6elnmQ0aDv--AnPNJHalMz7dl_99mSwqqei5OC0BM19vf8yu7Uug4CKtI6cVFwxLuoWYiC3nxV2MoyMjFDnxj5lVJASm0zmIASXFPtHWW5ZfU5G0EkvuHVBDiN',
     date: {
@@ -25,7 +25,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       FR: 'Vendredi 11 sept. 2026',
       ES: 'Viernes 11 sept. 2026',
     },
-    time: '10:00 - 12:00',
+    time: '10:00 - 13:00',
     level: 'intermediate',
     startLocation: {
       EN: 'Parc du Souvenir (Verdun Metro)',
@@ -33,9 +33,9 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Parc du Souvenir (Metro Verdun)',
     },
     endLocation: {
-      EN: 'Willibrord Park BBB Rink',
-      FR: 'Patinoire BBB du parc Willibrord',
-      ES: 'Pista BBB del parque Willibrord',
+      EN: 'Parc du Souvenir (Verdun Metro)',
+      FR: 'Parc du Souvenir (Métro Verdun)',
+      ES: 'Parc du Souvenir (Metro Verdun)',
     },
     category: {
       EN: 'Street Ride',
@@ -309,7 +309,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       FR: 'Vendredi 11 sept. 2026',
       ES: 'Viernes 11 sept. 2026',
     },
-    time: '20:30 - 22:00',
+    time: '20:00 - 22:00',
     level: 'intermediate',
     startLocation: {
       EN: 'Parc du Souvenir (Verdun Metro)',
@@ -869,19 +869,19 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
   {
     id: 'time-d3-1',
     title: {
-      EN: 'Urban Street Ride 10km (to F1 Circuit)',
-      FR: 'Randonnée urbaine 10kms',
-      ES: 'Ruta Urbana 10 km (al Circuito F1)',
+      EN: 'Urban Street Ride 20km',
+      FR: 'Randonnée urbaine 20 kms',
+      ES: 'Ruta Urbana 20 km',
     },
     description: {
-      EN: 'Scenic ride to the famous F1 circuit via Nuns\' Island and the Champlain bridge ice control structure, led by Rolling Tribes.',
-      FR: 'Randonnée à destination du fameux circuit de F1 via l\'île des Sœurs et l\'estacade du pont Champlain; encadrée par Rolling Tribes.',
-      ES: 'Ruta hacia el famoso circuito de F1 a través de Île des Sœurs y el dique del puente Champlain; guiada por Rolling Tribes.',
+      EN: 'Easy scenic ride along the waterfront, passing by the LaSalle skatepark and pumptrack; by Rolling Tribes.',
+      FR: 'Randonnée tranquille le long de l’eau, en passant par le skatepark et pumptrack de LaSalle ; par Rolling Tribes.',
+      ES: 'Paseo tranquilo junto al agua, pasando por el skatepark y pumptrack de LaSalle; por Rolling Tribes.',
     },
     longDescription: {
-      EN: 'Join Rolling Tribes on this scenic 10km urban ride starting at Parc du Souvenir (Verdun Metro), crossing Île des Sœurs and the Champlain Bridge Ice Control Structure (Estacade), and arriving at the legendary Circuit Gilles Villeneuve F1 track.',
-      FR: 'Rejoignez Rolling Tribes pour cette belle randonnée de 10 km au départ du parc du Souvenir (métro Verdun), traversant l\'île des Sœurs et l\'estacade du pont Champlain pour rejoindre le mythique circuit de F1 Gilles-Villeneuve.',
-      ES: 'Únete a Rolling Tribes en este recorrido panorámico de 10 km desde Parc du Souvenir (metro Verdun), cruzando Île des Sœurs y el dique del puente Champlain hasta el legendario circuito de F1 Gilles Villeneuve.',
+      EN: 'A scenic and relaxed 20km group roll along the waterfront of Montreal, routing through LaSalle skatepark and the local pumptrack, ending at Willibrord Park BBB rink. Led and escorted by Rolling Tribes.',
+      FR: 'Randonnée tranquille de 20 km le long de l’eau, en passant par le skatepark et pumptrack de LaSalle jusqu\'à la patinoire BBB du parc Willibrord ; par Rolling Tribes.',
+      ES: 'Paseo tranquilo de 20 km junto al agua, pasando por el skatepark y pumptrack de LaSalle hasta la pista BBB del parque Willibrord; por Rolling Tribes.',
     },
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtwBSh3I9965A5VA97GMNT6WPcpuu5lY8I0IjGiK64Fk0WHYIT5lLoUPqdrAuZgT135nCSSYXNEfdmjHaaTmCSimZFNPGifGOgEHqV9Ce7EiT2ka47xYp-GUeXAz7mZOk50o73irbImltxqiiVP2kW6I3JS43Y4XX4P68mZoG07MBWF4_BVlxnFnuICCFniVFHWu74Nsja97XezTH6yQTaucqy6wP_2Gzi8Ppx8r-LeFXGjoDfCTB8',
     date: {
@@ -889,7 +889,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       FR: 'Dimanche 13 sept. 2026',
       ES: 'Domingo 13 sept. 2026',
     },
-    time: '10:00 - 11:00',
+    time: '10:00 - 12:30',
     level: 'intermediate',
     startLocation: {
       EN: 'Parc du Souvenir (Verdun Metro)',
@@ -897,9 +897,9 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Parc du Souvenir (Metro Verdun)',
     },
     endLocation: {
-      EN: 'Circuit Gilles Villeneuve',
-      FR: 'Circuit Gilles Villeneuve',
-      ES: 'Circuito Gilles Villeneuve',
+      EN: 'Willibrord Park BBB Rink',
+      FR: 'Patinoire BBB du parc Willibrord',
+      ES: 'Pista BBB del parque Willibrord',
     },
     category: {
       EN: 'Street Ride',
@@ -912,90 +912,6 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
   },
   {
     id: 'time-d3-2',
-    title: {
-      EN: 'I Am Speed! Speed Skating Workshop',
-      FR: 'Je suis la vitesse !',
-      ES: '¡Soy la Velocidad! (Taller de Velocidad)',
-    },
-    description: {
-      EN: 'Practical application of speed skating techniques with Mathieu and Pierra from the VRL skate club. Accessible via Jean-Drapeau metro for those not joining the prior ride.',
-      FR: 'Mise en application des techniques de patin de vitesse, avec Mathieu et Pierra du club de patin VRL. Joignable via le métro Jean-Drapeau pour celles et ceux qui ne feraient pas la randonnée urbaine avant.',
-      ES: 'Aplicación práctica de técnicas de patinaje de velocidad, con Mathieu y Pierra del club de patinaje VRL. Accesible vía metro Jean-Drapeau para quienes no hagan la ruta previa.',
-    },
-    longDescription: {
-      EN: 'Learn speed skating mechanics, stride efficiency, drafting dynamics, and cornering technique on the world-class smooth asphalt of Circuit Gilles Villeneuve with coaches Mathieu and Pierra from Club VRL. Easily accessible via Jean-Drapeau metro if arriving directly.',
-      FR: 'Apprenez la biomécanique du patin de vitesse, l\'efficacité de poussée, le travail en peloton et la négociation des virages sur l\'asphalte parfait du circuit Gilles-Villeneuve avec Mathieu et Pierra du club VRL. Accessible directement via le métro Jean-Drapeau.',
-      ES: 'Aprende biomecánica de patinaje de velocidad, eficiencia de empuje, drafting y curvas en el asfalto del circuito Gilles Villeneuve con Mathieu y Pierra del club VRL. Accesible vía metro Jean-Drapeau.',
-    },
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDGtm6jK2gS9pavNm6jz5SH78XNkpBRlByAo36kawzTStCMCJWYmZDHSmFxJA65lvTw8t7zt04GLIQyw1RzK2wuO05f9ZUaAlWtvbO0aBn3eJYWya9H6nsp3DxS7hNByQEjXU3KTQwIMIXkc0poEBPheC_ZLEE9T_YNzd8qje1-WGGFqKJmuIpyaCUb_hfOnjQh6gB6tvT__tk1NoJ2zBkZsKku1Z9MZ1hdAsg0SCfd8F8nraYwsNCR',
-    date: {
-      EN: 'Sunday, Sept 13, 2026',
-      FR: 'Dimanche 13 sept. 2026',
-      ES: 'Domingo 13 sept. 2026',
-    },
-    time: '11:00 - 12:30',
-    level: 'beginner',
-    startLocation: {
-      EN: 'Circuit Gilles Villeneuve',
-      FR: 'Circuit Gilles Villeneuve',
-      ES: 'Circuito Gilles Villeneuve',
-    },
-    endLocation: undefined,
-    category: {
-      EN: 'Workshop',
-      FR: 'Atelier',
-      ES: 'Taller',
-    },
-    type: 'workshop',
-    day: 3,
-    iconName: 'timeline',
-  },
-  {
-    id: 'time-d3-3',
-    title: {
-      EN: 'Return Urban Ride 10km (via Lachine Canal)',
-      FR: 'Randonnée urbaine 10kms',
-      ES: 'Ruta Urbana de Regreso 10 km (Canal Lachine)',
-    },
-    description: {
-      EN: 'Group ride returning to Verdun via the scenic Lachine Canal, guided by Rolling Tribes.',
-      FR: 'Randonnée pour rentrer à Verdun via le Canal Lachine; encadrée par Rolling Tribes.',
-      ES: 'Ruta de regreso a Verdun por el Canal Lachine; guiada por Rolling Tribes.',
-    },
-    longDescription: {
-      EN: 'A smooth and social 10km roll following the beautiful waterside paths of the Lachine Canal back into Verdun, escorted by the Rolling Tribes marshals.',
-      FR: 'Une randonnée conviviale de 10 km le long des pistes cyclables du canal de Lachine pour revenir à Verdun en toute sécurité avec l\'équipe de Rolling Tribes.',
-      ES: 'Un recorrido suave y social de 10 km por los senderos junto al Canal Lachine de regreso a Verdun, acompañados por el equipo de Rolling Tribes.',
-    },
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBo4OsmywxyzTBGMpyJ2bONw_D0vlGKtLZIUtQ4wCtoFmboYAd8JRtC56FQUMeY8x9V8dzM_NfKPZx3nWcaZ-Sl4MOCRIbSLJQWf2iyqQohqSR3A_ehGXIy2s8JKHmB3JdIyFoQFP6DRGkHWg8OZCF8NMnXp-wK4XDzjSuww4NIBVKO79hSU39GeE8hzJPDSmXzxEfLubeML19YdskJ-qsNR1-1XIFxYW_ZjYVFVuti1sqlSA6uLIU0',
-    date: {
-      EN: 'Sunday, Sept 13, 2026',
-      FR: 'Dimanche 13 sept. 2026',
-      ES: 'Domingo 13 sept. 2026',
-    },
-    time: '12:30 - 13:30',
-    level: 'intermediate',
-    startLocation: {
-      EN: 'Circuit Gilles Villeneuve',
-      FR: 'Circuit Gilles Villeneuve',
-      ES: 'Circuito Gilles Villeneuve',
-    },
-    endLocation: {
-      EN: 'Parc du Souvenir (Verdun Metro)',
-      FR: 'Parc du Souvenir (Métro Verdun)',
-      ES: 'Parc du Souvenir (Metro Verdun)',
-    },
-    category: {
-      EN: 'Street Ride',
-      FR: 'Randonnée Urbaine',
-      ES: 'Ruta Urbana',
-    },
-    type: 'ride',
-    day: 3,
-    iconName: 'directions_bike',
-  },
-  {
-    id: 'time-d3-4',
     title: {
       EN: 'Ça SLALOM! Freestyle Workshop',
       FR: 'Ça SLALOM !',
@@ -1035,7 +951,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'timeline',
   },
   {
-    id: 'time-d3-5',
+    id: 'time-d3-3',
     title: {
       EN: 'WIZARD Skating Workshop',
       FR: 'Atelier de patinage WIZARD',
@@ -1075,7 +991,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'auto_awesome',
   },
   {
-    id: 'time-d3-6',
+    id: 'time-d3-4',
     title: {
       EN: 'Skate Games & Challenges',
       FR: 'Jeux',
@@ -1115,7 +1031,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'sparkles',
   },
   {
-    id: 'time-d3-7',
+    id: 'time-d3-5',
     title: {
       EN: 'High Jump & Limbo Challenge',
       FR: 'Sauté de patin et limbo',
@@ -1155,7 +1071,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'flight_takeoff',
   },
   {
-    id: 'time-d3-8',
+    id: 'time-d3-6',
     title: {
       EN: 'Open Skate Session',
       FR: 'Patinage libre',
