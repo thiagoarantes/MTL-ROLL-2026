@@ -150,7 +150,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Viernes 11 sept. 2026',
     },
     time: '16:00 - 17:00',
-    level: 'first_timer',
+    level: 'beginner',
     startLocation: {
       EN: 'Willibrord Park BBB Rink',
       FR: 'Patinoire BBB du parc Willibrord',
@@ -524,7 +524,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Sábado 12 sept. 2026',
     },
     time: '15:30 - 16:30',
-    level: 'first_timer',
+    level: 'beginner',
     startLocation: {
       EN: 'Willibrord Park BBB Rink',
       FR: 'Patinoire BBB du parc Willibrord',
