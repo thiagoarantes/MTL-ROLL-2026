@@ -459,9 +459,9 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
   {
     id: 'time-d2-3',
     title: {
-      EN: 'Urban Street Art Ride 5km',
-      FR: 'Randonnée urbaine 5kms',
-      ES: 'Ruta Urbana de Arte Callejero 5 km',
+      EN: 'Urban Street Art Ride 3km',
+      FR: 'Randonnée urbaine 3kms',
+      ES: 'Ruta Urbana de Arte Callejero 3 km',
     },
     description: {
       EN: 'A gentle skate stroll through the streets of Verdun to discover and appreciate local Street Art.',
@@ -469,9 +469,9 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
       ES: 'Un paseo suave en patines por las calles de Verdun para apreciar el Street Art local.',
     },
     longDescription: {
-      EN: 'An accessible, relaxing 5km group ride rolling through Verdun’s scenic streets and artistic alleyways with photo stops at prominent murals and street art installations.',
-      FR: 'Randonnée accessible et conviviale de 5 km à travers les rues de Verdun et ses ruelles artistiques, avec arrêts photos devant les plus belles murales locales.',
-      ES: 'Recorrido accesible y relajado de 5 km por las calles de Verdun y sus callejones artísticos, con paradas para admirar y fotografiar los murales locales.',
+      EN: 'An accessible, relaxing 3km group ride rolling through Verdun’s scenic streets and artistic alleyways with photo stops at prominent murals and street art installations.',
+      FR: 'Randonnée accessible et conviviale de 3 km à travers les rues de Verdun et ses ruelles artistiques, avec arrêts photos devant les plus belles murales locales.',
+      ES: 'Recorrido accesible y relajado de 3 km por las calles de Verdun y sus callejones artísticos, con paradas para admirar y fotografiar los murales locales.',
     },
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBo4OsmywxyzTBGMpyJ2bONw_D0vlGKtLZIUtQ4wCtoFmboYAd8JRtC56FQUMeY8x9V8dzM_NfKPZx3nWcaZ-Sl4MOCRIbSLJQWf2iyqQohqSR3A_ehGXIy2s8JKHmB3JdIyFoQFP6DRGkHWg8OZCF8NMnXp-wK4XDzjSuww4NIBVKO79hSU39GeE8hzJPDSmXzxEfLubeML19YdskJ-qsNR1-1XIFxYW_ZjYVFVuti1sqlSA6uLIU0',
     date: {
@@ -482,14 +482,14 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     time: '14:00 - 15:00',
     level: 'beginner',
     startLocation: {
-      EN: 'Verdun Metro Station',
-      FR: 'Métro Verdun',
-      ES: 'Metro Verdun',
+      EN: 'Willibrord Park BBB Rink',
+      FR: 'Patinoire BBB du parc Willibrord',
+      ES: 'Pista BBB del parque Willibrord',
     },
     endLocation: {
-      EN: 'Verdun Metro Station',
-      FR: 'Métro Verdun',
-      ES: 'Metro Verdun',
+      EN: 'Willibrord Park BBB Rink',
+      FR: 'Patinoire BBB du parc Willibrord',
+      ES: 'Pista BBB del parque Willibrord',
     },
     category: {
       EN: 'Street Ride',
