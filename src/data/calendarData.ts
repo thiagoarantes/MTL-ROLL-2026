@@ -459,6 +459,46 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
   {
     id: 'time-d2-3',
     title: {
+      EN: 'Open Skate & Warm-Up',
+      FR: 'Patinage libre',
+      ES: 'Patinaje Libre y Calentamiento',
+    },
+    description: {
+      EN: 'Setup, open skating, and warm-up session.',
+      FR: 'Mise en place et échauffement.',
+      ES: 'Puesta en marcha y calentamiento.',
+    },
+    longDescription: {
+      EN: 'Free open skating session at the rink to warm up, dial in your frames, test gear, and meet the community before the workshops begin.',
+      FR: 'Session de patinage libre pour s\'échauffer, tester son matériel, ajuster ses platines et se retrouver avant le début des ateliers.',
+      ES: 'Sesión de patinaje libre en la pista para calentar, ajustar patines y compartir con la comunidad antes del inicio de los talleres.',
+    },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzIYd8nyAicsDj0p9QMw0vc_OypY39Qi03q0N_nV2O9EkC9DmBiDS8VszGJGjdHD-Q7d01ywp0A6xGw1wqhRZnXfdWLJ7oDHSdPCDdacR6jox0ay6ByqcF0vqzVhG1U8N5QEOvUDL_kM1tdY-B4oTeUMUJk9bp_aUq1t407HctiUyKcpMOuhxJJcu9j-sFO1rDOgw3Ts73e8m-CiwhsK9C9-xMAS0iDUgpnTPFewCZ6D1H0a-IVUfa',
+    date: {
+      EN: 'Saturday, Sept 12, 2026',
+      FR: 'Samedi 12 sept. 2026',
+      ES: 'Sábado 12 sept. 2026',
+    },
+    time: '13:30 - 15:30',
+    level: 'first_timer',
+    startLocation: {
+      EN: 'Willibrord Park BBB Rink',
+      FR: 'Patinoire BBB du parc Willibrord',
+      ES: 'Pista BBB del parque Willibrord',
+    },
+    endLocation: undefined,
+    category: {
+      EN: 'Open Skate',
+      FR: 'Patinage libre',
+      ES: 'Patinaje libre',
+    },
+    type: 'social',
+    day: 2,
+    iconName: 'sparkles',
+  },
+  {
+    id: 'time-d2-4',
+    title: {
       EN: 'Urban Street Art Ride 3km',
       FR: 'Randonnée urbaine 3kms',
       ES: 'Ruta Urbana de Arte Callejero 3 km',
@@ -501,7 +541,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'brush',
   },
   {
-    id: 'time-d2-4',
+    id: 'time-d2-5',
     title: {
       EN: 'Ça SLALOM! Freestyle Workshop',
       FR: 'Ça SLALOM !',
@@ -541,7 +581,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'timeline',
   },
   {
-    id: 'time-d2-5',
+    id: 'time-d2-6',
     title: {
       EN: 'SKATESPACE Foundations & Intro',
       FR: 'Initiations par SKATESPACE',
@@ -581,7 +621,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'school',
   },
   {
-    id: 'time-d2-6',
+    id: 'time-d2-7',
     title: {
       EN: 'Slide & Powerslide Workshop',
       FR: 'Atelier de dérapage',
@@ -621,7 +661,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'sparkles',
   },
   {
-    id: 'time-d2-7',
+    id: 'time-d2-8',
     title: {
       EN: 'Roller Dance with SKATESPACE',
       FR: 'Roller Dance par SKATESPACE',
@@ -661,7 +701,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'music',
   },
   {
-    id: 'time-d2-8',
+    id: 'time-d2-9',
     title: {
       EN: 'Open Skate & Chill Session',
       FR: 'Patinage libre',
@@ -701,7 +741,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'sparkles',
   },
   {
-    id: 'time-d2-9',
+    id: 'time-d2-10',
     title: {
       EN: 'FREESTYLE with Émile',
       FR: 'FREESTYLE avec Émile',
@@ -741,7 +781,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'auto_awesome',
   },
   {
-    id: 'time-d2-10',
+    id: 'time-d2-11',
     title: {
       EN: 'Dance Contest',
       FR: 'Dance contest',
@@ -781,7 +821,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'trophy',
   },
   {
-    id: 'time-d2-11',
+    id: 'time-d2-12',
     title: {
       EN: 'Saturday Night Fever... On Skates!',
       FR: 'La fièvre du Samedi Soir... En patin !',
@@ -821,7 +861,7 @@ export const TIMETABLE_EVENTS: TimetableEvent[] = [
     iconName: 'music',
   },
   {
-    id: 'time-d2-12',
+    id: 'time-d2-13',
     title: {
       EN: 'Explore the 514',
       FR: 'Explore le 514',
