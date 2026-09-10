@@ -82,3 +82,27 @@ export interface TimetableEvent {
   day: 1 | 2 | 3;
   iconName?: string;
 }
+
+export interface PhotoAlbum {
+  id: string;
+  year: number;
+  edition: string;
+  day: 'friday' | 'saturday' | 'sunday';
+  dayLabel: LocalizedText;
+  title: LocalizedText;
+  description: LocalizedText;
+  albumUrl: string;
+  coverImage: string;
+  badge: LocalizedText;
+  videoUrl?: string;
+}
+
+export interface VideoHighlight {
+  id: string;
+  year: number;
+  title: LocalizedText;
+  description: LocalizedText;
+  videoUrl: string;
+  embedId: string;
+  day?: 'friday' | 'saturday' | 'sunday';
+}

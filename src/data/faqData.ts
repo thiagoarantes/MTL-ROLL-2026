@@ -289,7 +289,7 @@ export const FAQ_CATEGORIES = [
   { id: 'registration', labelEN: 'Access & Cost', labelFR: 'Accès & Tarifs', labelES: 'Acceso y Costos' },
   { id: 'access', labelEN: 'Spots & Transport', labelFR: 'Lieux & Transports', labelES: 'Ubicaciones' },
   { id: 'rules', labelEN: 'Gear & Wheels', labelFR: 'Équipement & Roues', labelES: 'Equipo y Ruedas' },
-  { id: 'amenities', labelEN: 'Food & District', labelFR: 'Restauration & Quartier', labelES: 'Comida y Zona' },
+  { id: 'amenities', labelEN: 'Amenities & Food', labelFR: 'Services & Restauration', labelES: 'Servicios y Comida' },
 ] as const;
 
 export const FAQ_ITEMS: FaqItem[] = [
@@ -425,6 +425,25 @@ export const FAQ_ITEMS: FaqItem[] = [
       EN: ['Wellington Pedestrian Street', '600m from BBB Hub', 'Restaurants, Cafes & Terraces'],
       FR: ['Rue piétonne Wellington', 'À 600 m de la patinoire BBB', 'Terrasses, restos & cafés'],
       ES: ['Calle peatonal Wellington', 'A 600 m de la pista BBB', 'Restaurantes, terrazas y cafés'],
+    },
+  },
+  {
+    id: 'faq-water-restrooms-lockers',
+    category: 'amenities',
+    question: {
+      EN: 'Are there water refill stations, restrooms, and showers on site?',
+      FR: 'Y a-t-il des points d’eau, des toilettes et des douches sur site ?',
+      ES: '¿Hay puntos de agua, baños y duchas en el lugar?',
+    },
+    answer: {
+      EN: 'Yes, the Parc Willibrord chalet will be open at the same time as the BBB rink. There are water refill stations for your bottles, restrooms, showers, and lockers to secure your belongings (bring your own padlock).',
+      FR: 'Oui, le chalet du Parc Willibrord sera ouvert en même temps que la patinoire BBB. Il y a de quoi remplir sa gourde d’eau, des toilettes et douches, ainsi que des casiers pour sécuriser vos affaires (apportez votre cadenas).',
+      ES: '¡Sí! El chalet del Parc Willibrord estará abierto al mismo tiempo que la pista BBB. Hay puntos para rellenar tu botella de agua, baños y duchas, así como casilleros para asegurar tus pertenencias (trae tu propio candado).',
+    },
+    highlights: {
+      EN: ['Parc Willibrord Chalet', 'Water Points, Restrooms & Showers', 'Secure Lockers (Bring Padlock)'],
+      FR: ['Chalet du Parc Willibrord', 'Points d’eau, toilettes & douches', 'Casiers sécurisés (apportez cadenas)'],
+      ES: ['Chalet de Parc Willibrord', 'Puntos de agua, baños y duchas', 'Casilleros seguros (trae candado)'],
     },
   },
 ];

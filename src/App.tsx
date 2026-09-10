@@ -6,6 +6,7 @@ import CalendarView from './components/CalendarView';
 import SitesMapView from './components/SitesMapView';
 import SyndicateView from './components/SyndicateView';
 import FaqConductView from './components/FaqConductView';
+import PhotosView from './components/PhotosView';
 
 import { GUESTS, ORGANIZERS, SPONSORS } from './data';
 import { Sponsor } from './types';
@@ -15,7 +16,7 @@ const VOLUNTEER_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc1bOWF_xmJ
 
 export default function App() {
   // Navigation & Localization
-  const [activeView, setActiveView] = React.useState<'calendar' | 'map' | 'syndicate' | 'faq'>('calendar');
+  const [activeView, setActiveView] = React.useState<'calendar' | 'map' | 'syndicate' | 'faq' | 'photos'>('calendar');
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
   // Persistence States
@@ -58,7 +59,7 @@ export default function App() {
   }, []);
 
   // Handler to switch view and scroll to anchor if needed
-  const handleViewChange = (view: 'calendar' | 'map' | 'syndicate' | 'faq', sectionId?: string) => {
+  const handleViewChange = (view: 'calendar' | 'map' | 'syndicate' | 'faq' | 'photos', sectionId?: string) => {
     setActiveView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -132,31 +133,22 @@ export default function App() {
             registerFormUrl={REGISTER_FORM_URL}
           />
         )}
+
+        {activeView === 'photos' && (
+          <PhotosView
+            lang={lang}
+          />
+        )}
       </main>
 
       {/* Immersive Footer matching screenshots */}
       <footer className="bg-[#111415] py-12 border-t-2 border-[#9500FF]/50 w-full mt-auto">
         <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
           
-          {/* Copyright & Quick Nav */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center md:text-left">
+          {/* Copyright */}
+          <div className="text-center md:text-left">
             <div className="font-headline text-xs font-black uppercase tracking-widest text-[#e2e2e4]">
               © 2026 MTL ROLL. RIDE THE WEEKEND.
-            </div>
-            <div className="flex items-center gap-4 font-mono text-[11px]">
-              <button
-                onClick={() => handleViewChange('map')}
-                className="text-[#E1FD15] hover:underline uppercase tracking-wider cursor-pointer"
-              >
-                {lang === 'EN' ? 'Sites Map' : lang === 'FR' ? 'Plan des sites' : 'Plan de sitios'}
-              </button>
-              <span className="text-[#444444]">•</span>
-              <button
-                onClick={() => handleViewChange('faq')}
-                className="text-[#E1FD15] hover:underline uppercase tracking-wider cursor-pointer"
-              >
-                {lang === 'EN' ? 'FAQ & Conduct' : lang === 'FR' ? 'FAQ & Conduite' : 'FAQ y Conducta'}
-              </button>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 import { Activity, Guest, Organizer, Sponsor } from '../types';
 export * from './calendarData';
 export * from './faqData';
+export * from './photosData';
 
 export const ACTIVITIES: Activity[] = [
   {
