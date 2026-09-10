@@ -19,8 +19,135 @@ export default function App() {
   const [activeView, setActiveView] = React.useState<'calendar' | 'map' | 'syndicate' | 'faq' | 'photos'>('calendar');
   const [lang, setLang] = React.useState<'EN' | 'FR' | 'ES'>('EN');
 
+  // Sub-view deep link parameters
+  const [calendarEventId, setCalendarEventId] = React.useState<string | null>(null);
+  const [calendarDay, setCalendarDay] = React.useState<1 | 2 | 3 | 'all' | undefined>(undefined);
+  const [calendarFilter, setCalendarFilter] = React.useState<'all' | 'ride' | 'workshop' | 'social' | undefined>(undefined);
+  const [mapId, setMapId] = React.useState<string | undefined>(undefined);
+  const [faqTab, setFaqTab] = React.useState<'all' | 'faq' | 'levels' | 'conduct' | undefined>(undefined);
+  const [photoYear, setPhotoYear] = React.useState<'all' | '2025' | '2024' | '2026' | undefined>(undefined);
+
   // Persistence States
   const [sponsors, setSponsors] = React.useState<Sponsor[]>(SPONSORS);
+
+  // Helper to parse URL params and update state
+  const parseUrlParams = React.useCallback(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      
+      // Supported views mapping (supporting aliases like /?page=, /?p=, /?view=)
+      const viewParam = (params.get('view') || params.get('page') || params.get('p') || params.get('tab') || '').toLowerCase().trim();
+      const validViews: Record<string, 'calendar' | 'map' | 'syndicate' | 'faq' | 'photos'> = {
+        calendar: 'calendar',
+        schedule: 'calendar',
+        events: 'calendar',
+        agenda: 'calendar',
+        map: 'map',
+        maps: 'map',
+        sites: 'map',
+        routes: 'map',
+        syndicate: 'syndicate',
+        community: 'syndicate',
+        team: 'syndicate',
+        sponsors: 'syndicate',
+        faq: 'faq',
+        conduct: 'faq',
+        rules: 'faq',
+        levels: 'faq',
+        photos: 'photos',
+        gallery: 'photos',
+        media: 'photos',
+        videos: 'photos',
+      };
+
+      if (viewParam && validViews[viewParam]) {
+        setActiveView(validViews[viewParam]);
+      }
+
+      // Language param
+      const langParam = (params.get('lang') || params.get('lng') || '').toUpperCase().trim();
+      if (langParam === 'EN' || langParam === 'FR' || langParam === 'ES') {
+        setLang(langParam as 'EN' | 'FR' | 'ES');
+        localStorage.setItem('mtl_roll_lang', langParam);
+      }
+
+      // Calendar deep links
+      const eventParam = params.get('event') || params.get('eventId');
+      if (eventParam) {
+        setCalendarEventId(eventParam);
+      }
+
+      const dayParam = params.get('day');
+      if (dayParam === '1' || dayParam === '2' || dayParam === '3') {
+        setCalendarDay(Number(dayParam) as 1 | 2 | 3);
+      } else if (dayParam === 'all') {
+        setCalendarDay('all');
+      }
+
+      const filterParam = params.get('filter') || params.get('type');
+      if (filterParam === 'all' || filterParam === 'ride' || filterParam === 'workshop' || filterParam === 'social') {
+        setCalendarFilter(filterParam);
+      }
+
+      // Map deep links
+      const mapParam = params.get('map') || params.get('route');
+      if (mapParam) {
+        setMapId(mapParam);
+      }
+
+      // FAQ / Levels / Conduct tab deep links
+      const tabParam = params.get('section') || params.get('faqTab') || (viewParam === 'levels' ? 'levels' : viewParam === 'conduct' || viewParam === 'rules' ? 'conduct' : undefined);
+      if (tabParam === 'all' || tabParam === 'faq' || tabParam === 'levels' || tabParam === 'conduct') {
+        setFaqTab(tabParam);
+      }
+
+      // Photo album year deep links
+      const yearParam = params.get('year');
+      if (yearParam === 'all' || yearParam === '2025' || yearParam === '2024' || yearParam === '2026') {
+        setPhotoYear(yearParam);
+      }
+
+      // Section anchor scrolling if provided (e.g. ?section=sponsors or ?anchor=...)
+      const anchorParam = params.get('anchor') || (viewParam === 'sponsors' ? 'sponsors' : undefined);
+      if (anchorParam) {
+        setTimeout(() => {
+          const el = document.getElementById(anchorParam) || document.getElementById(`${anchorParam}-anchor`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 300);
+      }
+    } catch (e) {
+      console.error('Error parsing URL query parameters', e);
+    }
+  }, []);
+
+  // Update URL search parameters without full page reload
+  const updateUrlParams = (newParams: Record<string, string | null | undefined>) => {
+    try {
+      const url = new URL(window.location.href);
+      Object.entries(newParams).forEach(([key, value]) => {
+        if (value === null || value === undefined || value === '') {
+          url.searchParams.delete(key);
+        } else {
+          url.searchParams.set(key, value);
+        }
+      });
+      window.history.pushState({}, '', url.toString());
+    } catch (e) {
+      console.error('Error updating URL search parameters', e);
+    }
+  };
+
+  // Listen to popstate (back/forward browser buttons)
+  React.useEffect(() => {
+    parseUrlParams();
+    const handlePopState = () => {
+      parseUrlParams();
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [parseUrlParams]);
 
   // Load from localStorage on mount (validating sponsor schema and syncing with data.ts)
   React.useEffect(() => {
@@ -49,23 +176,34 @@ export default function App() {
         setSponsors(SPONSORS);
       }
 
-      const savedLang = localStorage.getItem('mtl_roll_lang');
-      if (savedLang === 'EN' || savedLang === 'FR' || savedLang === 'ES') {
-        setLang(savedLang as 'EN' | 'FR' | 'ES');
+      // Check URL first before localStorage for lang
+      const params = new URLSearchParams(window.location.search);
+      const urlLang = params.get('lang') || params.get('lng');
+      if (!urlLang) {
+        const savedLang = localStorage.getItem('mtl_roll_lang');
+        if (savedLang === 'EN' || savedLang === 'FR' || savedLang === 'ES') {
+          setLang(savedLang as 'EN' | 'FR' | 'ES');
+        }
       }
     } catch (e) {
       console.error('Failed to parse state from localStorage', e);
     }
   }, []);
 
-  // Handler to switch view and scroll to anchor if needed
+  // Handler to switch view and update URL
   const handleViewChange = (view: 'calendar' | 'map' | 'syndicate' | 'faq' | 'photos', sectionId?: string) => {
     setActiveView(view);
+    updateUrlParams({
+      view,
+      anchor: sectionId || null,
+      // Clear specific view params when switching main views
+      event: null,
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (sectionId) {
       setTimeout(() => {
-        const element = document.getElementById(`${sectionId}-anchor`);
+        const element = document.getElementById(sectionId) || document.getElementById(`${sectionId}-anchor`);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -76,6 +214,7 @@ export default function App() {
   const handleChangeLang = (newLang: 'EN' | 'FR' | 'ES') => {
     setLang(newLang);
     localStorage.setItem('mtl_roll_lang', newLang);
+    updateUrlParams({ lang: newLang.toLowerCase() });
   };
 
   const handleAddSponsor = (newSponsor: Sponsor) => {
@@ -107,6 +246,9 @@ export default function App() {
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
             volunteerFormUrl={VOLUNTEER_FORM_URL}
+            initialEventId={calendarEventId}
+            initialDay={calendarDay}
+            initialFilter={calendarFilter}
           />
         )}
 
@@ -114,6 +256,11 @@ export default function App() {
           <SitesMapView
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
+            initialMapId={mapId}
+            onMapChange={(selectedMap) => {
+              setMapId(selectedMap);
+              updateUrlParams({ map: selectedMap });
+            }}
           />
         )}
 
@@ -131,12 +278,22 @@ export default function App() {
           <FaqConductView
             lang={lang}
             registerFormUrl={REGISTER_FORM_URL}
+            initialTab={faqTab}
+            onTabChange={(tab) => {
+              setFaqTab(tab);
+              updateUrlParams({ section: tab });
+            }}
           />
         )}
 
         {activeView === 'photos' && (
           <PhotosView
             lang={lang}
+            initialYear={photoYear}
+            onYearChange={(year) => {
+              setPhotoYear(year);
+              updateUrlParams({ year });
+            }}
           />
         )}
       </main>

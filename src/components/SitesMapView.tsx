@@ -18,6 +18,8 @@ import {
 interface SitesMapViewProps {
   lang: 'EN' | 'FR' | 'ES';
   registerFormUrl?: string;
+  initialMapId?: string;
+  onMapChange?: (mapId: string) => void;
 }
 
 interface SiteSpot {
@@ -288,9 +290,19 @@ const FESTIVAL_MAPS: MapRoute[] = [
   },
 ];
 
-export default function SitesMapView({ lang }: SitesMapViewProps) {
-  const [activeMapId, setActiveMapId] = React.useState<string>('friday-28k');
+export default function SitesMapView({ lang, initialMapId, onMapChange }: SitesMapViewProps) {
+  const [activeMapId, setActiveMapId] = React.useState<string>(initialMapId || 'friday-28k');
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    if (initialMapId && initialMapId !== activeMapId) {
+      const exists = FESTIVAL_MAPS.some((m) => m.id === initialMapId);
+      if (exists) {
+        setIsMapLoaded(false);
+        setActiveMapId(initialMapId);
+      }
+    }
+  }, [initialMapId]);
 
   const currentMap = FESTIVAL_MAPS.find((m) => m.id === activeMapId) || FESTIVAL_MAPS[0];
   const GOOGLE_MY_MAPS_EMBED_URL = `https://www.google.com/maps/d/embed?mid=${currentMap.mid}&ll=45.476294%2C-73.586692&z=12`;
@@ -389,6 +401,7 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
                   if (activeMapId !== mapItem.id) {
                     setIsMapLoaded(false);
                     setActiveMapId(mapItem.id);
+                    onMapChange?.(mapItem.id);
                   }
                 }}
                 className={`p-3 text-left border transition-all cursor-pointer flex flex-col justify-between gap-2 relative overflow-hidden ${

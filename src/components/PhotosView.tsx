@@ -21,13 +21,21 @@ import { PhotoAlbum, VideoHighlight, LocalizedText } from '../types';
 
 interface PhotosViewProps {
   lang: 'EN' | 'FR' | 'ES';
+  initialYear?: 'all' | '2025' | '2024' | '2026';
+  onYearChange?: (year: 'all' | '2025' | '2024' | '2026') => void;
 }
 
-export default function PhotosView({ lang }: PhotosViewProps) {
-  const [selectedYear, setSelectedYear] = React.useState<'all' | '2025' | '2024' | '2026'>('all');
+export default function PhotosView({ lang, initialYear, onYearChange }: PhotosViewProps) {
+  const [selectedYear, setSelectedYear] = React.useState<'all' | '2025' | '2024' | '2026'>(initialYear || 'all');
   const [selectedDay, setSelectedDay] = React.useState<'all' | 'friday' | 'saturday' | 'sunday'>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [activeVideoModal, setActiveVideoModal] = React.useState<VideoHighlight | null>(null);
+
+  React.useEffect(() => {
+    if (initialYear && initialYear !== selectedYear) {
+      setSelectedYear(initialYear);
+    }
+  }, [initialYear]);
 
   const getLocalized = (field: string | LocalizedText | undefined): string => {
     if (!field) return '';
@@ -188,7 +196,10 @@ export default function PhotosView({ lang }: PhotosViewProps) {
                 return (
                   <button
                     key={yearOpt.id}
-                    onClick={() => setSelectedYear(yearOpt.id)}
+                    onClick={() => {
+                      setSelectedYear(yearOpt.id);
+                      onYearChange?.(yearOpt.id);
+                    }}
                     className={`px-3 py-1 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                       isActive
                         ? 'bg-[#E1FD15] text-[#0B0C10] font-black shadow-[0_0_10px_rgba(225,253,21,0.5)]'

@@ -28,17 +28,27 @@ import {
 interface FaqConductViewProps {
   lang: 'EN' | 'FR' | 'ES';
   registerFormUrl?: string;
+  initialTab?: 'all' | 'faq' | 'levels' | 'conduct';
+  onTabChange?: (tab: 'all' | 'faq' | 'levels' | 'conduct') => void;
 }
 
 export default function FaqConductView({
   lang,
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
+  initialTab,
+  onTabChange,
 }: FaqConductViewProps) {
-  const [activeTab, setActiveTab] = React.useState<'all' | 'faq' | 'levels' | 'conduct'>('all');
+  const [activeTab, setActiveTab] = React.useState<'all' | 'faq' | 'levels' | 'conduct'>(initialTab || 'all');
   const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [expandedFaqId, setExpandedFaqId] = React.useState<string | null>('faq-what-is-mtl-roll');
   const [levelDisplayMode, setLevelDisplayMode] = React.useState<'cards' | 'table'>('cards');
+
+  React.useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   const t = {
     badge: lang === 'EN' ? 'MISSION PROTOCOLS' : lang === 'FR' ? 'PROTOCOLES DE MISSION' : 'PROTOCOLOS DE MISIÓN',
@@ -149,7 +159,10 @@ export default function FaqConductView({
         {/* Navigation Switcher Tabs */}
         <div className="mt-8 flex flex-wrap gap-2 sm:gap-3 border-b border-[#333537] pb-4">
           <button
-            onClick={() => setActiveTab('all')}
+            onClick={() => {
+              setActiveTab('all');
+              onTabChange?.('all');
+            }}
             className={`px-5 py-2 font-headline text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer ${
               activeTab === 'all'
                 ? 'bg-[#E1FD15] text-[#0B0C10] font-bold shadow-[0_0_12px_rgba(225,253,21,0.5)]'
@@ -159,7 +172,10 @@ export default function FaqConductView({
             {t.tabAll}
           </button>
           <button
-            onClick={() => setActiveTab('faq')}
+            onClick={() => {
+              setActiveTab('faq');
+              onTabChange?.('faq');
+            }}
             className={`px-5 py-2 font-headline text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'faq'
                 ? 'bg-[#9500FF] text-white font-bold shadow-[0_0_15px_rgba(149,0,255,0.6)]'
@@ -170,7 +186,10 @@ export default function FaqConductView({
             <span>{t.tabFaq}</span>
           </button>
           <button
-            onClick={() => setActiveTab('levels')}
+            onClick={() => {
+              setActiveTab('levels');
+              onTabChange?.('levels');
+            }}
             className={`px-5 py-2 font-headline text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'levels'
                 ? 'bg-[#00D2FF] text-[#0B0C10] font-bold shadow-[0_0_15px_rgba(0,210,255,0.6)]'
@@ -181,7 +200,10 @@ export default function FaqConductView({
             <span>{t.tabLevels}</span>
           </button>
           <button
-            onClick={() => setActiveTab('conduct')}
+            onClick={() => {
+              setActiveTab('conduct');
+              onTabChange?.('conduct');
+            }}
             className={`px-5 py-2 font-headline text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'conduct'
                 ? 'bg-[#9500FF] text-white font-bold shadow-[0_0_15px_rgba(149,0,255,0.6)]'

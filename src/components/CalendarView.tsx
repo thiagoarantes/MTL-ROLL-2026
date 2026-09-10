@@ -33,19 +33,44 @@ interface CalendarViewProps {
   lang: 'EN' | 'FR' | 'ES';
   registerFormUrl?: string;
   volunteerFormUrl?: string;
+  initialEventId?: string | null;
+  initialDay?: 1 | 2 | 3 | 'all';
+  initialFilter?: 'all' | 'ride' | 'workshop' | 'social';
 }
 
 export default function CalendarView({
   lang,
   registerFormUrl = 'https://forms.gle/7A9spHxz3Qm8VyEfA',
   volunteerFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc1bOWF_xmJuNlZifWtSGFHFhYTJUqjYpvbMZCE_rdhs5js8A/viewform',
+  initialEventId,
+  initialDay,
+  initialFilter,
 }: CalendarViewProps) {
   const [viewMode, setViewMode] = React.useState<'list' | 'calendar'>('list');
-  const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3 | 'all'>('all');
-  const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'workshop' | 'social'>('all');
+  const [selectedDay, setSelectedDay] = React.useState<1 | 2 | 3 | 'all'>(initialDay ?? 'all');
+  const [filterType, setFilterType] = React.useState<'all' | 'ride' | 'workshop' | 'social'>(initialFilter ?? 'all');
   const [selectedLevel, setSelectedLevel] = React.useState<'all' | SkillLevelId>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [activeDetailEventId, setActiveDetailEventId] = React.useState<string | null>(null);
+  const [activeDetailEventId, setActiveDetailEventId] = React.useState<string | null>(initialEventId ?? null);
+
+  // Sync if query param changed
+  React.useEffect(() => {
+    if (initialEventId !== undefined) {
+      setActiveDetailEventId(initialEventId);
+    }
+  }, [initialEventId]);
+
+  React.useEffect(() => {
+    if (initialDay !== undefined) {
+      setSelectedDay(initialDay);
+    }
+  }, [initialDay]);
+
+  React.useEffect(() => {
+    if (initialFilter !== undefined) {
+      setFilterType(initialFilter);
+    }
+  }, [initialFilter]);
 
   const scheduleContainerRef = React.useRef<HTMLDivElement>(null);
 
@@ -484,6 +509,7 @@ export default function CalendarView({
                           return (
                             <div
                               key={event.id}
+                              id={`calendar-event-${event.id}`}
                               onClick={() => setActiveDetailEventId(event.id)}
                               className={`bg-[#17191d] border border-[#272a2e] border-l-4 ${themeBorder} hover:border-[#E1FD15] hover:border-l-[#E1FD15] hover:bg-[#1f2227] hover:shadow-[0_0_15px_rgba(225,253,21,0.25)] transition-all p-3.5 cursor-pointer group text-left relative`}
                             >
@@ -586,6 +612,7 @@ export default function CalendarView({
                     return (
                       <div
                         key={event.id}
+                        id={`event-${event.id}`}
                         onClick={() => setActiveDetailEventId(event.id)}
                         className={`bg-[#111415] border border-[#333537] border-l-4 ${themeBorder} hover:border-[#E1FD15] hover:border-l-[#E1FD15] hover:shadow-[0_0_20px_rgba(225,253,21,0.2)] transition-all duration-300 p-5 group cursor-pointer text-left relative`}
                       >
