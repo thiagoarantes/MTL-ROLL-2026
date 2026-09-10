@@ -179,31 +179,135 @@ const FESTIVAL_SPOTS: SiteSpot[] = [
   },
 ];
 
+interface MapRoute {
+  id: string;
+  mid: string;
+  title: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  subtitle: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  day: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  distance: string;
+  color: string;
+}
+
+const FESTIVAL_MAPS: MapRoute[] = [
+  {
+    id: 'friday-28k',
+    mid: '195J_iaVcyqgElSFW2bT_Zl_BxUe_zgA',
+    title: {
+      EN: 'Friday 28K Ride',
+      FR: 'Randonnée 28 km du Vendredi',
+      ES: 'Ruta 28 km del Viernes',
+    },
+    subtitle: {
+      EN: 'Verdun • Waterfront • Long Distance Cruise',
+      FR: 'Verdun • Berges du Fleuve • Rando Longue Distance',
+      ES: 'Verdun • Ribera del Río • Gran Recorrido',
+    },
+    day: {
+      EN: 'Friday Daytime',
+      FR: 'Vendredi Jour',
+      ES: 'Viernes Día',
+    },
+    distance: '28 km',
+    color: '#00D2FF',
+  },
+  {
+    id: 'friday-night',
+    mid: '1hORy8dbCwDiXlVk1hRMyR3-v-3M568g',
+    title: {
+      EN: 'Friday Night Ride',
+      FR: 'Randonnée Nocturne du Vendredi',
+      ES: 'Ruta Nocturna del Viernes',
+    },
+    subtitle: {
+      EN: 'Light Up The 514 • Downtown • Illuminated Convoy',
+      FR: 'Illumine le 514 • Centre-Ville • Convoi Lumineux',
+      ES: 'Ilumina el 514 • Centro • Caravana Iluminada',
+    },
+    day: {
+      EN: 'Friday Night',
+      FR: 'Vendredi Soir',
+      ES: 'Viernes Noche',
+    },
+    distance: 'Night Ride',
+    color: '#9500FF',
+  },
+  {
+    id: 'saturday-3k',
+    mid: '1KkyOTdQCRmnVpVQRUcXNLguqdXK4FPQ',
+    title: {
+      EN: 'Saturday 3K Circuit',
+      FR: 'Circuit 3 km du Samedi',
+      ES: 'Circuito 3 km del Sábado',
+    },
+    subtitle: {
+      EN: 'HQ Hub • Willibrord • Accessible Loop',
+      FR: 'QG Principal • Willibrord • Boucle Accessible',
+      ES: 'Sede Central • Willibrord • Circuito Accesible',
+    },
+    day: {
+      EN: 'Saturday',
+      FR: 'Samedi',
+      ES: 'Sábado',
+    },
+    distance: '3 km',
+    color: '#E1FD15',
+  },
+  {
+    id: 'sunday-20k',
+    mid: '1S9HYfYfLQ1ErHN-U0YzhGcmMGMQ7dOQ',
+    title: {
+      EN: 'Sunday 20K Ride',
+      FR: 'Randonnée 20 km du Dimanche',
+      ES: 'Ruta 20 km del Domingo',
+    },
+    subtitle: {
+      EN: 'Lachine Canal • Waterfront • Closing Cruise',
+      FR: 'Canal de Lachine • Pistes Cyclables • Rando de Clôture',
+      ES: 'Canal Lachine • Ciclovías • Rodada de Cierre',
+    },
+    day: {
+      EN: 'Sunday',
+      FR: 'Dimanche',
+      ES: 'Domingo',
+    },
+    distance: '20 km',
+    color: '#FF6B00',
+  },
+];
+
 export default function SitesMapView({ lang }: SitesMapViewProps) {
-  const [activeCategoryFilter, setActiveCategoryFilter] = React.useState<'all' | 'hub' | 'circuit' | 'rally' | 'scenic'>('all');
+  const [activeMapId, setActiveMapId] = React.useState<string>('friday-28k');
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
-  const GOOGLE_MY_MAPS_EMBED_URL =
-    'https://www.google.com/maps/d/embed?mid=1ukgemNUImKZecUECbNfU8Wl9kXSsb3c&ll=45.45629415957067%2C-73.60669234644986&z=13';
-  const GOOGLE_MY_MAPS_VIEWER_URL =
-    'https://www.google.com/maps/d/u/0/viewer?mid=1ukgemNUImKZecUECbNfU8Wl9kXSsb3c&ll=45.45629415957067%2C-73.60669234644986&z=13';
+  const currentMap = FESTIVAL_MAPS.find((m) => m.id === activeMapId) || FESTIVAL_MAPS[0];
+  const GOOGLE_MY_MAPS_EMBED_URL = `https://www.google.com/maps/d/embed?mid=${currentMap.mid}&ll=45.476294%2C-73.586692&z=12`;
+  const GOOGLE_MY_MAPS_VIEWER_URL = `https://www.google.com/maps/d/u/0/viewer?mid=${currentMap.mid}`;
 
   const t = {
     badge: lang === 'EN' ? 'TACTICAL GEODATA' : lang === 'FR' ? 'CARTOGRAPHIE TACTIQUE' : 'GEODATOS TÁCTICOS',
     title: lang === 'EN' ? 'FESTIVAL SITES & ROUTES MAP' : lang === 'FR' ? 'PLAN DES SITES & ITINÉRAIRES' : 'PLAN DE LOS SITIOS Y RUTAS',
     subtitle:
       lang === 'EN'
-        ? 'Explore the official MTL ROLL 2026 interactive map: HQ rink, speed circuits, rally points, and urban cruising corridors across Montreal.'
+        ? 'Official route corridors and key festival spots across Montreal.'
         : lang === 'FR'
-        ? 'Consultez la carte interactive officielle de MTL ROLL 2026 : patinoire QG, circuits de vitesse, points de ralliement et corridors de glisse urbaine à Montréal.'
-        : 'Explora el mapa interactivo oficial de MTL ROLL 2026: pista sede, circuitos de velocidad, puntos de encuentro y rutas urbanas en Montreal.',
+        ? 'Itinéraires officiels et points clés du festival à Montréal.'
+        : 'Rutas oficiales y puntos clave del festival en Montreal.',
+    selectRoute: lang === 'EN' ? 'SELECT ROUTE MAP' : lang === 'FR' ? 'SÉLECTIONNER UN ITINÉRAIRE' : 'SELECCIONAR RUTA',
     openExternal:
       lang === 'EN' ? 'Open in Google Maps' : lang === 'FR' ? 'Ouvrir dans Google Maps' : 'Abrir en Google Maps',
-    filterAll: lang === 'EN' ? 'All Key Sites' : lang === 'FR' ? 'Tous les sites' : 'Todos los sitios',
-    filterHub: lang === 'EN' ? 'HQ Rink' : lang === 'FR' ? 'Patinoire QG' : 'Pista Sede',
-    filterCircuit: lang === 'EN' ? 'F1 Circuit' : lang === 'FR' ? 'Circuit F1' : 'Circuito F1',
-    filterRally: lang === 'EN' ? 'Muster Points' : lang === 'FR' ? 'Points de départ' : 'Puntos de Salida',
-    filterScenic: lang === 'EN' ? 'Canal & Routes' : lang === 'FR' ? 'Canal & Randonnées' : 'Canal y Rutas',
     keyLocationsHeading: lang === 'EN' ? 'FESTIVAL WAYPOINTS & ACCESS' : lang === 'FR' ? 'POINTS DE REPÈRE & ACCÈS' : 'PUNTOS CLAVE Y ACCESOS',
     metroLabel: lang === 'EN' ? 'Transit / Metro' : lang === 'FR' ? 'Accès Métro / STM' : 'Acceso Metro / STM',
     activitiesLabel: lang === 'EN' ? 'Featured Events' : lang === 'FR' ? 'Activités sur place' : 'Actividades en el sitio',
@@ -232,10 +336,6 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
         : 'La pista Willibrord tiene concreto pulido muy suave (ideal para ruedas 84A–88A). Las rutas urbanas combinan varios asfaltos; se recomiendan muñequeras y luces para la noche.',
   };
 
-  const filteredSpots = FESTIVAL_SPOTS.filter(
-    (spot) => activeCategoryFilter === 'all' || spot.category === activeCategoryFilter
-  );
-
   return (
     <div className="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto space-y-12 animate-in fade-in duration-300">
       
@@ -259,20 +359,81 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
         <p className="text-[#a0a5ad] font-sans text-sm sm:text-base leading-relaxed">
           {t.subtitle}
         </p>
+      </div>
 
-        {/* Quick External Actions */}
-        <div className="flex items-center justify-center pt-2">
+      {/* Route Map Selector Buttons */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#E1FD15] font-bold flex items-center gap-2">
+            <Navigation className="w-3.5 h-3.5" />
+            {t.selectRoute}
+          </span>
           <a
             href={GOOGLE_MY_MAPS_VIEWER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#E1FD15] text-[#0B0C10] px-6 py-3 font-headline text-xs sm:text-sm uppercase tracking-wider font-bold hover:shadow-[0_0_15px_rgba(225,253,21,0.7)] transition-all scale-95 active:scale-90 cursor-pointer"
-            id="open-google-my-maps-btn"
+            className="text-xs font-mono text-[#a0a5ad] hover:text-[#E1FD15] flex items-center gap-1 transition-colors"
           >
-            <MapPin className="w-4 h-4" />
-            <span>{t.openExternal}</span>
-            <ArrowUpRight className="w-4 h-4" />
+            <span>{currentMap.title[lang]}</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {FESTIVAL_MAPS.map((mapItem) => {
+            const isSelected = activeMapId === mapItem.id;
+            return (
+              <button
+                key={mapItem.id}
+                onClick={() => {
+                  if (activeMapId !== mapItem.id) {
+                    setIsMapLoaded(false);
+                    setActiveMapId(mapItem.id);
+                  }
+                }}
+                className={`p-3 text-left border transition-all cursor-pointer flex flex-col justify-between gap-2 relative overflow-hidden ${
+                  isSelected
+                    ? 'bg-[#1a1c22] border-[#E1FD15] shadow-[0_0_15px_rgba(225,253,21,0.25)]'
+                    : 'bg-[#111415] border-[#272a2e] hover:border-[#9500FF]/70 hover:bg-[#15171b]'
+                }`}
+              >
+                {isSelected && (
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1"
+                    style={{ backgroundColor: mapItem.color }}
+                  />
+                )}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#a0a5ad]">
+                    {mapItem.day[lang]}
+                  </span>
+                  <span
+                    className="font-mono text-[10px] font-black px-1.5 py-0.5 rounded-xs"
+                    style={{
+                      backgroundColor: `${mapItem.color}20`,
+                      color: mapItem.color,
+                      border: `1px solid ${mapItem.color}60`,
+                    }}
+                  >
+                    {mapItem.distance}
+                  </span>
+                </div>
+
+                <div>
+                  <div
+                    className={`font-headline text-sm font-bold uppercase tracking-wide leading-tight ${
+                      isSelected ? 'text-[#E1FD15]' : 'text-white'
+                    }`}
+                  >
+                    {mapItem.title[lang]}
+                  </div>
+                  <div className="font-sans text-[11px] text-[#787f8a] truncate mt-1">
+                    {mapItem.subtitle[lang]}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -285,15 +446,23 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
           
           {/* Tactical Bar Header */}
           <div className="bg-[#17191d] px-4 py-2.5 border-b border-[#272a2e] flex items-center justify-between gap-4 text-xs font-mono">
-            <div className="flex items-center gap-2 text-[#E1FD15]">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#E1FD15] animate-ping" />
-              <span className="font-bold tracking-wider uppercase">GOOGLE MY MAPS // MTL ROLL 2026 SITES RADAR</span>
+            <div className="flex items-center gap-2 text-[#E1FD15] truncate">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#E1FD15] animate-ping shrink-0" />
+              <span className="font-bold tracking-wider uppercase truncate">
+                GOOGLE MY MAPS // {currentMap.title[lang].toUpperCase()} ({currentMap.distance})
+              </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <span className="text-[#888888] font-mono text-[11px]">
-                LAT: 45.4563° N // LNG: -73.6067° W
-              </span>
+            <div className="flex items-center gap-3 shrink-0">
+              <a
+                href={GOOGLE_MY_MAPS_VIEWER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#E1FD15] hover:underline flex items-center gap-1 font-bold uppercase tracking-wider text-[11px]"
+              >
+                <span>{t.openExternal}</span>
+                <ArrowUpRight className="w-3 h-3" />
+              </a>
             </div>
           </div>
 
@@ -303,14 +472,15 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
               <div className="absolute inset-0 bg-[#111415] flex flex-col items-center justify-center p-6 text-center z-10">
                 <div className="w-10 h-10 border-2 border-[#E1FD15] border-t-transparent rounded-full animate-spin mb-4" />
                 <p className="font-mono text-xs text-[#E1FD15] uppercase tracking-widest">
-                  Loading Interactive Map Data...
+                  Loading {currentMap.title[lang]} Data...
                 </p>
               </div>
             )}
 
             <iframe
+              key={currentMap.id}
               src={GOOGLE_MY_MAPS_EMBED_URL}
-              title="MTL ROLL 2026 - Plan des sites et itinéraires"
+              title={`MTL ROLL 2026 - ${currentMap.title[lang]}`}
               width="100%"
               height="100%"
               className="w-full h-full border-0"
@@ -324,7 +494,7 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
           <div className="bg-[#111415] px-4 py-2.5 border-t border-[#272a2e] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#888888]">
             <div className="flex items-center gap-2">
               <Layers className="w-3.5 h-3.5 text-[#9500FF]" />
-              <span>Verdun / Canal de Lachine / Île Notre-Dame / Vieux-Port</span>
+              <span>{currentMap.subtitle[lang]}</span>
             </div>
             <a
               href={GOOGLE_MY_MAPS_VIEWER_URL}
@@ -340,74 +510,18 @@ export default function SitesMapView({ lang }: SitesMapViewProps) {
         </div>
       </section>
 
-      {/* Spot Categories Filter Pills */}
+      {/* Spot Categories */}
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#272a2e] pb-4">
-          <div>
-            <h2 className="font-headline text-xl sm:text-2xl uppercase tracking-wider text-white flex items-center gap-2.5">
-              <MapPin className="w-5 h-5 text-[#E1FD15]" />
-              <span>{t.keyLocationsHeading}</span>
-            </h2>
-          </div>
-
-          {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2 font-mono text-xs">
-            <button
-              onClick={() => setActiveCategoryFilter('all')}
-              className={`px-3 py-1.5 border transition-all cursor-pointer uppercase ${
-                activeCategoryFilter === 'all'
-                  ? 'bg-[#E1FD15] text-[#0B0C10] border-[#E1FD15] font-bold shadow-[0_0_8px_rgba(225,253,21,0.4)]'
-                  : 'bg-[#17191d] text-[#a0a5ad] border-[#272a2e] hover:border-[#9500FF]'
-              }`}
-            >
-              {t.filterAll}
-            </button>
-            <button
-              onClick={() => setActiveCategoryFilter('hub')}
-              className={`px-3 py-1.5 border transition-all cursor-pointer uppercase ${
-                activeCategoryFilter === 'hub'
-                  ? 'bg-[#9500FF] text-white border-[#9500FF] font-bold shadow-[0_0_8px_rgba(149,0,255,0.5)]'
-                  : 'bg-[#17191d] text-[#a0a5ad] border-[#272a2e] hover:border-[#9500FF]'
-              }`}
-            >
-              {t.filterHub}
-            </button>
-            <button
-              onClick={() => setActiveCategoryFilter('circuit')}
-              className={`px-3 py-1.5 border transition-all cursor-pointer uppercase ${
-                activeCategoryFilter === 'circuit'
-                  ? 'bg-[#9500FF] text-white border-[#9500FF] font-bold shadow-[0_0_8px_rgba(149,0,255,0.5)]'
-                  : 'bg-[#17191d] text-[#a0a5ad] border-[#272a2e] hover:border-[#9500FF]'
-              }`}
-            >
-              {t.filterCircuit}
-            </button>
-            <button
-              onClick={() => setActiveCategoryFilter('rally')}
-              className={`px-3 py-1.5 border transition-all cursor-pointer uppercase ${
-                activeCategoryFilter === 'rally'
-                  ? 'bg-[#9500FF] text-white border-[#9500FF] font-bold shadow-[0_0_8px_rgba(149,0,255,0.5)]'
-                  : 'bg-[#17191d] text-[#a0a5ad] border-[#272a2e] hover:border-[#9500FF]'
-              }`}
-            >
-              {t.filterRally}
-            </button>
-            <button
-              onClick={() => setActiveCategoryFilter('scenic')}
-              className={`px-3 py-1.5 border transition-all cursor-pointer uppercase ${
-                activeCategoryFilter === 'scenic'
-                  ? 'bg-[#9500FF] text-white border-[#9500FF] font-bold shadow-[0_0_8px_rgba(149,0,255,0.5)]'
-                  : 'bg-[#17191d] text-[#a0a5ad] border-[#272a2e] hover:border-[#9500FF]'
-              }`}
-            >
-              {t.filterScenic}
-            </button>
-          </div>
+        <div className="border-b border-[#272a2e] pb-4">
+          <h2 className="font-headline text-xl sm:text-2xl uppercase tracking-wider text-white flex items-center gap-2.5">
+            <MapPin className="w-5 h-5 text-[#E1FD15]" />
+            <span>{t.keyLocationsHeading}</span>
+          </h2>
         </div>
 
         {/* Spot Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredSpots.map((spot) => {
+          {FESTIVAL_SPOTS.map((spot) => {
             const spotName = spot.name[lang];
             const spotBadge = spot.badge[lang];
             const spotDesc = spot.description[lang];
