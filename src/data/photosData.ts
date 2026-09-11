@@ -193,7 +193,7 @@ export const PHOTO_ALBUMS: PhotoAlbum[] = [
       ES: 'Día completo de talleres de freestyle, wizard, slides, limbo y juegos colectivos.',
     },
     albumUrl: 'https://photos.app.goo.gl/pFY8j1jChgFJ6z3K9',
-    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczNxGt8ZScKHniYl34vSkHwGTFbuo-bhqSxPLKvVV0fqqG7ck39wXLBPbOGBS8mEM4z44F4Z5mEz6Tcjn7Eyu6effyCpIgwUreZ2pz-wAnFUMQnyjWpd=w800',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczOJfBH7Sk0tYC7lxHACtP5AFAj6y6DTfOAPOw3LZPmeKmi1e4_m-zB7cVFmqncJvlCIT02zOeErH0frVtn0Qay_ogUsQB7Q_9Ua_qDAMacy94kuxOBg=w800',
     badge: {
       EN: 'Workshops & Games',
       FR: 'Ateliers & Jeux',
@@ -221,7 +221,7 @@ export const PHOTO_ALBUMS: PhotoAlbum[] = [
       ES: 'Recorrido por las explanadas de concreto y la icónica arquitectura del Parque Olímpico de Montreal.',
     },
     albumUrl: 'https://photos.app.goo.gl/qeedKY5PME6pe5388',
-    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczPcOPK0eKl9dQdy3va6R9QEMRKTuIJhyQoULaXMqmqJPdGL4ju4b_6xCvRF6N13IPjY4Io7bAvsY9g2k2UBdOSLG41DYXnczHpuTmTgG4IiBsW8nTom=w800',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczPyVwBH8ccvEYG2UHDtrF5sfxa3PPhmjG4P9yQbNbl7HvN_nYViKo66hGjJ-6rq4MUeb182L7QiEY0kgMr3ecYdgcvpTP6NM15_3TqjM-Wg4qAf2V0Z=w800',
     badge: {
       EN: 'Iconic Spot',
       FR: 'Stade Olympique',
