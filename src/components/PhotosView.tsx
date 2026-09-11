@@ -50,10 +50,10 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
     titleSub: lang === 'EN' ? '& EVENT RECAPS' : lang === 'FR' ? '& RÉCAPITULATIFS' : 'Y RESÚMENES EN VÍDEO',
     subtitle:
       lang === 'EN'
-        ? 'Relive the speed, energy, and community of Montreal Roll-O-Rama. Browse official Google Photo albums from past festival editions and stream full event recap films.'
+        ? 'Relive the speed, energy, and community of Montreal Roll. Browse official photo albums from past festival editions and stream full event recap films.'
         : lang === 'FR'
-        ? 'Revivez la vitesse, l\'énergie et la communion de Montréal Roll-O-Rama. Parcourez les albums Google Photos officiels des éditions précédentes et visionnez les films récapitulatifs du festival.'
-        : 'Revive la velocidad, la energía y la comunidad de Montreal Roll-O-Rama. Explora los álbumes oficiales de Google Photos de ediciones pasadas y mira las películas y resúmenes del festival.',
+        ? 'Revivez la vitesse, l\'énergie et la communion de Montréal Roll. Parcourez les albums photos officiels des éditions précédentes et visionnez les films récapitulatifs du festival.'
+        : 'Revive la velocidad, la energía y la comunidad de Montreal Roll. Explora los álbumes de fotos oficiales de ediciones pasadas y mira las películas y resúmenes del festival.',
     
     // Filters
     filterYear: lang === 'EN' ? 'Edition' : lang === 'FR' ? 'Édition' : 'Edición',
@@ -76,11 +76,11 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
         : 'Buscar álbumes (ej. Estadio, Mural, Disco, Taller)...',
 
     // Card buttons & labels
-    openGooglePhotos: lang === 'EN' ? 'Open in Google Photos' : lang === 'FR' ? 'Ouvrir dans Google Photos' : 'Abrir en Google Photos',
+    openGooglePhotos: lang === 'EN' ? 'Open Photo Album' : lang === 'FR' ? 'Ouvrir l\'album photo' : 'Abrir álbum de fotos',
     copyLink: lang === 'EN' ? 'Copy Link' : lang === 'FR' ? 'Copier le lien' : 'Copiar enlace',
     copied: lang === 'EN' ? 'Link Copied!' : lang === 'FR' ? 'Lien copié !' : '¡Copiado!',
     videoAvailable: lang === 'EN' ? 'Watch Clip' : lang === 'FR' ? 'Voir le clip' : 'Ver vídeo',
-    googlePhotosLabel: lang === 'EN' ? 'Official Google Photos Album' : lang === 'FR' ? 'Album Google Photos officiel' : 'Álbum oficial de Google Photos',
+    googlePhotosLabel: lang === 'EN' ? 'Official Photo Album' : lang === 'FR' ? 'Album photo officiel' : 'Álbum oficial de fotos',
     
     // Video section
     videosHeading: lang === 'EN' ? 'FESTIVAL FILMS & VIDEO HIGHLIGHTS' : lang === 'FR' ? 'FILMS ET RÉCAPS VIDÉO DU FESTIVAL' : 'PELÍCULAS Y VÍDEOS DEL FESTIVAL',
