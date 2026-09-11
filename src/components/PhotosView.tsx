@@ -60,7 +60,7 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
     allYears: lang === 'EN' ? 'All Years' : lang === 'FR' ? 'Toutes les années' : 'Todos los años',
     year2025: '2025',
     year2024: '2024',
-    year2026: lang === 'EN' ? '2026 (Upcoming)' : lang === 'FR' ? '2026 (À venir)' : '2026 (Próximo)',
+    year2026: lang === 'EN' ? '2026 (Live)' : lang === 'FR' ? '2026 (En cours)' : '2026 (En vivo)',
     
     filterDay: lang === 'EN' ? 'Day' : lang === 'FR' ? 'Jour' : 'Día',
     allDays: lang === 'EN' ? 'All Days' : lang === 'FR' ? 'Tous les jours' : 'Todos los días',
@@ -70,10 +70,10 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
     
     searchPlaceholder:
       lang === 'EN'
-        ? 'Search albums (e.g. Olympic, Mural, Disco, Workshop)...'
+        ? 'Search albums (e.g. 28 km, Olympic, Mural, Disco)...'
         : lang === 'FR'
-        ? 'Rechercher un album (ex. Stade, Mural, Disco, Atelier)...'
-        : 'Buscar álbumes (ej. Estadio, Mural, Disco, Taller)...',
+        ? 'Rechercher un album (ex. 28 kms, Stade, Mural, Disco)...'
+        : 'Buscar álbumes (ej. 28 km, Estadio, Mural, Disco)...',
 
     // Card buttons & labels
     openGooglePhotos: lang === 'EN' ? 'Open Photo Album' : lang === 'FR' ? 'Ouvrir l\'album photo' : 'Abrir álbum de fotos',
@@ -93,13 +93,13 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
     watchOnYouTube: lang === 'EN' ? 'Watch on YouTube' : lang === 'FR' ? 'Regarder sur YouTube' : 'Ver en YouTube',
 
     // 2026 Banner
-    banner2026Title: lang === 'EN' ? 'MTL ROLL 2026 — Photo Drop Coming Soon!' : lang === 'FR' ? 'MTL ROLL 2026 — Albums photos bientôt en ligne !' : 'MTL ROLL 2026 — ¡Fotos muy pronto!',
+    banner2026Title: lang === 'EN' ? 'MTL ROLL 2026 — Official Photo Drop Live!' : lang === 'FR' ? 'MTL ROLL 2026 — Albums photos officiels en ligne !' : 'MTL ROLL 2026 — ¡Álbumes oficiales en línea!',
     banner2026Desc:
       lang === 'EN'
-        ? 'Official photo albums for the 2026 festival edition will be published right here after the weekend. Got photos or clips to contribute? Share them with the organizers and community!'
+        ? 'Official photo albums for the 2026 festival edition are being updated live through the weekend! Got photos or clips to contribute? Share them with the organizers and community!'
         : lang === 'FR'
-        ? 'Les albums photos officiels de l\'édition 2026 seront mis en ligne ici dès la fin du week-end. Vous avez pris des photos ou des vidéos ? Partagez-les avec les organisateurs et la communauté !'
-        : 'Los álbumes de fotos oficiales de la edición 2026 se publicarán aquí justo después del fin de semana. ¿Tomaste fotos o vídeos? ¡Compártelos con la organización y la comunidad!',
+        ? 'Les albums photos officiels de l\'édition 2026 sont mis en ligne et actualisés tout au long du week-end ! Vous avez pris des photos ou des vidéos ? Partagez-les avec nous !'
+        : '¡Los álbumes de fotos oficiales de la edición 2026 se actualizan en directo durante todo el fin de semana! ¿Tomaste fotos o vídeos? ¡Compártelos con nosotros!',
     joinWhatsApp: lang === 'EN' ? 'Join WhatsApp Group' : lang === 'FR' ? 'Rejoindre le WhatsApp' : 'Unirse al WhatsApp',
     followInstagram: lang === 'EN' ? 'Instagram @montrealroll' : lang === 'FR' ? 'Instagram @montrealroll' : 'Instagram @montrealroll',
 
@@ -114,7 +114,6 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
   const filteredAlbums = PHOTO_ALBUMS.filter((album) => {
     // Year filter
     if (selectedYear !== 'all') {
-      if (selectedYear === '2026') return false; // 2026 handled via special banner
       if (album.year.toString() !== selectedYear) return false;
     }
 
@@ -234,40 +233,38 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
           </div>
         </div>
 
-        {/* Row 2: Day Filter Tabs (hidden when 2026 selected) */}
-        {selectedYear !== '2026' && (
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#9500FF]/20">
-            <Filter className="w-3.5 h-3.5 text-[#00D2FF]" />
-            <span className="text-xs font-mono uppercase text-gray-400 font-bold tracking-wider">
-              {t.filterDay}:
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {(
-                [
-                  { id: 'all', label: t.allDays },
-                  { id: 'friday', label: t.friday },
-                  { id: 'saturday', label: t.saturday },
-                  { id: 'sunday', label: t.sunday },
-                ] as const
-              ).map((dayOpt) => {
-                const isActive = selectedDay === dayOpt.id;
-                return (
-                  <button
-                    key={dayOpt.id}
-                    onClick={() => setSelectedDay(dayOpt.id)}
-                    className={`px-2.5 py-1 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-[#9500FF] text-white font-bold shadow-[0_0_8px_rgba(149,0,255,0.6)]'
-                        : 'bg-[#181a1f] text-gray-400 hover:text-white hover:bg-[#9500FF]/20'
-                    }`}
-                  >
-                    {dayOpt.label}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Row 2: Day Filter Tabs */}
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#9500FF]/20">
+          <Filter className="w-3.5 h-3.5 text-[#00D2FF]" />
+          <span className="text-xs font-mono uppercase text-gray-400 font-bold tracking-wider">
+            {t.filterDay}:
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {(
+              [
+                { id: 'all', label: t.allDays },
+                { id: 'friday', label: t.friday },
+                { id: 'saturday', label: t.saturday },
+                { id: 'sunday', label: t.sunday },
+              ] as const
+            ).map((dayOpt) => {
+              const isActive = selectedDay === dayOpt.id;
+              return (
+                <button
+                  key={dayOpt.id}
+                  onClick={() => setSelectedDay(dayOpt.id)}
+                  className={`px-2.5 py-1 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-[#9500FF] text-white font-bold shadow-[0_0_8px_rgba(149,0,255,0.6)]'
+                      : 'bg-[#181a1f] text-gray-400 hover:text-white hover:bg-[#9500FF]/20'
+                  }`}
+                >
+                  {dayOpt.label}
+                </button>
+              );
+            })}
           </div>
-        )}
+        </div>
       </div>
 
       {/* 2026 Edition Callout Banner (shown when 2026 is selected or at the top of 'all') */}
@@ -315,9 +312,8 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
       )}
 
       {/* Albums Grid */}
-      {selectedYear !== '2026' && (
-        <>
-          {filteredAlbums.length > 0 ? (
+      <>
+        {filteredAlbums.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAlbums.map((album) => {
                 const title = getLocalized(album.title);
@@ -421,7 +417,6 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
             </div>
           )}
         </>
-      )}
 
       {/* Official Video Recaps & Highlight Reels */}
       <div className="mt-16 pt-12 border-t-2 border-[#9500FF]/40">

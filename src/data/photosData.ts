@@ -1,6 +1,36 @@
 import { PhotoAlbum, VideoHighlight } from '../types';
 
 export const PHOTO_ALBUMS: PhotoAlbum[] = [
+  // --- 2026 EDITION ---
+  {
+    id: 'album-2026-fri-urban-28k',
+    year: 2026,
+    edition: 'MTL ROLL 2026',
+    day: 'friday',
+    dayLabel: {
+      EN: 'Friday',
+      FR: 'Vendredi',
+      ES: 'Viernes',
+    },
+    title: {
+      EN: 'Day 1: Urban Skate 28 km',
+      FR: 'Jour 1: Randonnée urbaine 28 kms',
+      ES: 'Día 1: Patinaje urbano 28 km',
+    },
+    description: {
+      EN: 'Official community album for Friday\'s 28 km evening street ride through Montreal.',
+      FR: 'Album photo officiel de la randonnée urbaine du vendredi soir de 28 km à travers Montréal.',
+      ES: 'Álbum oficial de fotos de la ruta urbana del viernes por la noche de 28 km por Montreal.',
+    },
+    albumUrl: 'https://photos.app.goo.gl/5Lamq3F6L3BuGs9WA',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczOA1hBl-xC3wLMmBNABKkI0a029v99LyMa_VTBG96dlW4f0aFGU39ZY9SwzegLJDo0eKW1htJyGW2doBDEbRWX_bRTrIh6LKyUN8rGbkqqA16ILDHwW=w800',
+    badge: {
+      EN: 'Urban Ride 28 km',
+      FR: 'Rando Urbaine 28 km',
+      ES: 'Ruta Urbana 28 km',
+    },
+  },
+
   // --- 2025 EDITION ---
   {
     id: 'album-2025-fri-morning',
