@@ -3,6 +3,34 @@ import { PhotoAlbum, VideoHighlight } from '../types';
 export const PHOTO_ALBUMS: PhotoAlbum[] = [
   // --- 2026 EDITION ---
   {
+    id: 'album-2026-fri-willibrord',
+    year: 2026,
+    edition: 'MTL ROLL 2026',
+    day: 'friday',
+    dayLabel: {
+      EN: 'Friday',
+      FR: 'Vendredi',
+      ES: 'Viernes',
+    },
+    title: {
+      EN: 'Day 1: Parc Willibrord Activity',
+      FR: 'Jour 1: Activité parc Willibrord',
+      ES: 'Día 1: Actividad parque Willibrord',
+    },
+    description: {
+      EN: 'Community skate meetup and afternoon warm-up sessions at Parc Willibrord.',
+      FR: 'Rassemblement et sessions de patinage communautaires d\'après-midi au parc Willibrord.',
+      ES: 'Punto de encuentro y sesiones de patinaje de calentamiento en el parque Willibrord.',
+    },
+    albumUrl: 'https://photos.app.goo.gl/FguyqoaG3GaDHWMTA',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczP89uXxIbg9WM1J9qQVKYZhSEjJ84ftn5dC-ZxMkgmwyZFXLzpP6mZj95t70WQAWpC1c72g8uaySzrgveu2Gedc6wnQIp3jV78TwFev-TzojS56QpN0=w800',
+    badge: {
+      EN: 'Parc Willibrord',
+      FR: 'Parc Willibrord',
+      ES: 'Parque Willibrord',
+    },
+  },
+  {
     id: 'album-2026-fri-urban-28k',
     year: 2026,
     edition: 'MTL ROLL 2026',
@@ -28,6 +56,34 @@ export const PHOTO_ALBUMS: PhotoAlbum[] = [
       EN: 'Urban Ride 28 km',
       FR: 'Rando Urbaine 28 km',
       ES: 'Ruta Urbana 28 km',
+    },
+  },
+  {
+    id: 'album-2026-fri-lightup-514',
+    year: 2026,
+    edition: 'MTL ROLL 2026',
+    day: 'friday',
+    dayLabel: {
+      EN: 'Friday',
+      FR: 'Vendredi',
+      ES: 'Viernes',
+    },
+    title: {
+      EN: 'Day 1: Illumine le 514 (MTL ROLL Special)',
+      FR: 'Jour 1: Illumine le 514 : Spécial MTL ROLL',
+      ES: 'Día 1: Ilumina el 514 (Especial MTL ROLL)',
+    },
+    description: {
+      EN: 'The glowing night roll through Montreal with neon lights, glowing wheels, and sound systems.',
+      FR: 'La grande randonnée nocturne lumineuse à travers Montréal avec néons, roues LED et musique mobile.',
+      ES: 'La ruta nocturna luminosa por Montreal con luces de neón, ruedas LED y música.',
+    },
+    albumUrl: 'https://photos.app.goo.gl/YDPGbpcAyGTd6YH36',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczN5rh-q4WFT6a5PhvgMJXwPjiMsZsFjTKQGDc2VyITcpRoIuFKsBirUCZZK3YcJCtSasgVqTst8zP3XRYD4002nsKSi0cbapUwc9e9XiFSO_U9Cf7Ak=w800',
+    badge: {
+      EN: 'Night Ride',
+      FR: 'Rando Nocturne',
+      ES: 'Ruta Nocturna',
     },
   },
 
