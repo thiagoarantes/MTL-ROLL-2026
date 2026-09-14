@@ -767,6 +767,22 @@ export const PHOTO_ALBUMS: PhotoAlbum[] = [
 
 export const VIDEO_HIGHLIGHTS: VideoHighlight[] = [
   {
+    id: 'vid-2026-explore-514',
+    year: 2026,
+    title: {
+      EN: 'Explore the 514 | MTL ROLL 2026',
+      FR: 'Explore le 514 | MTL ROLL 2026',
+      ES: 'Explora el 514 | MTL ROLL 2026',
+    },
+    description: {
+      EN: 'Skating through Montreal streets and landmarks during MTL ROLL 2026 by Desk in the Warehouse.',
+      FR: 'Randonnée à travers les rues et lieux emblématiques de Montréal durant MTL ROLL 2026 par Desk in the Warehouse.',
+      ES: 'Patinando por las calles y lugares emblemáticos de Montreal durante MTL ROLL 2026 por Desk in the Warehouse.',
+    },
+    videoUrl: 'https://www.youtube.com/watch?v=WN52DmRwq54',
+    embedId: 'WN52DmRwq54',
+  },
+  {
     id: 'vid-2025-highlights',
     year: 2025,
     title: {
