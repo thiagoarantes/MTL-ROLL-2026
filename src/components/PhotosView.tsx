@@ -9,11 +9,8 @@ import {
   Film,
   Share2,
   Info,
-  Clock,
   ArrowUpRight,
   ChevronRight,
-  MessageCircle,
-  Instagram,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PHOTO_ALBUMS, VIDEO_HIGHLIGHTS } from '../data/photosData';
@@ -60,7 +57,7 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
     allYears: lang === 'EN' ? 'All Years' : lang === 'FR' ? 'Toutes les années' : 'Todos los años',
     year2025: '2025',
     year2024: '2024',
-    year2026: lang === 'EN' ? '2026 (Live)' : lang === 'FR' ? '2026 (En cours)' : '2026 (En vivo)',
+    year2026: '2026',
     
     filterDay: lang === 'EN' ? 'Day' : lang === 'FR' ? 'Jour' : 'Día',
     allDays: lang === 'EN' ? 'All Days' : lang === 'FR' ? 'Tous les jours' : 'Todos los días',
@@ -91,17 +88,6 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
         ? 'Visionnez les résumés complets du week-end, les sessions freestyle et l\'action dans les rues de Montréal capturés par la communauté.'
         : 'Mira los resúmenes completos del fin de semana, sesiones de freestyle y la acción callejera grabada por la comunidad.',
     watchOnYouTube: lang === 'EN' ? 'Watch on YouTube' : lang === 'FR' ? 'Regarder sur YouTube' : 'Ver en YouTube',
-
-    // 2026 Banner
-    banner2026Title: lang === 'EN' ? 'MTL ROLL 2026 — Official Photo Drop Live!' : lang === 'FR' ? 'MTL ROLL 2026 — Albums photos officiels en ligne !' : 'MTL ROLL 2026 — ¡Álbumes oficiales en línea!',
-    banner2026Desc:
-      lang === 'EN'
-        ? 'Official photo albums for the 2026 festival edition are being updated live through the weekend! Got photos or clips to contribute? Share them with the organizers and community!'
-        : lang === 'FR'
-        ? 'Les albums photos officiels de l\'édition 2026 sont mis en ligne et actualisés tout au long du week-end ! Vous avez pris des photos ou des vidéos ? Partagez-les avec nous !'
-        : '¡Los álbumes de fotos oficiales de la edición 2026 se actualizan en directo durante todo el fin de semana! ¿Tomaste fotos o vídeos? ¡Compártelos con nosotros!',
-    joinWhatsApp: lang === 'EN' ? 'Join WhatsApp Group' : lang === 'FR' ? 'Rejoindre le WhatsApp' : 'Unirse al WhatsApp',
-    followInstagram: lang === 'EN' ? 'Instagram @montrealroll' : lang === 'FR' ? 'Instagram @montrealroll' : 'Instagram @montrealroll',
 
     // Stats
     totalAlbums: lang === 'EN' ? 'Albums Available' : lang === 'FR' ? 'Albums disponibles' : 'Álbumes disponibles',
@@ -266,50 +252,6 @@ export default function PhotosView({ lang, initialYear, onYearChange }: PhotosVi
           </div>
         </div>
       </div>
-
-      {/* 2026 Edition Callout Banner (shown when 2026 is selected or at the top of 'all') */}
-      {(selectedYear === 'all' || selectedYear === '2026') && (
-        <div className="mb-10 bg-gradient-to-r from-[#1a0933] to-[#111415] border-2 border-[#E1FD15]/60 p-6 shadow-[0_0_20px_rgba(225,253,21,0.15)] relative overflow-hidden">
-          <div className="absolute -right-8 -bottom-8 w-40 h-40 bg-[#E1FD15]/5 rounded-full blur-2xl pointer-events-none" />
-          
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#E1FD15]/20 text-[#E1FD15] text-[11px] font-mono uppercase font-bold tracking-wider">
-                <Clock className="w-3 h-3" />
-                <span>SEPTEMBER 11-13, 2026</span>
-              </div>
-              <h3 className="font-headline text-xl md:text-2xl text-white font-bold uppercase tracking-tight">
-                {t.banner2026Title}
-              </h3>
-              <p className="text-xs md:text-sm text-gray-300 font-sans leading-relaxed">
-                {t.banner2026Desc}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3 shrink-0 font-headline text-xs uppercase tracking-wider font-bold">
-              <a
-                href="https://chat.whatsapp.com/JyyW0HZxQsQDYbLdTaBG4p"
-                target="_blank"
-                rel="noreferrer"
-                className="bg-[#E1FD15] text-[#0B0C10] hover:bg-[#E1FD15]/90 px-4 py-2.5 flex items-center gap-2 shadow-[0_0_12px_rgba(225,253,21,0.4)] transition-all scale-95 active:scale-90"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>{t.joinWhatsApp}</span>
-              </a>
-
-              <a
-                href="https://www.instagram.com/montrealroll/"
-                target="_blank"
-                rel="noreferrer"
-                className="border-2 border-[#9500FF] bg-[#111415] text-white hover:bg-[#9500FF]/30 px-4 py-2.5 flex items-center gap-2 transition-all scale-95 active:scale-90"
-              >
-                <Instagram className="w-4 h-4 text-[#E1FD15]" />
-                <span>{t.followInstagram}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Albums Grid */}
       <>
