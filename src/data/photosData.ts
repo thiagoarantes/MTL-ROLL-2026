@@ -254,6 +254,62 @@ export const PHOTO_ALBUMS: PhotoAlbum[] = [
       ES: 'Explora Montreal',
     },
   },
+  {
+    id: 'album-2026-sun-urban-20k',
+    year: 2026,
+    edition: 'MTL ROLL 2026',
+    day: 'sunday',
+    dayLabel: {
+      EN: 'Sunday',
+      FR: 'Dimanche',
+      ES: 'Domingo',
+    },
+    title: {
+      EN: 'Day 3: Urban Skate 20 km',
+      FR: 'Jour 3: Randonnée urbaine 20 kms',
+      ES: 'Día 3: Patinaje urbano 20 km',
+    },
+    description: {
+      EN: 'Sunday 20 km city cruise rolling through scenic streets, parks, and Montreal landmarks.',
+      FR: 'Randonnée dominicale de 20 km à travers les rues animées, parcs et artères de Montréal.',
+      ES: 'Ruta dominical de 20 km patinando por calles emblemáticas, parques y avenidas de Montreal.',
+    },
+    albumUrl: 'https://photos.app.goo.gl/vExZJzs7mx8uM1t68',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczNf8KAuM1aD7-tPen83KFTKLAipl8--TkkoJVkCp7fEsVZEr1VfP42xgZbuGv02GTCjXKE9ULC69liUhhE91AUWP4fHSz9ysCAFXhPwD2Ws7mYmatEg=w800',
+    badge: {
+      EN: 'Urban Ride 20 km',
+      FR: 'Rando 20 km',
+      ES: 'Ruta 20 km',
+    },
+  },
+  {
+    id: 'album-2026-sun-olympic-activities',
+    year: 2026,
+    edition: 'MTL ROLL 2026',
+    day: 'sunday',
+    dayLabel: {
+      EN: 'Sunday',
+      FR: 'Dimanche',
+      ES: 'Domingo',
+    },
+    title: {
+      EN: 'Day 3: Olympic Stadium Activities',
+      FR: 'Jour 3: Activités stade olympique',
+      ES: 'Día 3: Actividades estadio olímpico',
+    },
+    description: {
+      EN: 'Closing afternoon sessions, workshops, games, and group photos at the iconic Olympic Stadium plaza.',
+      FR: 'Activités de clôture, ateliers, jeux et photos de groupe sur la vaste esplanade du Stade olympique.',
+      ES: 'Sesiones de cierre, talleres, juegos y fotos de grupo en la emblemática explanada del Estadio Olímpico.',
+    },
+    albumUrl: 'https://photos.app.goo.gl/p6j9RXYqsgfUNay59',
+    coverImage: 'https://lh3.googleusercontent.com/pw/AP1GczNKvhXAiRRGj368wg4zAegpaGfLBdPbs4iE1LZiuBUIvxrZgUHSXqzcNmq7qURRXhPeLGX9JqAQrlwtw1N2tXhkIDVtadRg_5wEP8TAeLkQ_94rRWCe=w800',
+    badge: {
+      EN: 'Olympic Stadium',
+      FR: 'Stade Olympique',
+      ES: 'Estadio Olímpico',
+    },
+  },
 
   // --- 2025 EDITION ---
   {
