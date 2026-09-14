@@ -799,6 +799,38 @@ export const VIDEO_HIGHLIGHTS: VideoHighlight[] = [
     embedId: 'gPDdaGnskoU',
   },
   {
+    id: 'vid-2025-light-up-514',
+    year: 2025,
+    title: {
+      EN: 'Montreal Roll 2025 - Light Up 514 Skating Event Highlights',
+      FR: 'Montréal Roll 2025 - Light Up 514 | Temps forts',
+      ES: 'Montreal Roll 2025 - Light Up 514 | Momentos destacados',
+    },
+    description: {
+      EN: 'Highlights of the Light Up 514 evening skate session during Montreal Roll 2025 by Desk in the Warehouse.',
+      FR: 'Temps forts de la session nocturne Light Up 514 lors de Montréal Roll 2025 par Desk in the Warehouse.',
+      ES: 'Momentos destacados de la ruta nocturna Light Up 514 durante Montreal Roll 2025 por Desk in the Warehouse.',
+    },
+    videoUrl: 'https://www.youtube.com/watch?v=HsWYRVlA2IU',
+    embedId: 'HsWYRVlA2IU',
+  },
+  {
+    id: 'vid-2025-solo-inline',
+    year: 2025,
+    title: {
+      EN: 'Roll-O-Rama 2025 | Montreal Skate Weekend Highlights (Solo Inline)',
+      FR: 'Roll-O-Rama 2025 | Temps forts par Solo Inline',
+      ES: 'Roll-O-Rama 2025 | Momentos destacados por Solo Inline',
+    },
+    description: {
+      EN: 'Highlights and recap of the Montreal skate weekend by Boutique Solo Inline.',
+      FR: 'Temps forts et récapitulatif du week-end de patin à Montréal par Boutique Solo Inline.',
+      ES: 'Resumen y mejores momentos del fin de semana de patinaje en Montreal por Boutique Solo Inline.',
+    },
+    videoUrl: 'https://www.youtube.com/watch?v=tgGEs7mWkDU',
+    embedId: 'tgGEs7mWkDU',
+  },
+  {
     id: 'vid-2024-event-film',
     year: 2024,
     title: {
@@ -814,5 +846,21 @@ export const VIDEO_HIGHLIGHTS: VideoHighlight[] = [
     videoUrl: 'https://youtu.be/VOCm12s5bgY?feature=shared',
     embedId: 'VOCm12s5bgY',
     day: 'friday',
+  },
+  {
+    id: 'vid-2024-freestyle-film',
+    year: 2024,
+    title: {
+      EN: 'Montreal Roll-O-Rama — Full Weekend Event Film — Inline Freestyle',
+      FR: 'Montréal Roll-O-Rama — Film de l\'événement — Inline Freestyle',
+      ES: 'Montreal Roll-O-Rama — Película del evento — Inline Freestyle',
+    },
+    description: {
+      EN: 'Full weekend event film and inline freestyle skating coverage by Global Ice.',
+      FR: 'Film complet de l\'événement du week-end et couverture freestyle en ligne par Global Ice.',
+      ES: 'Película completa del evento de fin de semana y cobertura de patinaje freestyle en línea por Global Ice.',
+    },
+    videoUrl: 'https://www.youtube.com/watch?v=y6jghSTw80U',
+    embedId: 'y6jghSTw80U',
   },
 ];
