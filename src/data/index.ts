@@ -215,40 +215,22 @@ export const SPONSORS: Sponsor[] = [
     website: 'https://rollerbones.com/',
   },
   {
-    id: 'spon-s1',
-    name: 'S1 Helmets',
-    image: '/sponsors/s1.png',
-    website: 'https://www.s1helmets.ca/',
-  },
-  {
     id: 'spon-solo',
     name: 'Boutique Solo-Inline',
     image: '/sponsors/solo.png',
     website: 'https://solo-inline.com/'
   },
   {
-    id: 'spon-lowlife',
-    name: 'Lowlife Mtl',
-    image: '/sponsors/lowlife.png',
-    website: 'https://www.lowlifemtl.com/'
-  },
-  {
-    id: 'spon-skpro',
-    name: 'SkatePro',
-    image: '/sponsors/skatepro.png',
-    website: 'https://www.skatepro.ca/'
-  },
-  {
-    id: 'spon-prosk8place',
-    name: 'ProSkaters Place',
-    image: '/sponsors/proskaterplace.png',
-    website: 'https://proskatersplace.ca/'
-  },
-  {
     id: 'spon-flyingeagle',
     name: 'FlyingEagle Skate',
     image: '/sponsors/flyingeagle.png',
     website: 'https://www.flyingeagleskates.com/'
+  },
+  {
+    id: 'spon-s1',
+    name: 'S1 Helmets',
+    image: '/sponsors/s1.png',
+    website: 'https://www.s1helmets.ca/',
   },
   {
     id: 'spon-yoyo',
@@ -261,5 +243,23 @@ export const SPONSORS: Sponsor[] = [
     name: 'Endless Blading Co.',
     image: '/sponsors/endless.png',
     website: 'https://www.endlessblading.com/'
+  },
+  {
+    id: 'spon-prosk8place',
+    name: 'ProSkaters Place',
+    image: '/sponsors/proskaterplace.png',
+    website: 'https://proskatersplace.ca/'
+  },
+  {
+    id: 'spon-skpro',
+    name: 'SkatePro',
+    image: '/sponsors/skatepro.png',
+    website: 'https://www.skatepro.ca/'
+  },
+  {
+    id: 'spon-lowlife',
+    name: 'Lowlife Mtl',
+    image: '/sponsors/lowlife.png',
+    website: 'https://www.lowlifemtl.com/'
   }
 ];
