@@ -13,6 +13,9 @@ import {
   Clock,
   ArrowUpRight,
   Droplet,
+  Activity,
+  History,
+  Share2,
 } from 'lucide-react';
 
 interface SitesMapViewProps {
@@ -290,6 +293,183 @@ const FESTIVAL_MAPS: MapRoute[] = [
   },
 ];
 
+interface StravaRetrospectiveRoute {
+  id: string;
+  stravaId: string;
+  url: string;
+  mapImageUrl?: string;
+  title: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  subtitle: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  day: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  distance: string;
+  pace?: string;
+  elevation?: string;
+  sport: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+  color: string;
+  highlight: {
+    EN: string;
+    FR: string;
+    ES: string;
+  };
+}
+
+const STRAVA_RETROSPECTIVE_MAPS: StravaRetrospectiveRoute[] = [
+  {
+    id: 'strava-20132769540',
+    stravaId: '20132769540',
+    url: 'https://www.strava.com/activities/20132769540',
+    mapImageUrl: 'https://d3o5xota0a1fcr.cloudfront.net/v6/maps/5EHNXSGRYQZCXPWZLJQDIVLFGHBZS3YSJM5R4LWCJUNMZSIQFO6B2RYTR2DZINV4WQP4BBYAU3SLHMBRSZ7MIAY=',
+    title: {
+      EN: 'MTL ROLL 2026: 28K Friday Ride',
+      FR: 'MTL ROLL 2026 : Rando 28 km du Vendredi',
+      ES: 'MTL ROLL 2026: Ruta 28 km del Viernes',
+    },
+    subtitle: {
+      EN: 'Verdun • Waterfront • Southwest Express Loop',
+      FR: 'Verdun • Berges du Fleuve • Boucle Express Sud-Ouest',
+      ES: 'Verdun • Riberas del Río • Circuito Suroeste',
+    },
+    day: {
+      EN: 'Friday Daytime',
+      FR: 'Vendredi Jour',
+      ES: 'Viernes Día',
+    },
+    distance: '27.76 km',
+    pace: '13.3 km/h',
+    elevation: '43 m',
+    sport: {
+      EN: 'Inline Skating',
+      FR: 'Patin à roues alignées',
+      ES: 'Patinaje en línea',
+    },
+    color: '#00D2FF',
+    highlight: {
+      EN: 'Official Friday endurance loop through scenic riverbanks and Verdun bike trails.',
+      FR: 'Boucle d\'endurance officielle du vendredi longeant les berges fluviales et les voies cyclables.',
+      ES: 'Circuito oficial de resistencia del viernes por las orillas del río y vías ciclistas.',
+    },
+  },
+  {
+    id: 'strava-20138026669',
+    stravaId: '20138026669',
+    url: 'https://www.strava.com/activities/20138026669',
+    mapImageUrl: 'https://d3o5xota0a1fcr.cloudfront.net/v6/maps/NBFW7PTDERBHDSLYBFB5P3EWA6ZGQ5AEG773AZZ42XRI5SV7VAND5FDWRZQKZISPYNJH7IKG7ISEH4V4TMDWSOGZ=',
+    title: {
+      EN: 'MTL ROLL 2026: Illumine le 514 / FNS',
+      FR: 'MTL ROLL 2026 : Illumine le 514 / FNS',
+      ES: 'MTL ROLL 2026: Ilumina el 514 / FNS',
+    },
+    subtitle: {
+      EN: 'Downtown Montreal • Old Port • Esplanade Tranquille',
+      FR: 'Centre-Ville • Vieux-Port • Esplanade Tranquille',
+      ES: 'Centro de Montreal • Puerto Viejo • Esplanade Tranquille',
+    },
+    day: {
+      EN: 'Friday Night',
+      FR: 'Vendredi Soir',
+      ES: 'Viernes Noche',
+    },
+    distance: '16.74 km',
+    pace: '11.8 km/h',
+    elevation: '59 m',
+    sport: {
+      EN: 'Night Street Skate',
+      FR: 'Rando Urbaine Nocturne',
+      ES: 'Ruta Urbana Nocturna',
+    },
+    color: '#9500FF',
+    highlight: {
+      EN: 'Illuminated neon convoy rolling into Quartier des Spectacles and the Old Port.',
+      FR: 'Convoi lumineux et musical traversant le Quartier des spectacles et le Vieux-Port.',
+      ES: 'Caravana iluminada y musical recorriendo el centro y el Puerto Viejo.',
+    },
+  },
+  {
+    id: 'strava-19954242947',
+    stravaId: '19954242947',
+    url: 'https://www.strava.com/activities/19954242947',
+    mapImageUrl: 'https://d3o5xota0a1fcr.cloudfront.net/v6/maps/ARSFALHEJQKFKKUJJ2OBAU2LANBCR4JPL2BFIP5OGZH2RRTLILNZ2BPSZDZQVPPE5GNUWPQ4UQSJJ3XRYP5OISA=',
+    title: {
+      EN: 'Afternoon Inline Skate',
+      FR: 'Randonnée Roller Après-Midi',
+      ES: 'Patinaje en Línea por la Tarde',
+    },
+    subtitle: {
+      EN: 'Montreal • Urban Skate Corridor • Anthony Mentor',
+      FR: 'Montréal • Corridor Urbain de Patin • Anthony Mentor',
+      ES: 'Montreal • Corredor Urbano de Patinaje • Anthony Mentor',
+    },
+    day: {
+      EN: 'Retrospective Ride',
+      FR: 'Parcours Rétrospectif',
+      ES: 'Ruta Retrospectiva',
+    },
+    distance: 'Strava GPS Route',
+    sport: {
+      EN: 'Inline Skating',
+      FR: 'Patin à roues alignées',
+      ES: 'Patinaje en línea',
+    },
+    color: '#E1FD15',
+    highlight: {
+      EN: 'GPS tracked inline skate activity navigating Montreal urban pathways.',
+      FR: 'Tracé GPS enregistré en patin à roues alignées à travers les axes urbains de Montréal.',
+      ES: 'Recorrido GPS registrado en patines en línea navegando las rutas urbanas de Montreal.',
+    },
+  },
+  {
+    id: 'strava-20161044010',
+    stravaId: '20161044010',
+    url: 'https://www.strava.com/activities/20161044010',
+    mapImageUrl: 'https://d3o5xota0a1fcr.cloudfront.net/v6/maps/AEZWQ4AKVLRCZYWITLFAATZDWQ3WQNTY2D4LZ3ELGTKGPWTLMG33QM4FGHV7H6SY5ZDVRNCLZPVCWMHGJKUDIVY=',
+    title: {
+      EN: 'MTL ROLL 2026: 20K Sunday Finale',
+      FR: 'MTL ROLL 2026 : Rando Finale 20 km du Dimanche',
+      ES: 'MTL ROLL 2026: Gran Final 20 km del Domingo',
+    },
+    subtitle: {
+      EN: 'Lachine Canal • LaSalle Parks • Waterfront Closing Roll',
+      FR: 'Canal de Lachine • Parcs de LaSalle • Rando de Clôture',
+      ES: 'Canal Lachine • Parques de LaSalle • Rodada de Clausura',
+    },
+    day: {
+      EN: 'Sunday Daytime',
+      FR: 'Dimanche Jour',
+      ES: 'Domingo Día',
+    },
+    distance: '19.98 km',
+    pace: '12.4 km/h',
+    elevation: '32 m',
+    sport: {
+      EN: 'Inline Skating',
+      FR: 'Patin à roues alignées',
+      ES: 'Patinaje en línea',
+    },
+    color: '#FF6B00',
+    highlight: {
+      EN: 'Scenic riverside cruise passing LaSalle skatepark & pumptrack towards the final celebration.',
+      FR: 'Balade panoramique au fil de l\'eau passant par LaSalle jusqu\'au rassemblement final.',
+      ES: 'Paseo panorámico junto al agua pasando por el skatepark y pumptrack de LaSalle.',
+    },
+  },
+];
+
 export default function SitesMapView({ lang, initialMapId, onMapChange }: SitesMapViewProps) {
   const [activeMapId, setActiveMapId] = React.useState<string>(initialMapId || 'friday-28k');
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
@@ -346,6 +526,26 @@ export default function SitesMapView({ lang, initialMapId, onMapChange }: SitesM
         : lang === 'FR'
         ? 'La patinoire Willibrord offre un béton poli ultra-lisse (idéal pour roues 84A–88A). Les randonnées urbaines empruntent de l\'asphalte varié; protège-poignets et lampes sont fortement conseillés pour la nuit.'
         : 'La pista Willibrord tiene concreto pulido muy suave (ideal para ruedas 84A–88A). Las rutas urbanas combinan varios asfaltos; se recomiendan muñequeras y luces para la noche.',
+    stravaSectionBadge:
+      lang === 'EN' ? 'STRAVA GPS RETROSPECTIVE' : lang === 'FR' ? 'RÉTROSPECTIVE GPS STRAVA' : 'RETROSPECTIVA GPS STRAVA',
+    stravaHeading:
+      lang === 'EN' ? '2026 RETROSPECTIVE' : lang === 'FR' ? 'RÉTROSPECTIVE 2026' : 'RETROSPECTIVA 2026',
+    stravaSubtitle:
+      lang === 'EN'
+        ? 'Relive the exact telemetry, GPS tracks, elevation, and real distances logged by festival riders during MTL ROLL 2026.'
+        : lang === 'FR'
+        ? 'Revivez la télémétrie exacte, les tracés GPS, l\'élévation et les distances réelles enregistrées par les patineurs du festival lors du MTL ROLL 2026.'
+        : 'Revive la telemetría exacta, rutas GPS, elevación y distancias reales registradas por los patinadores durante MTL ROLL 2026.',
+    viewOnStrava:
+      lang === 'EN' ? 'View on Strava' : lang === 'FR' ? 'Voir sur Strava' : 'Ver en Strava',
+    elevationLabel:
+      lang === 'EN' ? 'Elev. Gain' : lang === 'FR' ? 'Dénivelé' : 'Desnivel',
+    paceLabel:
+      lang === 'EN' ? 'Avg. Speed' : lang === 'FR' ? 'Vitesse moy.' : 'Vel. media',
+    gpsVerified:
+      lang === 'EN' ? 'GPS Logged' : lang === 'FR' ? 'Tracé GPS' : 'Registrado GPS',
+    jumpToStrava:
+      lang === 'EN' ? '2026 Retrospective' : lang === 'FR' ? 'Rétrospective 2026' : 'Retrospectiva 2026',
   };
 
   return (
@@ -375,20 +575,29 @@ export default function SitesMapView({ lang, initialMapId, onMapChange }: SitesM
 
       {/* Route Map Selector Buttons */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <span className="font-mono text-xs uppercase tracking-widest text-[#E1FD15] font-bold flex items-center gap-2">
             <Navigation className="w-3.5 h-3.5" />
             {t.selectRoute}
           </span>
-          <a
-            href={GOOGLE_MY_MAPS_VIEWER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-mono text-[#a0a5ad] hover:text-[#E1FD15] flex items-center gap-1 transition-colors"
-          >
-            <span>{currentMap.title[lang]}</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="#strava-retrospective-section"
+              className="text-xs font-mono text-[#FC4C02] hover:text-[#ff7438] flex items-center gap-1.5 transition-colors font-semibold"
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>{t.jumpToStrava}</span>
+            </a>
+            <a
+              href={GOOGLE_MY_MAPS_VIEWER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-[#a0a5ad] hover:text-[#E1FD15] flex items-center gap-1 transition-colors"
+            >
+              <span>{currentMap.title[lang]}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -626,6 +835,168 @@ export default function SitesMapView({ lang, initialMapId, onMapChange }: SitesM
           })}
         </div>
       </div>
+
+      {/* Retrospective Strava Maps Section */}
+      <section className="space-y-6" id="strava-retrospective-section">
+        <div className="border-b border-[#272a2e] pb-4">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#FC4C02]/15 border border-[#FC4C02]/40 text-[#FC4C02] font-mono text-[11px] uppercase tracking-widest font-bold">
+              <Activity className="w-3.5 h-3.5 text-[#FC4C02]" />
+              <span>{t.stravaSectionBadge}</span>
+            </div>
+            <h2 className="font-headline text-2xl sm:text-3xl uppercase tracking-wider text-white flex items-center gap-2.5 font-black">
+              <History className="w-6 h-6 text-[#FC4C02]" />
+              <span>{t.stravaHeading}</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#a0a5ad] leading-relaxed">
+              {t.stravaSubtitle}
+            </p>
+          </div>
+        </div>
+
+        {/* Strava Routes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {STRAVA_RETROSPECTIVE_MAPS.map((route) => {
+            const routeTitle = route.title[lang];
+            const routeSubtitle = route.subtitle[lang];
+            const routeDay = route.day[lang];
+            const routeSport = route.sport[lang];
+            const routeHighlight = route.highlight[lang];
+
+            return (
+              <div
+                key={route.id}
+                className="bg-[#111415] border border-[#272a2e] hover:border-[#FC4C02]/70 p-5 sm:p-6 transition-all duration-200 flex flex-col justify-between group relative overflow-hidden shadow-lg hover:shadow-[0_0_24px_rgba(252,76,2,0.15)]"
+              >
+                {/* Accent top line */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1"
+                  style={{ backgroundColor: route.color || '#FC4C02' }}
+                />
+
+                <div className="space-y-4">
+                  {/* Header badges */}
+                  <div className="flex items-center justify-between gap-2 flex-wrap pt-1">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-[#FC4C02]/20 border border-[#FC4C02]/50 text-[#FC4C02] font-mono text-[10px] uppercase font-bold tracking-wider flex items-center gap-1">
+                        <Activity className="w-3 h-3" />
+                        {routeDay}
+                      </span>
+                      <span className="px-2 py-0.5 bg-[#1f2227] text-[#e2e2e4] font-mono text-[10px] border border-[#272a2e]">
+                        {routeSport}
+                      </span>
+                    </div>
+
+                    <span className="font-mono text-[10px] text-[#FC4C02] uppercase tracking-wider flex items-center gap-1 font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FC4C02] animate-pulse" />
+                      {t.gpsVerified}
+                    </span>
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <div>
+                    <h3 className="font-headline text-lg sm:text-xl uppercase font-bold text-white group-hover:text-[#FC4C02] transition-colors leading-tight">
+                      {routeTitle}
+                    </h3>
+                    <p className="font-mono text-xs text-[#a0a5ad] mt-1">
+                      {routeSubtitle}
+                    </p>
+                  </div>
+
+                  {/* Map Visual Preview or Stylized Vector Track */}
+                  <div className="relative aspect-[16/9] w-full bg-[#0a0c0d] border border-[#272a2e] overflow-hidden group-hover:border-[#FC4C02]/40 transition-colors">
+                    {route.mapImageUrl ? (
+                      <>
+                        <img
+                          src={route.mapImageUrl}
+                          alt={routeTitle}
+                          className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-300 filter contrast-125"
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#111415] via-transparent to-transparent opacity-60" />
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-[#0e1114] relative">
+                        {/* Decorative background grid */}
+                        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#FC4C02_1px,transparent_1px)] [background-size:16px_16px]" />
+                        <Compass className="w-10 h-10 text-[#FC4C02] mb-2 stroke-[1.5] animate-pulse" />
+                        <div className="font-headline text-sm uppercase text-white font-bold tracking-wider">
+                          Montreal City GPS Corridor
+                        </div>
+                        <div className="font-mono text-[11px] text-[#888888] mt-1 max-w-xs">
+                          Vendôme • Downtown • Night Skyline Traverse
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Overlay Distance Pill */}
+                    <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-[#111415]/90 border border-[#FC4C02]/60 backdrop-blur-sm text-white font-mono text-xs font-bold flex items-center gap-1.5 shadow-md">
+                      <Bike className="w-3.5 h-3.5 text-[#FC4C02]" />
+                      <span>{route.distance}</span>
+                    </div>
+                  </div>
+
+                  {/* Route Telemetry Stats */}
+                  <div className="grid grid-cols-3 gap-2 bg-[#17191d] p-2.5 border border-[#272a2e] font-mono text-center">
+                    <div>
+                      <div className="text-[10px] uppercase text-[#666666] tracking-wider font-semibold">
+                        Distance
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">
+                        {route.distance.split(' ')[0]}
+                        <span className="text-[10px] text-[#888888] ml-0.5">
+                          {route.distance.includes('km') ? 'km' : ''}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="border-x border-[#272a2e]">
+                      <div className="text-[10px] uppercase text-[#666666] tracking-wider font-semibold">
+                        {t.paceLabel}
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-[#E1FD15] mt-0.5">
+                        {route.pace || 'Group Pace'}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] uppercase text-[#666666] tracking-wider font-semibold">
+                        {t.elevationLabel}
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">
+                        {route.elevation || '—'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Highlights blurb */}
+                  <p className="text-xs text-[#a0a5ad] leading-relaxed">
+                    {routeHighlight}
+                  </p>
+                </div>
+
+                {/* Card Action Link */}
+                <div className="pt-5 mt-4 border-t border-[#272a2e] flex items-center justify-between gap-4">
+                  <a
+                    href={route.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FC4C02] hover:bg-[#e03f00] text-white font-headline text-xs uppercase font-bold tracking-wider transition-all duration-150 shadow-md hover:shadow-[0_0_15px_rgba(252,76,2,0.4)] cursor-pointer"
+                  >
+                    <span>{t.viewOnStrava}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+
+                  <span className="font-mono text-[10px] text-[#666666] uppercase">
+                    ID: {route.stravaId}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* Skater Transit & Logistics Section */}
       <div className="border border-[#272a2e] bg-[#111415] p-6 md:p-8 space-y-6">
