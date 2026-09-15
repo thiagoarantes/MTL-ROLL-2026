@@ -295,14 +295,14 @@ export default function CalendarView({
 
           <div className="mt-12 flex flex-col items-center gap-4 w-full max-w-md">
             <div className="flex flex-col sm:flex-row gap-4 w-full">
-              <a 
-                href={registerFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-14 bg-[#E1FD15] text-[#0B0C10] px-6 font-headline font-black text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(225,253,21,0.8)] hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer border-0 w-full flex items-center justify-center text-center"
+              <button 
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="h-14 bg-[#E1FD15]/60 text-[#0B0C10]/80 px-6 font-headline font-black text-sm uppercase tracking-widest cursor-not-allowed opacity-75 border-0 w-full flex items-center justify-center text-center select-none"
               >
                 {t.secureSpot}
-              </a>
+              </button>
               <button 
                 onClick={handleScrollToSchedule}
                 className="h-14 bg-transparent border-2 border-[#9500FF] text-white px-6 font-headline font-bold text-sm uppercase tracking-widest hover:bg-[#9500FF]/20 hover:shadow-[0_0_20px_rgba(149,0,255,0.4)] active:scale-[0.98] transition-all cursor-pointer w-full flex items-center justify-center text-center"
@@ -311,17 +311,17 @@ export default function CalendarView({
               </button>
             </div>
 
-            {/* Become a Volunteer */}
+            {/* Become a Volunteer (Deactivated / Read-Only) */}
             <div className="w-full">
-              <a 
-                href={volunteerFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-14 bg-[#111415]/90 border-2 border-[#00D2FF] text-[#00D2FF] hover:text-white hover:bg-[#00D2FF]/20 hover:shadow-[0_0_20px_rgba(0,210,255,0.6)] active:scale-[0.98] px-6 font-headline font-bold text-sm uppercase tracking-widest transition-all cursor-pointer w-full flex items-center justify-center gap-2 text-center"
+              <button 
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="h-14 bg-[#111415]/90 border-2 border-[#00D2FF]/40 text-[#00D2FF]/70 cursor-not-allowed opacity-75 px-6 font-headline font-bold text-sm uppercase tracking-widest w-full flex items-center justify-center gap-2 text-center select-none"
               >
-                <Users className="w-4 h-4 text-[#00D2FF]" />
+                <Users className="w-4 h-4 text-[#00D2FF]/70" />
                 <span>{t.becomeVolunteer}</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -929,18 +929,15 @@ export default function CalendarView({
                     </button>
                   </div>
 
-                  {/* Register action trigger */}
-                  <a
-                    href={registerFormUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      setActiveDetailEventId(null);
-                    }}
-                    className="w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider transition-all scale-95 active:scale-90 cursor-pointer border-0 inline-block text-center bg-[#9500FF] text-white hover:bg-[#8000DB] hover:shadow-[0_0_15px_#9500FF]"
+                  {/* Register action trigger (Deactivated / Read-Only) */}
+                  <button
+                    type="button"
+                    disabled
+                    aria-disabled="true"
+                    className="w-full sm:w-auto py-2.5 px-6 font-headline text-xs font-black uppercase tracking-wider border-0 inline-block text-center bg-[#9500FF]/60 text-white/80 cursor-not-allowed opacity-75 select-none"
                   >
                     {t.registerForSession}
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             </div>

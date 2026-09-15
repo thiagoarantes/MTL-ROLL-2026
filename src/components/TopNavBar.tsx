@@ -156,16 +156,16 @@ export default function TopNavBar({
             {t.boutique}
           </a>
 
-          {/* Register CTA */}
-          <a
-            href={registerFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#E1FD15] text-[#0B0C10] px-6 py-2 rounded-none font-headline text-sm uppercase tracking-wider hover:shadow-[0_0_15px_rgba(225,253,21,0.8)] transition-all scale-95 active:scale-90 cursor-pointer font-bold border-0 inline-block text-center"
+          {/* Register CTA (Deactivated / Read-Only) */}
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="bg-[#E1FD15]/60 text-[#0B0C10]/80 px-6 py-2 rounded-none font-headline text-sm uppercase tracking-wider font-bold border-0 inline-block text-center cursor-not-allowed opacity-75 select-none"
             id="register-navbar-btn"
           >
             {t.register}
-          </a>
+          </button>
         </div>
       </div>
 
@@ -283,16 +283,15 @@ export default function TopNavBar({
             >
               {t.boutique}
             </a>
-            <a
-              href={registerFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full bg-[#E1FD15] text-[#0B0C10] py-3 text-center font-headline uppercase tracking-wider font-bold text-sm scale-95 active:scale-90 cursor-pointer block"
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="w-full bg-[#E1FD15]/60 text-[#0B0C10]/80 py-3 text-center font-headline uppercase tracking-wider font-bold text-sm cursor-not-allowed opacity-75 select-none block"
               id="mobile-register-btn"
             >
               {t.register}
-            </a>
+            </button>
           </div>
         </div>
       )}
